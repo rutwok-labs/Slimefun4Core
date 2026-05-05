@@ -54,7 +54,15 @@ public class FishermanAndroid extends ProgrammableAndroid {
 
     @Override
     protected void fish(Block b, BlockMenu menu) {
+        if (b.getWorld() == null || !b.getChunk().isLoaded()) {
+            return;
+        }
+
         Block water = b.getRelative(BlockFace.DOWN);
+
+        if (water.getWorld() == null) {
+            return;
+        }
 
         if (water.getType() == Material.WATER) {
             SoundEffect.FISHERMAN_ANDROID_FISHING_SOUND.playAt(water);

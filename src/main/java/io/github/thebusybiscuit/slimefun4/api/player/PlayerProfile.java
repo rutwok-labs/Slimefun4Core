@@ -392,20 +392,24 @@ public class PlayerProfile {
 
         loading.put(uuid, true);
         Slimefun.getThreadService().newThread(Slimefun.instance(), "PlayerProfile#get(" + uuid + ")", () -> {
-            PlayerData data = Slimefun.getPlayerStorage().loadPlayerData(p.getUniqueId());
+            try {
+                PlayerData data = Slimefun.getPlayerStorage().loadPlayerData(p.getUniqueId());
 
-            AsyncProfileLoadEvent event = new AsyncProfileLoadEvent(new PlayerProfile(p, data));
-            Bukkit.getPluginManager().callEvent(event);
+                AsyncProfileLoadEvent event = new AsyncProfileLoadEvent(new PlayerProfile(p, data));
+                Bukkit.getPluginManager().callEvent(event);
 
-            Slimefun.getRegistry().getPlayerProfiles().put(uuid, event.getProfile());
+                Slimefun.getRegistry().getPlayerProfiles().put(uuid, event.getProfile());
 
-            // Make sure we call this after we put the PlayerProfile into the registry.
-            // Otherwise, we end up with a race condition where the profile is not in the map just _yet_
-            // but the loading flag is gone and we can end up loading it a second time (and thus can dupe items)
-            // Fixes https://github.com/Slimefun/Slimefun4/issues/4130
-            loading.remove(uuid);
+                if (Bukkit.getPlayer(uuid) == null) {
+                    event.getProfile().markForDeletion();
+                }
 
-            callback.accept(event.getProfile());
+                callback.accept(event.getProfile());
+            } finally {
+                // Make sure we only clear this after we either published the profile or failed the load.
+                // This prevents duplicate loads while also allowing retries after an exception.
+                loading.remove(uuid);
+            }
         });
 
         return false;
@@ -438,16 +442,20 @@ public class PlayerProfile {
             loading.put(uuid, true);
             // Should probably prevent multiple requests for the same profile in the future
             Slimefun.getThreadService().newThread(Slimefun.instance(), "PlayerProfile#request(" + uuid + ")", () -> {
-                PlayerData data = Slimefun.getPlayerStorage().loadPlayerData(uuid);
+                try {
+                    PlayerData data = Slimefun.getPlayerStorage().loadPlayerData(uuid);
 
-                PlayerProfile pp = new PlayerProfile(p, data);
-                Slimefun.getRegistry().getPlayerProfiles().put(uuid, pp);
+                    PlayerProfile pp = new PlayerProfile(p, data);
+                    Slimefun.getRegistry().getPlayerProfiles().put(uuid, pp);
 
-                // Make sure we call this after we put the PlayerProfile into the registry.
-                // Otherwise, we end up with a race condition where the profile is not in the map just _yet_
-                // but the loading flag is gone and we can end up loading it a second time (and thus can dupe items)
-                // Fixes https://github.com/Slimefun/Slimefun4/issues/4130
-                loading.remove(uuid);
+                    if (Bukkit.getPlayer(uuid) == null) {
+                        pp.markForDeletion();
+                    }
+                } finally {
+                    // Make sure we only clear this after we either published the profile or failed the load.
+                    // This prevents duplicate loads while also allowing retries after an exception.
+                    loading.remove(uuid);
+                }
             });
 
             return false;

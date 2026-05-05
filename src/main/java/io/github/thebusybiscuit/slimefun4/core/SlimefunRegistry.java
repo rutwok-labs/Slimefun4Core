@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,7 @@ public final class SlimefunRegistry {
 
     private final Map<UUID, PlayerProfile> profiles = new ConcurrentHashMap<>();
     private final Map<String, BlockStorage> worlds = new ConcurrentHashMap<>();
-    private final Map<String, BlockInfoConfig> chunks = new HashMap<>();
+    private final Map<String, BlockInfoConfig> chunks = new ConcurrentHashMap<>();
     private final Map<SlimefunGuideMode, SlimefunGuideImplementation> guides = new EnumMap<>(SlimefunGuideMode.class);
     private final Map<EntityType, Set<ItemStack>> mobDrops = new HashMap<>();
 
@@ -332,6 +333,13 @@ public final class SlimefunRegistry {
     @Nonnull
     public Map<String, BlockInfoConfig> getChunks() {
         return chunks;
+    }
+
+    public void removeChunksForWorld(@Nonnull String worldName) {
+        Validate.notNull(worldName, "World name cannot be null");
+
+        String prefix = worldName + ';';
+        chunks.keySet().removeIf(key -> key.startsWith(prefix));
     }
 
     @Nonnull

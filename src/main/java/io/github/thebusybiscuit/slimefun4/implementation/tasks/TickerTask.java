@@ -183,6 +183,7 @@ public class TickerTask implements Runnable {
     private void tickBlock(Location l, Block b, SlimefunItem item, Config data, long timestamp) {
         try {
             item.getBlockTicker().tick(b, item, data);
+            bugs.remove(new BlockPosition(l));
         } catch (Exception | LinkageError x) {
             reportErrors(l, item, x);
         } finally {
@@ -385,6 +386,27 @@ public class TickerTask implements Runnable {
                 tickingLocations.remove(chunk);
             }
         }
+    }
+
+    public void clearWorld(@Nonnull org.bukkit.World world) {
+        Validate.notNull(world, "World cannot be null");
+
+        String worldName = world.getName();
+        tickingLocations.keySet().removeIf(chunk -> belongsToWorld(tickingLocations.get(chunk), worldName));
+    }
+
+    private boolean belongsToWorld(Set<Location> locations, @Nonnull String worldName) {
+        if (locations == null || locations.isEmpty()) {
+            return false;
+        }
+
+        for (Location location : locations) {
+            if (location.getWorld() != null && worldName.equals(location.getWorld().getName())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

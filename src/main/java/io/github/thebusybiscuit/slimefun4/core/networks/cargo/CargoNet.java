@@ -1,12 +1,12 @@
 package io.github.thebusybiscuit.slimefun4.core.networks.cargo;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
@@ -44,8 +44,8 @@ public class CargoNet extends AbstractItemNetwork implements HologramOwner {
     private static final int RANGE = 5;
     private static final int TICK_DELAY = Slimefun.getCfg().getInt("networks.cargo-ticker-delay");
 
-    private final Set<Location> inputNodes = new HashSet<>();
-    private final Set<Location> outputNodes = new HashSet<>();
+    private final Set<Location> inputNodes = ConcurrentHashMap.newKeySet();
+    private final Set<Location> outputNodes = ConcurrentHashMap.newKeySet();
 
     protected final Map<Location, Integer> roundRobin = new HashMap<>();
     private int tickDelayThreshold = 0;
@@ -111,6 +111,7 @@ public class CargoNet extends AbstractItemNetwork implements HologramOwner {
         if (from == NetworkComponent.TERMINUS) {
             inputNodes.remove(l);
             outputNodes.remove(l);
+            roundRobin.remove(l);
         }
 
         if (to == NetworkComponent.TERMINUS) {

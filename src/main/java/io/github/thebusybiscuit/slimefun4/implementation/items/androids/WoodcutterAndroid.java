@@ -169,6 +169,11 @@ public class WoodcutterAndroid extends ProgrammableAndroid {
                     saplingType = Material.CHERRY_SAPLING;
                     soilRequirement = SlimefunTag.DIRT_VARIANTS::isTagged;
                 }
+                case BAMBOO_BLOCK,
+                    STRIPPED_BAMBOO_BLOCK -> {
+                    saplingType = Material.BAMBOO;
+                    soilRequirement = SlimefunTag.DIRT_VARIANTS::isTagged;
+                }
                 default -> {}
             }
         }

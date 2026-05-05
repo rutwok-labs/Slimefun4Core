@@ -31,6 +31,8 @@ public class WorldListener implements Listener {
 
         if (storage != null) {
             storage.saveAndRemove();
+            Slimefun.getRegistry().removeChunksForWorld(e.getWorld().getName());
+            Slimefun.getTickerTask().clearWorld(e.getWorld());
         } else {
             Slimefun.logger().log(Level.SEVERE, "Could not save Slimefun Blocks for World \"{0}\"", e.getWorld().getName());
         }

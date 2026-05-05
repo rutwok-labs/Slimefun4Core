@@ -7,8 +7,6 @@ import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -69,9 +67,8 @@ public class AutoSavingService {
 
             // Remove the PlayerProfile from memory if the player has left the server (marked from removal)
             // and they're still not on the server
-            // At this point, we've already saved their profile so we can safely remove it
-            // without worry for having a data sync issue (e.g. data is changed but then we try to re-load older data)
             if (profile.isMarkedForDeletion() && profile.getPlayer() == null) {
+                profile.save();
                 iterator.remove();
 
                 Debug.log(TestCase.PLAYER_PROFILE_DATA, "Removed data from memory for {}",
@@ -91,15 +88,11 @@ public class AutoSavingService {
     private void saveAllBlocks() {
         Set<BlockStorage> worlds = new HashSet<>();
 
-        for (World world : Bukkit.getWorlds()) {
-            BlockStorage storage = BlockStorage.getStorage(world);
+        for (BlockStorage storage : Slimefun.getRegistry().getWorlds().values()) {
+            storage.computeChanges();
 
-            if (storage != null) {
-                storage.computeChanges();
-
-                if (storage.getChanges() > 0) {
-                    worlds.add(storage);
-                }
+            if (storage.getChanges() > 0) {
+                worlds.add(storage);
             }
         }
 

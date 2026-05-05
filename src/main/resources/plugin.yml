@@ -26,6 +26,9 @@ commands:
     aliases: sf
     description: Slimefun base command
     usage: The Slimefun version you have installed does not seem to be compatible with your server setup. Check your console for more detailed info.
+  addon:
+    description: Managed Slimefun addon administration
+    usage: /addon <list|download|update|remove|enable|disable> [name]
 
 # Default permissions
 permissions:
@@ -85,4 +88,13 @@ permissions:
     default: op
   slimefun.debugging:
     description: Allows you to use the debugging tool from Slimefun
+    default: op
+  addon.admin:
+    description: Allows full managed addon administration
+    default: op
+  addon.update:
+    description: Allows managed addon download and update actions
+    default: op
+  addon.manage:
+    description: Allows managed addon enable, disable and remove actions
     default: op

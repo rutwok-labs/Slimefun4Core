@@ -41,6 +41,7 @@ import io.github.thebusybiscuit.slimefun4.api.geo.GEOResource;
 import io.github.thebusybiscuit.slimefun4.api.gps.GPSNetwork;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
+import io.github.thebusybiscuit.slimefun4.core.addons.AddonManager;
 import io.github.thebusybiscuit.slimefun4.core.SlimefunRegistry;
 import io.github.thebusybiscuit.slimefun4.core.commands.SlimefunCommand;
 import io.github.thebusybiscuit.slimefun4.core.networks.NetworkManager;
@@ -190,6 +191,7 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
     private final SoundService soundService = new SoundService(this);
     private final ThreadService threadService = new ThreadService(this);
     private final AnalyticsService analyticsService = new AnalyticsService(this);
+    private final AddonManager addonManager = new AddonManager(this);
 
     // Some other things we need
     private final IntegrationsManager integrations = new IntegrationsManager(this);
@@ -370,6 +372,8 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
             logger.log(Level.SEVERE, "An Exception occurred while registering the /slimefun command", x);
         }
 
+        addonManager.start();
+
         // Armor Update Task
         if (config.getBoolean("options.enable-armor-effects")) {
             new SlimefunArmorTask().schedule(this, config.getInt("options.armor-update-interval") * 20L);
@@ -459,6 +463,7 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
 
         // Close and unload any resources from our Metrics Service
         metricsService.cleanUp();
+        addonManager.shutdown();
 
         // Terminate our Plugin instance
         setInstance(null);
@@ -1149,5 +1154,10 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
      */
     public static @Nonnull ThreadService getThreadService() {
         return instance().threadService;
+    }
+
+    public static @Nonnull AddonManager getAddonManager() {
+        validateInstance();
+        return instance.addonManager;
     }
 }

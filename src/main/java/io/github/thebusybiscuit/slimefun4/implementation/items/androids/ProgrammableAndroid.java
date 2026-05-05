@@ -707,7 +707,12 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
             String[] script = CommonPatterns.DASH.split(code == null ? DEFAULT_SCRIPT : code);
             int index = parseInstructionIndex(b, data.getString("index"), script.length) + 1;
 
-            if (index >= script.length || index < 0) {
+            if (index < 0) {
+                BlockStorage.addBlockInfo(b, "index", "0");
+                return;
+            }
+
+            if (index >= script.length) {
                 index = 0;
             }
 
@@ -744,13 +749,22 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
                 BlockStorage.addBlockInfo(b, "index", String.valueOf(index));
                 break;
             case REPEAT:
+                // REPEAT resets to index 0. On the next tick, tick() will increment
+                // to 1 and execute the first real instruction after START.
+                // This is intentional - START is a marker only, not an instruction
+                // that costs a tick on loop restart.
                 // "repeat" just means, we reset our index
                 BlockStorage.addBlockInfo(b, "index", String.valueOf(0));
                 break;
             case CHOP_TREE:
-                // We only move to the next step if we finished chopping wood
-                if (chopTree(b, inv, face)) {
+                try {
+                    // We only move to the next step if we finished chopping wood
+                    if (chopTree(b, inv, face)) {
+                        BlockStorage.addBlockInfo(b, "index", String.valueOf(index));
+                    }
+                } catch (Exception x) {
                     BlockStorage.addBlockInfo(b, "index", String.valueOf(index));
+                    Slimefun.logger().log(Level.WARNING, x, () -> "ProgrammableAndroid CHOP_TREE failed at " + b.getLocation());
                 }
                 break;
             default:
@@ -943,14 +957,14 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
             if (index < 0 || index >= scriptLength) {
                 BlockStorage.addBlockInfo(b, "index", "0");
                 reportRuntimeIssue(b, "Corrupted script index was reset");
-                return 0;
+                return -2;
             }
 
             return index;
         } catch (NumberFormatException x) {
             BlockStorage.addBlockInfo(b, "index", "0");
             reportRuntimeIssue(b, "Corrupted script index was reset");
-            return 0;
+            return -2;
         }
     }
 

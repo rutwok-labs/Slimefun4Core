@@ -35,14 +35,18 @@ class SlimefunTabCompleter implements TabCompleter {
         if (args.length == 1) {
             return createReturnList(command.getSubCommandNames(), args[0]);
         } else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("debug")) {
+            if (args[0].equalsIgnoreCase("addon")) {
+                return createReturnList(Slimefun.getAddonManager().tabComplete(new String[] { args[1] }), args[1]);
+            } else if (args[0].equalsIgnoreCase("debug")) {
                 return createReturnList(TestCase.VALUES_LIST, args[1]);
             } else {
                 // Returning null will make it fallback to the default arguments (all online players)
                 return null;
             }
         } else if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("give")) {
+            if (args[0].equalsIgnoreCase("addon")) {
+                return createReturnList(Slimefun.getAddonManager().tabComplete(new String[] { args[1], args[2] }), args[2]);
+            } else if (args[0].equalsIgnoreCase("give")) {
                 return createReturnList(getSlimefunItems(), args[2]);
             } else if (args[0].equalsIgnoreCase("research")) {
                 List<Research> researches = Slimefun.getRegistry().getResearches();

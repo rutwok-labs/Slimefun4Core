@@ -3,8 +3,9 @@ package io.github.thebusybiscuit.slimefun4.core.networks;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
@@ -41,15 +42,7 @@ public class NetworkManager {
     private final boolean enableVisualizer;
     private final boolean deleteExcessItems;
 
-    /**
-     * Fixes #3041
-     * 
-     * We use a {@link CopyOnWriteArrayList} here to ensure thread-safety.
-     * This {@link List} is also much more frequently read than being written to.
-     * Therefore a {@link CopyOnWriteArrayList} should be perfect for this, even
-     * if insertions come at a slight cost.
-     */
-    private final List<Network> networks = new CopyOnWriteArrayList<>();
+    private final Map<Location, Network> networksByOrigin = new ConcurrentHashMap<>();
 
     /**
      * This creates a new {@link NetworkManager} with the given capacity.
@@ -116,7 +109,7 @@ public class NetworkManager {
      */
     @Nonnull
     public List<Network> getNetworkList() {
-        return Collections.unmodifiableList(networks);
+        return Collections.unmodifiableList(new ArrayList<>(networksByOrigin.values()));
     }
 
     @Nonnull
@@ -127,7 +120,7 @@ public class NetworkManager {
 
         Validate.notNull(type, "Type must not be null");
 
-        for (Network network : networks) {
+        for (Network network : networksByOrigin.values()) {
             if (type.isInstance(network) && network.connectsTo(l)) {
                 return Optional.of(type.cast(network));
             }
@@ -146,7 +139,7 @@ public class NetworkManager {
         Validate.notNull(type, "Type must not be null");
         List<T> list = new ArrayList<>();
 
-        for (Network network : networks) {
+        for (Network network : networksByOrigin.values()) {
             if (type.isInstance(network) && network.connectsTo(l)) {
                 list.add(type.cast(network));
             }
@@ -163,7 +156,7 @@ public class NetworkManager {
      */
     public void registerNetwork(@Nonnull Network network) {
         Validate.notNull(network, "Cannot register a null Network");
-        networks.add(network);
+        networksByOrigin.put(network.getRegulator(), network);
     }
 
     /**
@@ -174,7 +167,7 @@ public class NetworkManager {
      */
     public void unregisterNetwork(@Nonnull Network network) {
         Validate.notNull(network, "Cannot unregister a null Network");
-        networks.remove(network);
+        networksByOrigin.remove(network.getRegulator());
     }
 
     /**
@@ -192,7 +185,7 @@ public class NetworkManager {
              * No need to create a sublist and loop through it if
              * there aren't even any networks on the server.
              */
-            if (networks.isEmpty()) {
+            if (networksByOrigin.isEmpty()) {
                 return;
             }
 

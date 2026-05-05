@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -56,7 +57,7 @@ public class BlockStorage {
     private static final EmptyBlockData emptyBlockData = new EmptyBlockData();
 
     private final World world;
-    private final Map<Location, Config> storage = new ConcurrentHashMap<>();
+    private final Map<BlockPosition, Config> storage = new ConcurrentHashMap<>();
     private final Map<Location, BlockMenu> inventories = new ConcurrentHashMap<>();
     private final Map<String, Config> blocksCache = new ConcurrentHashMap<>();
 
@@ -73,12 +74,16 @@ public class BlockStorage {
 
     @Nonnull
     public static BlockStorage getOrCreate(@Nonnull World world) {
-        BlockStorage storage = Slimefun.getRegistry().getWorlds().get(world.getName());
+        Map<String, BlockStorage> worlds = Slimefun.getRegistry().getWorlds();
 
-        if (storage == null) {
-            return new BlockStorage(world);
-        } else {
-            return storage;
+        synchronized (worlds) {
+            BlockStorage storage = worlds.get(world.getName());
+
+            if (storage == null) {
+                return new BlockStorage(world);
+            } else {
+                return storage;
+            }
         }
     }
 
@@ -195,14 +200,16 @@ public class BlockStorage {
             Config blockInfo = parseBlockInfo(l, json);
 
             if (blockInfo != null && blockInfo.contains("id")) {
-                if (storage.putIfAbsent(l, blockInfo) != null) {
+                BlockPosition position = new BlockPosition(l);
+
+                if (storage.putIfAbsent(position, blockInfo) != null) {
                     /*
                      * It should not be possible to have two blocks on the same location.
                      * Ignore the new entry if a block is already present and print an
                      * error to the console (if enabled).
                      */
                     if (Slimefun.getRegistry().logDuplicateBlockEntries()) {
-                        Slimefun.logger().log(Level.INFO, "Ignoring duplicate block @ %d, %d, %d (%s -> %s)".formatted(l.getBlockX(), l.getBlockY(), l.getBlockZ(), blockInfo.getString("id"), storage.get(l).getString("id")));
+                        Slimefun.logger().log(Level.INFO, "Ignoring duplicate block @ %d, %d, %d (%s -> %s)".formatted(l.getBlockX(), l.getBlockY(), l.getBlockZ(), blockInfo.getString("id"), storage.get(position).getString("id")));
                     }
 
                     return;
@@ -288,17 +295,17 @@ public class BlockStorage {
     }
 
     public void computeChanges() {
-        changes = blocksCache.size();
-
-        Map<Location, BlockMenu> inventories2 = new HashMap<>(inventories);
-        for (Map.Entry<Location, BlockMenu> entry : inventories2.entrySet()) {
-            changes += entry.getValue().getUnsavedChanges();
+        int dirtyInventories = 0;
+        for (BlockMenu menu : inventories.values()) {
+            dirtyInventories += menu.getUnsavedChanges();
         }
 
-        Map<String, UniversalBlockMenu> universalInventories2 = new HashMap<>(Slimefun.getRegistry().getUniversalInventories());
-        for (Map.Entry<String, UniversalBlockMenu> entry : universalInventories2.entrySet()) {
-            changes += entry.getValue().getUnsavedChanges();
+        int dirtyUniversal = 0;
+        for (UniversalBlockMenu menu : Slimefun.getRegistry().getUniversalInventories().values()) {
+            dirtyUniversal += menu.getUnsavedChanges();
         }
+
+        changes = blocksCache.size() + dirtyInventories + dirtyUniversal;
     }
 
     public int getChanges() {
@@ -313,10 +320,11 @@ public class BlockStorage {
         }
 
         Slimefun.logger().log(Level.INFO, "Saving block data for world \"{0}\" ({1} change(s) queued)", new Object[] { world.getName(), changes });
-        Map<String, Config> cache = new HashMap<>(blocksCache);
+        Iterator<Map.Entry<String, Config>> iterator = blocksCache.entrySet().iterator();
 
-        for (Map.Entry<String, Config> entry : cache.entrySet()) {
-            blocksCache.remove(entry.getKey());
+        while (iterator.hasNext()) {
+            Map.Entry<String, Config> entry = iterator.next();
+            iterator.remove();
             Config cfg = entry.getValue();
 
             if (cfg.getKeys().isEmpty()) {
@@ -390,7 +398,13 @@ public class BlockStorage {
      */
     @Nonnull
     public Map<Location, Config> getRawStorage() {
-        return ImmutableMap.copyOf(this.storage);
+        Map<Location, Config> copy = new HashMap<>(this.storage.size());
+
+        for (Map.Entry<BlockPosition, Config> entry : this.storage.entrySet()) {
+            copy.put(entry.getKey().toLocation(), entry.getValue());
+        }
+
+        return ImmutableMap.copyOf(copy);
     }
 
     /**
@@ -455,7 +469,7 @@ public class BlockStorage {
             return emptyBlockData;
         }
 
-        Config cfg = storage.storage.get(l);
+        Config cfg = storage.storage.get(new BlockPosition(l));
         return cfg == null ? emptyBlockData : cfg;
     }
 
@@ -557,7 +571,7 @@ public class BlockStorage {
         BlockStorage storage = getStorage(l.getWorld());
 
         if (storage != null) {
-            Config cfg = storage.storage.get(l);
+            Config cfg = storage.storage.get(new BlockPosition(l));
             return cfg != null && cfg.getString("id") != null;
         } else {
             return false;
@@ -572,7 +586,7 @@ public class BlockStorage {
             return;
         }
 
-        storage.storage.put(l, cfg);
+        storage.storage.put(new BlockPosition(l), cfg);
         String id = cfg.getString("id");
         BlockMenuPreset preset = BlockMenuPreset.getPreset(id);
 
@@ -635,7 +649,9 @@ public class BlockStorage {
         }
         Map<Location, Boolean> toClear = new HashMap<>();
         // Unsafe: get raw storage for this world
-        for (Location location : blockStorage.storage.keySet()) {
+        for (BlockPosition key : blockStorage.storage.keySet()) {
+            Location location = key.toLocation();
+
             if (location.getBlockX() >> 4 == chunkX && location.getBlockZ() >> 4 == chunkZ) {
                 toClear.put(location, destroy);
             }
@@ -661,7 +677,7 @@ public class BlockStorage {
 
         if (hasBlockInfo(l)) {
             refreshCache(storage, l, getLocationInfo(l).getString("id"), null, destroy);
-            storage.storage.remove(l);
+            storage.storage.remove(new BlockPosition(l));
         }
 
         if (destroy) {
@@ -712,7 +728,7 @@ public class BlockStorage {
         }
 
         refreshCache(storage, from, previousData.getString("id"), null, true);
-        storage.storage.remove(from);
+        storage.storage.remove(new BlockPosition(from));
 
         Slimefun.getTickerTask().disableTicker(from);
     }

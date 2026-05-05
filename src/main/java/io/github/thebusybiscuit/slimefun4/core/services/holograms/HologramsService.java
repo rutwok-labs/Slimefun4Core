@@ -1,9 +1,9 @@
 package io.github.thebusybiscuit.slimefun4.core.services.holograms;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
@@ -66,7 +66,7 @@ public class HologramsService {
     /**
      * Our cache to save {@link Entity} lookups
      */
-    private final Map<BlockPosition, Hologram> cache = new HashMap<>();
+    private final Map<BlockPosition, Hologram> cache = new ConcurrentHashMap<>();
 
     /**
      * This constructs a new {@link HologramsService}.
@@ -108,7 +108,7 @@ public class HologramsService {
         while (iterator.hasNext()) {
             Hologram hologram = iterator.next();
 
-            if (hologram.hasExpired()) {
+            if (hologram.hasExpired() || hologram.hasDespawned()) {
                 iterator.remove();
             }
         }
@@ -129,6 +129,10 @@ public class HologramsService {
     @Nullable
     private Hologram getHologram(@Nonnull Location loc, boolean createIfNoneExists) {
         Validate.notNull(loc, "Location cannot be null");
+
+        if (loc.getWorld() == null) {
+            return null;
+        }
 
         BlockPosition position = new BlockPosition(loc);
         Hologram hologram = cache.get(position);
