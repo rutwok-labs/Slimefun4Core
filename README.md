@@ -16,7 +16,7 @@ _**This is an unofficial modified version** of the original project, maintained 
 - **Original version**: 1.19.4
 - **Updated to**: **1.21.11**
 - **Compatibility**: :white_check_mark: **Working**
-- **Status**: :test_tube: **Currently under testing**
+- **Status**: :test_tube: **Online**
 - **Tested on**: Purpur 1.21.11 (Java 21)
 
 **This build is still under testing and may contain bugs.** Feedback and bug reports are highly appreciated!
@@ -42,8 +42,7 @@ https://github.com/rutwok-labs/SF4-Addons
 ---
 
 ## Download
-🔗 **Link** : [SlimefunCore4-2609.jar
-](https://github.com/rutwok-labs/SlimefunCore-V.4.0/releases/download/slimefuncore4-2610/SlimefunCore4-2609.jar)
+🔗 **Link** : [SlimefunCore4](https://modrinth.com/plugin/slimefuncore)
 
 > **Note**: This is an **unofficial fork**. Always test on a backup server before using on production.
 
