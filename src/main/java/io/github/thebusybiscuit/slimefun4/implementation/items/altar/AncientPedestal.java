@@ -17,9 +17,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.items.CustomItemStack;
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSpawnReason;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -52,7 +52,7 @@ import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
  */
 public class AncientPedestal extends SimpleSlimefunItem<BlockDispenseHandler> implements NotHopperable {
 
-    public static final String ITEM_PREFIX = ChatColors.color("&dALTAR &3Probe - &e");
+    public static final String ITEM_PREFIX = SF4Colors.color("&dALTAR &3Probe - &e");
 
     @ParametersAreNonnullByDefault
     public AncientPedestal(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
@@ -146,7 +146,7 @@ public class AncientPedestal extends SimpleSlimefunItem<BlockDispenseHandler> im
         im.setDisplayName(null);
         stack.setItemMeta(im);
 
-        if (customName == null || !customName.equals(ItemUtils.getItemName(stack))) {
+        if (customName == null || !customName.equals(SF4ItemUtils.getItemName(stack))) {
             im.setDisplayName(customName);
             stack.setItemMeta(im);
         }
@@ -157,14 +157,14 @@ public class AncientPedestal extends SimpleSlimefunItem<BlockDispenseHandler> im
     public void placeItem(@Nonnull Player p, @Nonnull Block b) {
         ItemStack hand = p.getInventory().getItemInMainHand();
         String displayName = ITEM_PREFIX + System.nanoTime();
-        ItemStack displayItem = CustomItemStack.create(hand, displayName);
+        ItemStack displayItem = SF4Items.create(hand, displayName);
         displayItem.setAmount(1);
 
         // Get the display name of the original Item in the Player's hand
-        String nametag = ItemUtils.getItemName(hand);
+        String nametag = SF4ItemUtils.getItemName(hand);
 
         if (p.getGameMode() != GameMode.CREATIVE) {
-            ItemUtils.consumeItem(hand, false);
+            SF4ItemUtils.consumeItem(hand, false);
         }
 
         Item entity = SlimefunUtils.spawnItem(b.getLocation().add(0.5, 1.2, 0.5), displayItem, ItemSpawnReason.ANCIENT_PEDESTAL_PLACE_ITEM, false, p);

@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -89,7 +89,7 @@ public class AutoBrewer extends AContainer implements NotHopperable {
 
             output.setItemMeta(potion);
 
-            if (!InvUtils.fits(menu.toInventory(), output, getOutputSlots())) {
+            if (!SF4InvUtils.fits(menu.toInventory(), output, getOutputSlots())) {
                 return null;
             }
 

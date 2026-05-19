@@ -13,7 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
@@ -78,7 +78,7 @@ public final class SlimefunGuideSettings {
         LocalizationService locale = Slimefun.getLocalization();
 
         // @formatter:off
-        menu.addItem(0, CustomItemStack.create(SlimefunGuide.getItem(SlimefunGuideMode.SURVIVAL_MODE),
+        menu.addItem(0, SF4Items.create(SlimefunGuide.getItem(SlimefunGuideMode.SURVIVAL_MODE),
             "&e\u21E6 " + locale.getMessage(p, "guide.back.title"),
             "",
             "&7" + locale.getMessage(p, "guide.back.guide")));
@@ -98,7 +98,7 @@ public final class SlimefunGuideSettings {
         contributorsLore.add("&7\u21E8 &e" + locale.getMessage(p, "guide.credits.open"));
 
         // @formatter:off
-        menu.addItem(2, CustomItemStack.create(SlimefunUtils.getCustomHead("e952d2b3f351a6b0487cc59db31bf5f2641133e5ba0006b18576e996a0293e52"),
+        menu.addItem(2, SF4Items.create(SlimefunUtils.getCustomHead("e952d2b3f351a6b0487cc59db31bf5f2641133e5ba0006b18576e996a0293e52"),
             "&c" + locale.getMessage(p, "guide.title.credits"),
             contributorsLore.toArray(new String[0])));
         // @formatter:on
@@ -109,7 +109,7 @@ public final class SlimefunGuideSettings {
         });
 
         // @formatter:off
-        menu.addItem(4, CustomItemStack.create(Material.WRITABLE_BOOK,
+        menu.addItem(4, SF4Items.create(Material.WRITABLE_BOOK,
             ChatColor.GREEN + locale.getMessage(p, "guide.title.versions"),
             "&7&o" + locale.getMessage(p, "guide.tooltips.versions-notice"),
             "",
@@ -120,7 +120,7 @@ public final class SlimefunGuideSettings {
         // @formatter:on
 
         // @formatter:off
-        menu.addItem(6, CustomItemStack.create(Material.COMPARATOR,
+        menu.addItem(6, SF4Items.create(Material.COMPARATOR,
            "&e" + locale.getMessage(p, "guide.title.source"),
            "", "&7Last Activity: &a" + NumberUtils.getElapsedTime(github.getLastUpdate()) + " ago",
            "&7Forks: &e" + github.getForks(),
@@ -141,7 +141,7 @@ public final class SlimefunGuideSettings {
         });
 
         // @formatter:off
-        menu.addItem(8, CustomItemStack.create(Material.KNOWLEDGE_BOOK,
+        menu.addItem(8, SF4Items.create(Material.KNOWLEDGE_BOOK,
             "&3" + locale.getMessage(p, "guide.title.wiki"),
             "", "&7Do you need help with an Item or machine?",
             "&7You cannot figure out what to do?",
@@ -158,7 +158,7 @@ public final class SlimefunGuideSettings {
         });
 
         // @formatter:off
-        menu.addItem(47, CustomItemStack.create(Material.BOOKSHELF,
+        menu.addItem(47, SF4Items.create(Material.BOOKSHELF,
             "&3" + locale.getMessage(p, "guide.title.addons"),
             "",
             "&7Slimefun is huge. But its addons are what makes",
@@ -178,7 +178,7 @@ public final class SlimefunGuideSettings {
 
         if (Slimefun.getUpdater().getBranch().isOfficial()) {
             // @formatter:off
-            menu.addItem(49, CustomItemStack.create(Material.REDSTONE_TORCH,
+            menu.addItem(49, SF4Items.create(Material.REDSTONE_TORCH,
                 "&4" + locale.getMessage(p, "guide.title.bugs"),
                 "",
                 "&7&oBug reports have to be made in English!",
@@ -198,7 +198,7 @@ public final class SlimefunGuideSettings {
             menu.addItem(49, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
 
-        menu.addItem(51, CustomItemStack.create(Material.TOTEM_OF_UNDYING, ChatColor.RED + locale.getMessage(p, "guide.work-in-progress")), (pl, slot, item, action) -> {
+        menu.addItem(51, SF4Items.create(Material.TOTEM_OF_UNDYING, ChatColor.RED + locale.getMessage(p, "guide.work-in-progress")), (pl, slot, item, action) -> {
             // Add something here
             return false;
         });

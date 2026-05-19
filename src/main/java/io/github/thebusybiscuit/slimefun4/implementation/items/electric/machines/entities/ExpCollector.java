@@ -13,7 +13,7 @@ import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemHandler;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -107,7 +107,7 @@ public class ExpCollector extends SlimefunItem implements InventoryBlock, Energy
 
     protected void constructMenu(BlockMenuPreset preset) {
         for (int slot : border) {
-            preset.addItem(slot, CustomItemStack.create(Material.PURPLE_STAINED_GLASS_PANE, " "), (p, s, item, action) -> false);
+            preset.addItem(slot, SF4Items.create(Material.PURPLE_STAINED_GLASS_PANE, " "), (p, s, item, action) -> false);
         }
     }
 

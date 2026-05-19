@@ -23,8 +23,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4DataAPI;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -246,13 +246,13 @@ public abstract class AbstractAutoCrafter extends SlimefunItem implements Energy
         if (state instanceof Skull skull) {
             if (recipe == null) {
                 // Clear the value from persistent data storage
-                PersistentDataAPI.remove(skull, recipeStorageKey);
+                SF4DataAPI.remove(skull, recipeStorageKey);
 
                 // Also remove the "enabled" state since this should be per-recipe.
-                PersistentDataAPI.remove(skull, recipeEnabledKey);
+                SF4DataAPI.remove(skull, recipeEnabledKey);
             } else {
                 // Store the value to persistent data storage
-                PersistentDataAPI.setString(skull, recipeStorageKey, recipe.toString());
+                SF4DataAPI.setString(skull, recipeStorageKey, recipe.toString());
             }
 
             // Fixes #2899 - Update the BlockState if necessary
@@ -286,7 +286,7 @@ public abstract class AbstractAutoCrafter extends SlimefunItem implements Energy
         ChestMenuUtils.drawBackground(menu, 45, 46, 47, 48, 50, 51, 52, 53);
 
         if (recipe.isEnabled()) {
-            menu.addItem(49, CustomItemStack.create(Material.BARRIER, Slimefun.getLocalization().getMessages(p, "messages.auto-crafting.tooltips.enabled")));
+            menu.addItem(49, SF4Items.create(Material.BARRIER, Slimefun.getLocalization().getMessages(p, "messages.auto-crafting.tooltips.enabled")));
             menu.addMenuClickHandler(49, (pl, item, slot, action) -> {
                 if (action.isRightClicked()) {
                     deleteRecipe(pl, b);
@@ -297,7 +297,7 @@ public abstract class AbstractAutoCrafter extends SlimefunItem implements Energy
                 return false;
             });
         } else {
-            menu.addItem(49, CustomItemStack.create(HeadTexture.EXCLAMATION_MARK.getAsItemStack(), Slimefun.getLocalization().getMessages(p, "messages.auto-crafting.tooltips.disabled")));
+            menu.addItem(49, SF4Items.create(HeadTexture.EXCLAMATION_MARK.getAsItemStack(), Slimefun.getLocalization().getMessages(p, "messages.auto-crafting.tooltips.disabled")));
             menu.addMenuClickHandler(49, (pl, item, slot, action) -> {
                 if (action.isRightClicked()) {
                     deleteRecipe(pl, b);
@@ -331,10 +331,10 @@ public abstract class AbstractAutoCrafter extends SlimefunItem implements Energy
         // Make sure the block is still a Skull
         if (state instanceof Skull skull) {
             if (enabled) {
-                PersistentDataAPI.remove(skull, recipeEnabledKey);
+                SF4DataAPI.remove(skull, recipeEnabledKey);
                 Slimefun.getLocalization().sendMessage(p, "messages.auto-crafting.re-enabled");
             } else {
-                PersistentDataAPI.setByte(skull, recipeEnabledKey, (byte) 1);
+                SF4DataAPI.setByte(skull, recipeEnabledKey, (byte) 1);
                 Slimefun.getLocalization().sendMessage(p, "messages.auto-crafting.temporarily-disabled");
             }
         }

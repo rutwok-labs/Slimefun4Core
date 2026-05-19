@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -33,6 +35,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 import io.github.bakedlibs.dough.protection.ProtectionManager;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
@@ -58,6 +61,7 @@ import io.github.thebusybiscuit.slimefun4.core.services.PerWorldSettingsService;
 import io.github.thebusybiscuit.slimefun4.core.services.PermissionsService;
 import io.github.thebusybiscuit.slimefun4.core.services.ThreadService;
 import io.github.thebusybiscuit.slimefun4.core.services.UpdaterService;
+import io.github.thebusybiscuit.slimefun4.core.services.WorldBackupService;
 import io.github.thebusybiscuit.slimefun4.core.services.github.GitHubService;
 import io.github.thebusybiscuit.slimefun4.core.services.holograms.HologramsService;
 import io.github.thebusybiscuit.slimefun4.core.services.profiler.SlimefunProfiler;
@@ -178,12 +182,13 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
     // Services - Systems that fulfill certain tasks, treat them as a black box
     private final CustomItemDataService itemDataService = new CustomItemDataService(this, "slimefun_item");
     private final BlockDataService blockDataService = new BlockDataService(this, "slimefun_block");
-    private final CustomTextureService textureService = new CustomTextureService(new Config(this, "item-models.yml"));
+    private final CustomTextureService textureService = new CustomTextureService(SF4Config.forPlugin(this, "item-models.yml"));
     private final GitHubService gitHubService = new GitHubService("Slimefun/Slimefun4");
     private final UpdaterService updaterService = new UpdaterService(this, getDescription().getVersion(), getFile());
     private final MetricsService metricsService = new MetricsService(this);
     private final AutoSavingService autoSavingService = new AutoSavingService();
     private final BackupService backupService = new BackupService();
+    private final WorldBackupService worldBackupService = new WorldBackupService(this);
     private final PermissionsService permissionsService = new PermissionsService(this);
     private final PerWorldSettingsService worldSettingsService = new PerWorldSettingsService(this);
     private final MinecraftRecipeService recipeService = new MinecraftRecipeService(this);
@@ -203,9 +208,9 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
     private LocalizationService local;
 
     // Important config files for Slimefun
-    private final Config config = new Config(this);
-    private final Config items = new Config(this, "Items.yml");
-    private final Config researches = new Config(this, "Researches.yml");
+    private final Config config = SF4Config.forPlugin(this);
+    private final Config items = SF4Config.forPlugin(this, "Items.yml");
+    private final Config researches = SF4Config.forPlugin(this, "Researches.yml");
 
     // Data storage
     private Storage playerStorage;
@@ -373,6 +378,9 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
         }
 
         addonManager.start();
+        if (config.getBoolean("slimefun.discord.enabled")) {
+            logger.log(Level.INFO, "[Slimefun] Community Discord: {0}", config.getString("slimefun.discord.invite-url"));
+        }
 
         // Armor Update Task
         if (config.getBoolean("options.enable-armor-effects")) {
@@ -461,6 +469,10 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
             backupService.run();
         }
 
+        if (config.getBoolean("slimefun.world-backup.enabled")) {
+            runWorldBackupOnShutdown();
+        }
+
         // Close and unload any resources from our Metrics Service
         metricsService.cleanUp();
         addonManager.shutdown();
@@ -474,6 +486,26 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
          */
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.closeInventory();
+        }
+    }
+
+    private void runWorldBackupOnShutdown() {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        try {
+            Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+                try {
+                    worldBackupService.run();
+                } finally {
+                    latch.countDown();
+                }
+            });
+
+            if (!latch.await(10L, TimeUnit.MINUTES)) {
+                getLogger().warning("World backup did not finish within 10 minutes during shutdown.");
+            }
+        } catch (Exception x) {
+            getLogger().log(Level.WARNING, "Could not run world backup asynchronously during shutdown", x);
         }
     }
 

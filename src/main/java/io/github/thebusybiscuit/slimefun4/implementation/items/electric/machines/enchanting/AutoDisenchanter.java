@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
 import io.github.thebusybiscuit.slimefun4.api.events.AutoDisenchantEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -111,7 +111,7 @@ public class AutoDisenchanter extends AbstractEnchantmentMachine {
 
             MachineRecipe recipe = new MachineRecipe(90 * enchantments.size() / this.getSpeed(), new ItemStack[] { book, item }, new ItemStack[] { disenchantedItem, enchantedBook });
 
-            if (!InvUtils.fitAll(menu.toInventory(), recipe.getOutput(), getOutputSlots())) {
+            if (!SF4InvUtils.fitAll(menu.toInventory(), recipe.getOutput(), getOutputSlots())) {
                 return null;
             }
 

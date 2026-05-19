@@ -23,10 +23,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
-import io.github.bakedlibs.dough.inventory.InvUtils;
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.scheduling.TaskQueue;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4TaskQueue;
 import io.github.thebusybiscuit.slimefun4.core.services.sounds.SoundEffect;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.utils.compatibility.VersionedParticle;
@@ -70,8 +72,8 @@ class MiningTask implements Runnable {
         this.chest = chest;
         this.pistons = pistons;
 
-        this.start = new BlockPosition(start);
-        this.end = new BlockPosition(end);
+        this.start = SF4BlockPos.of(start);
+        this.end = SF4BlockPos.of(end);
 
         this.height = start.getY();
         this.x = start.getX();
@@ -124,7 +126,7 @@ class MiningTask implements Runnable {
          * This is our warm up animation.
          * The pistons will push after another in decreasing intervals
          */
-        TaskQueue queue = new TaskQueue();
+        TaskQueue queue = SF4TaskQueue.create();
 
         queue.thenRun(4, () -> setPistonState(pistons[0], true));
         queue.thenRun(10, () -> setPistonState(pistons[0], false));
@@ -176,7 +178,7 @@ class MiningTask implements Runnable {
             return;
         }
 
-        TaskQueue queue = new TaskQueue();
+        TaskQueue queue = SF4TaskQueue.create();
 
         queue.thenRun(1, () -> setPistonState(pistons[0], true));
         queue.thenRun(3, () -> setPistonState(pistons[0], false));
@@ -216,7 +218,7 @@ class MiningTask implements Runnable {
 
                 nextColumn();
             } catch (Exception e) {
-                Slimefun.logger().log(Level.SEVERE, e, () -> "An Error occurred while running an Industrial Miner at " + new BlockPosition(chest));
+                Slimefun.logger().log(Level.SEVERE, e, () -> "An Error occurred while running an Industrial Miner at " + SF4BlockPos.of(chest));
                 stop();
             }
         });
@@ -273,7 +275,7 @@ class MiningTask implements Runnable {
                 if (state instanceof Chest chestState) {
                     Inventory inv = chestState.getBlockInventory();
 
-                    if (InvUtils.fits(inv, item)) {
+                    if (SF4InvUtils.fits(inv, item)) {
                         inv.addItem(item);
                         return true;
                     } else {
@@ -319,7 +321,7 @@ class MiningTask implements Runnable {
                  * no errors during #setPistonState
                  */
                 if (fuelType.test(item) && running) {
-                    ItemUtils.consumeItem(item, false);
+                    SF4ItemUtils.consumeItem(item, false);
 
                     if (miner instanceof AdvancedIndustrialMiner) {
                         inv.addItem(new ItemStack(Material.BUCKET));
@@ -369,7 +371,7 @@ class MiningTask implements Runnable {
                 stop(MinerStoppingReason.STRUCTURE_DESTROYED);
             }
         } catch (Exception e) {
-            Slimefun.logger().log(Level.SEVERE, e, () -> "An Error occurred while moving a Piston for an Industrial Miner at " + new BlockPosition(block));
+            Slimefun.logger().log(Level.SEVERE, e, () -> "An Error occurred while moving a Piston for an Industrial Miner at " + SF4BlockPos.of(block));
             stop();
         }
     }

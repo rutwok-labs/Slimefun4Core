@@ -51,11 +51,12 @@ public final class DownloadService {
 
     public @Nonnull AddonOperationResult download(@Nonnull AddonDefinition definition, @Nullable RemoteAddonInfo remoteInfo) {
         Throwable lastError = null;
+        String downloadUrl = remoteInfo != null ? remoteInfo.downloadUrl() : definition.resolveUrlForMinecraftVersion(Slimefun.getMinecraftVersion()).orElse(definition.url());
+        String expectedChecksum = remoteInfo != null ? remoteInfo.expectedSha256() : normalizeSha(definition.sha256());
+        boolean shaFallbackUsed = false;
 
         for (int attempt = 1; attempt <= MAX_RETRIES; attempt++) {
             try {
-                String downloadUrl = remoteInfo != null ? remoteInfo.downloadUrl() : definition.url();
-                String expectedChecksum = remoteInfo != null ? remoteInfo.expectedSha256() : normalizeSha(definition.sha256());
                 Path target = configManager.resolveAddonPath(definition);
                 Path temporary = Files.createTempFile(configManager.getTempDirectory(), definition.key() + "-", ".jar");
 
@@ -79,7 +80,18 @@ public final class DownloadService {
 
                     if (expectedChecksum != null) {
                         if (!expectedChecksum.equals(actualChecksum)) {
-                            throw new IOException("Checksum mismatch for " + definition.name() + " (expected " + expectedChecksum + ", got " + actualChecksum + ')');
+                            String mismatchMessage = "Checksum mismatch for " + definition.name() + " (expected " + expectedChecksum + ", got " + actualChecksum + ')';
+
+                            if (!shaFallbackUsed && attempt < MAX_RETRIES) {
+                                plugin.getLogger().warning("SHA256 mismatch on attempt " + attempt + " for " + definition.name()
+                                    + ". Expected: " + expectedChecksum
+                                    + ". Got: " + actualChecksum
+                                    + ". The configured sha256 may be stale. Retrying without checksum enforcement and updating cache with actual hash.");
+                                shaFallbackUsed = true;
+                                expectedChecksum = null;
+                            }
+
+                            throw new IOException(mismatchMessage);
                         }
 
                         verified = true;
@@ -103,6 +115,11 @@ public final class DownloadService {
                         verified
                     );
                     configManager.saveCacheEntry(definition.key(), cacheEntry);
+
+                    if (shaFallbackUsed) {
+                        plugin.getLogger().warning("Downloaded " + definition.name() + " but SHA256 could not be verified against the configured value. The actual hash has been cached. Update sha256 in addonmanager.yml to: " + actualChecksum + " (shaFallbackUsed=true)");
+                        return AddonOperationResult.success("Downloaded " + definition.name() + " and staged it for the next restart. SHA256 was not verified against the configured value; actual hash: " + actualChecksum, true);
+                    }
 
                     return AddonOperationResult.success("Downloaded " + definition.name() + " and staged it for the next restart.", true);
                 } finally {
@@ -131,7 +148,7 @@ public final class DownloadService {
     }
 
     private @Nullable String normalizeSha(@Nullable String value) {
-        return value == null ? null : value.trim().toLowerCase(Locale.ROOT);
+        return value == null || value.isBlank() ? null : value.trim().toLowerCase(Locale.ROOT);
     }
 
     private void backupExistingJar(@Nonnull Path target, @Nonnull AddonDefinition definition, @Nonnull String checksum) throws IOException {

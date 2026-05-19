@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.attributes.ProtectionType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -45,7 +45,7 @@ public class BeeListener implements Listener {
             if (profile.hasFullProtectionAgainst(ProtectionType.BEES)) {
                 for (ItemStack armor : p.getInventory().getArmorContents()) {
                     if (armor != null) {
-                        ItemUtils.damageItem(armor, 1, false);
+                        SF4ItemUtils.damageItem(armor, 1, false);
                     }
                 }
 

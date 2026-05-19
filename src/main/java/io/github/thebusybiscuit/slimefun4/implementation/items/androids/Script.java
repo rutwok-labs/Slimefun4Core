@@ -20,7 +20,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.bakedlibs.dough.config.Config;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
@@ -145,7 +146,7 @@ public final class Script {
             lore.add("&eShift + Right Click &fto leave a negative Rating");
         }
 
-        return CustomItemStack.create(android.getItem(), "&b" + getName(), lore.toArray(new String[0]));
+        return SF4Items.create(android.getItem(), "&b" + getName(), lore.toArray(new String[0]));
     }
 
     @Nonnull
@@ -245,7 +246,7 @@ public final class Script {
         for (File file : files) {
             if (file.getName().endsWith(".sfs")) {
                 try {
-                    Config config = new Config(file);
+                    Config config = SF4Config.forFile(file);
 
                     // Some older versions somehow allowed null values to slip in here sometimes
                     // So we need this check for compatibility with older scripts
@@ -261,7 +262,7 @@ public final class Script {
 
     @ParametersAreNonnullByDefault
     public static void upload(Player p, AndroidType androidType, int id, String name, String code) {
-        Config config = new Config("plugins/Slimefun/scripts/" + androidType.name() + '/' + p.getName() + ' ' + id + ".sfs");
+        Config config = SF4Config.forPath("plugins/Slimefun/scripts/" + androidType.name() + '/' + p.getName() + ' ' + id + ".sfs");
 
         config.setValue("author", p.getUniqueId().toString());
         config.setValue("author_name", p.getName());

@@ -7,7 +7,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -29,7 +29,7 @@ public class Vitamins extends MedicalSupply<ItemUseHandler> {
             SoundEffect.VITAMINS_CONSUME_SOUND.playFor(p);
 
             if (p.getGameMode() != GameMode.CREATIVE) {
-                ItemUtils.consumeItem(e.getItem(), false);
+                SF4ItemUtils.consumeItem(e.getItem(), false);
             }
 
             e.cancel();

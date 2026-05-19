@@ -44,6 +44,7 @@ public final class SlimefunSubCommands {
         commands.add(new ChargeCommand(plugin, cmd));
         commands.add(new DebugCommand(plugin, cmd));
         commands.add(new AddonCommand(plugin, cmd));
+        commands.add(new DiscordCommand(plugin, cmd));
 
         return commands;
     }

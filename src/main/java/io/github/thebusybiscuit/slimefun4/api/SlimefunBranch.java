@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.Validate;
 
-import io.github.bakedlibs.dough.common.CommonPatterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
 
 /**
  * This enum represents the branch this Slimefun build is on.
@@ -50,7 +50,7 @@ public enum SlimefunBranch {
         this.name = name;
         this.official = official;
 
-        if (!CommonPatterns.ASCII.matcher(name).matches()) {
+        if (!SF4Patterns.ASCII.matcher(name).matches()) {
             throw new IllegalStateException("The SlimefunBranch enum contains ILLEGAL CHARACTERS. DO NOT TRANSLATE THIS FILE.");
         }
     }

@@ -27,9 +27,10 @@ import org.bukkit.inventory.ItemStack;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.common.CommonPatterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 import io.github.thebusybiscuit.slimefun4.api.events.AsyncProfileLoadEvent;
 import io.github.thebusybiscuit.slimefun4.api.gps.Waypoint;
 import io.github.thebusybiscuit.slimefun4.api.items.HashedArmorpiece;
@@ -78,7 +79,7 @@ public class PlayerProfile {
         this.name = p.getName();
         this.data = data;
 
-        configFile = new Config("data-storage/Slimefun/Players/" + ownerId.toString() + ".yml");
+        configFile = SF4Config.forPath("data-storage/Slimefun/Players/" + ownerId.toString() + ".yml");
     }
 
     /**
@@ -321,11 +322,11 @@ public class PlayerProfile {
         float progress = Math.round(((unlockedResearches * 100.0F) / allResearches) * 100.0F) / 100.0F;
 
         sender.sendMessage("");
-        sender.sendMessage(ChatColors.color("&7Statistics for Player: &b" + name));
+        sender.sendMessage(SF4Colors.color("&7Statistics for Player: &b" + name));
         sender.sendMessage("");
-        sender.sendMessage(ChatColors.color("&7Title: " + ChatColor.AQUA + getTitle()));
-        sender.sendMessage(ChatColors.color("&7Research Progress: " + NumberUtils.getColorFromPercentage(progress) + progress + " &r% " + ChatColor.YELLOW + '(' + unlockedResearches + " / " + allResearches + ')'));
-        sender.sendMessage(ChatColors.color("&7Total XP Levels spent: " + ChatColor.AQUA + levels));
+        sender.sendMessage(SF4Colors.color("&7Title: " + ChatColor.AQUA + getTitle()));
+        sender.sendMessage(SF4Colors.color("&7Research Progress: " + NumberUtils.getColorFromPercentage(progress) + progress + " &r% " + ChatColor.YELLOW + '(' + unlockedResearches + " / " + allResearches + ')'));
+        sender.sendMessage(SF4Colors.color("&7Total XP Levels spent: " + ChatColor.AQUA + levels));
     }
 
     /**
@@ -491,12 +492,12 @@ public class PlayerProfile {
         String uuid = "";
 
         for (String line : item.getItemMeta().getLore()) {
-            if (line.startsWith(ChatColors.color("&7ID: ")) && line.indexOf('#') != -1) {
-                String[] splitLine = CommonPatterns.HASH.split(line);
+            if (line.startsWith(SF4Colors.color("&7ID: ")) && line.indexOf('#') != -1) {
+                String[] splitLine = SF4Patterns.HASH.split(line);
 
-                if (CommonPatterns.NUMERIC.matcher(splitLine[1]).matches()) {
+                if (SF4Patterns.NUMERIC.matcher(splitLine[1]).matches()) {
                     id = OptionalInt.of(Integer.parseInt(splitLine[1]));
-                    uuid = splitLine[0].replace(ChatColors.color("&7ID: "), "");
+                    uuid = splitLine[0].replace(SF4Colors.color("&7ID: "), "");
                 }
             }
         }

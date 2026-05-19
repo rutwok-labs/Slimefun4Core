@@ -10,9 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.common.CommonPatterns;
-import io.github.bakedlibs.dough.common.PlayerList;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4PlayerUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.commands.SlimefunCommand;
 import io.github.thebusybiscuit.slimefun4.core.commands.SubCommand;
@@ -34,7 +34,7 @@ class GiveCommand extends SubCommand {
     public void onExecute(CommandSender sender, String[] args) {
         if (sender.hasPermission("slimefun.cheat.items") || !(sender instanceof Player)) {
             if (args.length > 2) {
-                Optional<Player> player = PlayerList.findByName(args[1]);
+                Optional<Player> player = SF4PlayerUtils.findByName(args[1]);
 
                 if (player.isPresent()) {
                     Player p = player.get();
@@ -65,7 +65,7 @@ class GiveCommand extends SubCommand {
 
             if (amount > 0) {
                 Slimefun.getLocalization().sendMessage(p, "messages.given-item", true, msg -> msg.replace(PLACEHOLDER_ITEM, sfItem.getItemName()).replace(PLACEHOLDER_AMOUNT, String.valueOf(amount)));
-                Map<Integer, ItemStack> excess = p.getInventory().addItem(CustomItemStack.create(sfItem.getItem(), amount));
+                Map<Integer, ItemStack> excess = p.getInventory().addItem(SF4Items.create(sfItem.getItem(), amount));
                 if (Slimefun.getCfg().getBoolean("options.drop-excess-sf-give-items") && !excess.isEmpty()) {
                     for (ItemStack is : excess.values()) {
                         p.getWorld().dropItem(p.getLocation(), is);
@@ -83,7 +83,7 @@ class GiveCommand extends SubCommand {
         int amount = 1;
 
         if (args.length == 4) {
-            if (CommonPatterns.NUMERIC.matcher(args[3]).matches()) {
+            if (SF4Patterns.NUMERIC.matcher(args[3]).matches()) {
                 amount = Integer.parseInt(args[3]);
             } else {
                 return 0;

@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
 // This class will be deprecated, relocated and rewritten in a future version.
@@ -57,7 +58,7 @@ public class BlockMenu extends DirtyChestMenu {
         this.getContents();
 
         File file = new File("data-storage/Slimefun/stored-inventories/" + serializeLocation(l) + ".sfi");
-        Config cfg = new Config(file);
+        Config cfg = SF4Config.forFile(file);
         cfg.setValue("preset", preset.getID());
 
         for (int slot : preset.getInventorySlots()) {

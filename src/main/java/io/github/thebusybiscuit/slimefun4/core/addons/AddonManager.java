@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 
-import io.github.bakedlibs.dough.common.ChatColors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
 /**
@@ -82,15 +82,15 @@ public final class AddonManager {
     }
 
     public void info(@Nonnull String message) {
-        plugin.getServer().getConsoleSender().sendMessage(ChatColors.color(PREFIX + "&a" + message));
+        plugin.getServer().getConsoleSender().sendMessage(SF4Colors.color(PREFIX + "&a" + message));
     }
 
     public void warn(@Nonnull String message) {
-        plugin.getServer().getConsoleSender().sendMessage(ChatColors.color(PREFIX + "&e" + message));
+        plugin.getServer().getConsoleSender().sendMessage(SF4Colors.color(PREFIX + "&e" + message));
     }
 
     public void error(@Nonnull String message, @Nonnull Throwable throwable) {
-        plugin.getServer().getConsoleSender().sendMessage(ChatColors.color(PREFIX + "&c" + message + ": &4" + throwable.getMessage()));
+        plugin.getServer().getConsoleSender().sendMessage(SF4Colors.color(PREFIX + "&c" + message + ": &4" + throwable.getMessage()));
         plugin.getLogger().warning(message + ": " + throwable.getMessage());
     }
 

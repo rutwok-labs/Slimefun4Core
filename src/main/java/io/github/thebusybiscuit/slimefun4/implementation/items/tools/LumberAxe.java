@@ -14,7 +14,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Orientable;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.blocks.Vein;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Vein;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -51,7 +51,7 @@ public class LumberAxe extends SlimefunItem implements NotPlaceable {
     private ToolUseHandler onBlockBreak() {
         return (e, tool, fortune, drops) -> {
             if (!e.getPlayer().isSneaking() && Tag.LOGS.isTagged(e.getBlock().getType())) {
-                List<Block> logs = Vein.find(e.getBlock(), MAX_BROKEN, b -> Tag.LOGS.isTagged(b.getType()));
+                List<Block> logs = SF4Vein.find(e.getBlock(), MAX_BROKEN, b -> Tag.LOGS.isTagged(b.getType()));
                 logs.remove(e.getBlock());
 
                 for (Block b : logs) {
@@ -70,7 +70,7 @@ public class LumberAxe extends SlimefunItem implements NotPlaceable {
                 Block block = e.getClickedBlock().get();
 
                 if (isUnstrippedLog(block)) {
-                    List<Block> logs = Vein.find(block, MAX_STRIPPED, this::isUnstrippedLog);
+                    List<Block> logs = SF4Vein.find(block, MAX_STRIPPED, this::isUnstrippedLog);
 
                     logs.remove(block);
 

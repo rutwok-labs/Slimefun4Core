@@ -1,11 +1,17 @@
 package io.github.thebusybiscuit.slimefun4.core.addons;
 
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang.Validate;
+
+import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
 /**
  * Immutable configuration for a managed addon.
@@ -16,8 +22,7 @@ public record AddonDefinition(
     boolean enabled,
     boolean download,
     boolean autoUpdate,
-    @Nonnull String version,
-    @Nonnull String url,
+    @Nonnull Map<String, String> versionUrls,
     @Nullable String sha256,
     @Nullable String checksumUrl,
     @Nullable String apiUrl
@@ -26,12 +31,59 @@ public record AddonDefinition(
     public AddonDefinition {
         Validate.notEmpty(key, "Addon key must not be empty");
         Validate.notEmpty(name, "Addon name must not be empty");
-        Validate.notEmpty(version, "Addon version must not be empty");
-        Validate.notEmpty(url, "Addon url must not be empty");
+        Validate.notNull(versionUrls, "Version URLs must not be null");
+        versionUrls = Map.copyOf(versionUrls);
     }
 
     public boolean tracksLatestVersion() {
-        return "latest".equalsIgnoreCase(version);
+        return "latest".equalsIgnoreCase(version());
+    }
+
+    /**
+     * Returns the URL for the given SF4 version tag.
+     *
+     * @param versionTag
+     *            The SF4 version tag
+     *
+     * @return The configured URL, if present and non-empty
+     */
+    public @Nonnull Optional<String> urlForVersion(@Nonnull String versionTag) {
+        Validate.notEmpty(versionTag, "Version tag must not be empty");
+
+        String url = versionUrls.get(versionTag);
+        return url == null || url.isBlank() ? Optional.empty() : Optional.of(url);
+    }
+
+    /**
+     * Returns the best URL for the given Minecraft version.
+     *
+     * @param mcVersion
+     *            The Minecraft version
+     *
+     * @return The configured URL for this Minecraft version, if present
+     */
+    public @Nonnull Optional<String> resolveUrlForMinecraftVersion(@Nonnull MinecraftVersion mcVersion) {
+        Validate.notNull(mcVersion, "Minecraft version must not be null");
+        Optional<String> resolvedUrl = urlForVersion(VersionTagResolver.resolveTag(mcVersion));
+
+        if (resolvedUrl.isPresent() || versionUrls.size() != 1) {
+            return resolvedUrl;
+        }
+
+        return versionUrls.values().stream()
+            .filter(url -> url != null && !url.isBlank())
+            .findFirst();
+    }
+
+    public @Nonnull String version() {
+        String tag = VersionTagResolver.resolveTag(Slimefun.getMinecraftVersion());
+        return versionUrls.containsKey(tag) ? tag : versionUrls.keySet().stream().findFirst().orElse("latest");
+    }
+
+    public @Nonnull String url() {
+        return resolveUrlForMinecraftVersion(Slimefun.getMinecraftVersion())
+            .or(() -> versionUrls.values().stream().filter(value -> value != null && !value.isBlank()).findFirst())
+            .orElse("");
     }
 
     public @Nonnull String repositoryFileName() {
@@ -40,14 +92,23 @@ public record AddonDefinition(
     }
 
     public @Nonnull AddonDefinition withEnabled(boolean value) {
-        return new AddonDefinition(key, name, value, download, autoUpdate, version, url, sha256, checksumUrl, apiUrl);
+        return new AddonDefinition(key, name, value, download, autoUpdate, versionUrls, sha256, checksumUrl, apiUrl);
     }
 
     public @Nonnull AddonDefinition withDownload(boolean value) {
-        return new AddonDefinition(key, name, enabled, value, autoUpdate, version, url, sha256, checksumUrl, apiUrl);
+        return new AddonDefinition(key, name, enabled, value, autoUpdate, versionUrls, sha256, checksumUrl, apiUrl);
     }
 
     public @Nonnull AddonDefinition withAutoUpdate(boolean value) {
-        return new AddonDefinition(key, name, enabled, download, value, version, url, sha256, checksumUrl, apiUrl);
+        return new AddonDefinition(key, name, enabled, download, value, versionUrls, sha256, checksumUrl, apiUrl);
+    }
+
+    public static @Nonnull Map<String, String> legacyVersionUrl(@Nonnull String version, @Nonnull String url) {
+        Validate.notEmpty(version, "Version must not be empty");
+        Validate.notNull(url, "URL must not be null");
+
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put(version, url);
+        return map;
     }
 }

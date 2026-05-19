@@ -16,6 +16,7 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
@@ -34,7 +35,7 @@ public class PermissionsService {
     private final Config config;
 
     public PermissionsService(@Nonnull Slimefun plugin) {
-        config = new Config(plugin, "permissions.yml");
+        config = SF4Config.forPlugin(plugin, "permissions.yml");
 
         // @formatter:off
         config.getConfiguration().options().header(

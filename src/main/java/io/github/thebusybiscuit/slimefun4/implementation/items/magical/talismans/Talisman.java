@@ -26,8 +26,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.events.TalismanActivateEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -40,7 +40,7 @@ import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 
 public class Talisman extends SlimefunItem {
 
-    protected static final ItemGroup TALISMANS_ITEMGROUP = new ItemGroup(new NamespacedKey(Slimefun.instance(), "talismans"), CustomItemStack.create(SlimefunItems.COMMON_TALISMAN.item(), "&7Talismans - &aTier I"), 2);
+    protected static final ItemGroup TALISMANS_ITEMGROUP = new ItemGroup(new NamespacedKey(Slimefun.instance(), "talismans"), SF4Items.create(SlimefunItems.COMMON_TALISMAN.item(), "&7Talismans - &aTier I"), 2);
     private static final String WIKI_PAGE = "Talismans";
 
     private final SlimefunItemStack enderTalisman;
@@ -68,7 +68,7 @@ public class Talisman extends SlimefunItem {
 
     @ParametersAreNonnullByDefault
     protected Talisman(ItemGroup itemGroup, SlimefunItemStack item, ItemStack[] recipe, boolean consumable, boolean cancelEvent, @Nullable String messageSuffix, int chance, PotionEffect... effects) {
-        super(itemGroup, item, RecipeType.MAGIC_WORKBENCH, recipe, CustomItemStack.create(item.item(), consumable ? 4 : 1));
+        super(itemGroup, item, RecipeType.MAGIC_WORKBENCH, recipe, SF4Items.create(item.item(), consumable ? 4 : 1));
 
         this.consumable = consumable;
         this.cancel = cancelEvent;
@@ -234,7 +234,7 @@ public class Talisman extends SlimefunItem {
                 ItemStack item = contents[i];
 
                 if (SlimefunUtils.isItemSimilar(item, talismanItem, true, false)) {
-                    ItemUtils.consumeItem(item, false);
+                    SF4ItemUtils.consumeItem(item, false);
                     return;
                 }
             }

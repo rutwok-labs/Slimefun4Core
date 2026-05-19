@@ -14,7 +14,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -87,7 +87,7 @@ public class OutputChest extends SlimefunItem {
                         Inventory inv = chest.getInventory();
 
                         // Check if the Item fits into that inventory.
-                        if (InvUtils.fits(inv, item)) {
+                        if (SF4InvUtils.fits(inv, item)) {
                             return Optional.of(inv);
                         }
                     }

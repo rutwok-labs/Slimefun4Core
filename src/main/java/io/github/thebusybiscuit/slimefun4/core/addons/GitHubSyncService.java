@@ -97,8 +97,9 @@ public final class GitHubSyncService {
                 return new RemoteSyncResult(RemoteSyncOutcome.DISABLED, "Cloud sync is disabled.", null);
             }
 
+            String syncUrl = settings.urlForVersion(VersionTagResolver.resolveTag(Slimefun.getMinecraftVersion())).orElse(settings.url());
             RemoteSyncState state = configManager.getRemoteSyncState().orElse(RemoteSyncState.EMPTY);
-            HttpRequest.Builder builder = HttpRequest.newBuilder(URI.create(settings.url()))
+            HttpRequest.Builder builder = HttpRequest.newBuilder(URI.create(syncUrl))
                 .header("User-Agent", USER_AGENT)
                 .header("Accept", "text/plain, text/yaml, application/x-yaml, */*")
                 .GET();
@@ -117,7 +118,7 @@ public final class GitHubSyncService {
                 configManager.saveRemoteSyncState(new RemoteSyncState(
                     state.etag(),
                     state.lastModified(),
-                    settings.url(),
+                    syncUrl,
                     "Not modified",
                     Instant.now()
                 ));
@@ -125,7 +126,7 @@ public final class GitHubSyncService {
             }
 
             if (response.statusCode() >= 400) {
-                throw new IOException("Remote sync returned HTTP " + response.statusCode() + " from " + settings.url());
+                throw new IOException("Remote sync returned HTTP " + response.statusCode() + " from " + syncUrl);
             }
 
             String body = response.body();
@@ -133,7 +134,7 @@ public final class GitHubSyncService {
                 configManager.saveRemoteSyncState(new RemoteSyncState(
                     response.headers().firstValue("ETag").orElse(null),
                     response.headers().firstValue("Last-Modified").orElse(null),
-                    settings.url(),
+                    syncUrl,
                     "Remote file was empty",
                     Instant.now()
                 ));
@@ -147,17 +148,18 @@ public final class GitHubSyncService {
                 configManager.saveRemoteSyncState(new RemoteSyncState(
                     response.headers().firstValue("ETag").orElse(null),
                     response.headers().firstValue("Last-Modified").orElse(null),
-                    settings.url(),
+                    syncUrl,
                     "Remote file parsed with no addons",
                     Instant.now()
                 ));
                 return new RemoteSyncResult(RemoteSyncOutcome.EMPTY_REMOTE, "Remote addonmanager.yml contains no valid addons. Local configuration was left unchanged.", null);
             }
 
+            configManager.saveRemoteAddonsToLocal(remoteAddons);
             configManager.saveRemoteSyncState(new RemoteSyncState(
                 response.headers().firstValue("ETag").orElse(null),
                 response.headers().firstValue("Last-Modified").orElse(null),
-                settings.url(),
+                syncUrl,
                 "Remote config updated",
                 Instant.now()
             ));

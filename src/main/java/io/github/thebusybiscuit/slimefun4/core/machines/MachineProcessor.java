@@ -14,6 +14,7 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
 import io.github.thebusybiscuit.slimefun4.api.events.AsyncMachineOperationFinishEvent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.MachineProcessHolder;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -96,7 +97,7 @@ public class MachineProcessor<T extends MachineOperation> {
         Validate.notNull(loc, "The location must not be null");
         Validate.notNull(operation, "The operation cannot be null");
 
-        return startOperation(new BlockPosition(loc), operation);
+        return startOperation(SF4BlockPos.of(loc), operation);
     }
 
     /**
@@ -114,7 +115,7 @@ public class MachineProcessor<T extends MachineOperation> {
         Validate.notNull(b, "The Block must not be null");
         Validate.notNull(operation, "The machine operation cannot be null");
 
-        return startOperation(new BlockPosition(b), operation);
+        return startOperation(SF4BlockPos.of(b), operation);
     }
 
     /**
@@ -146,7 +147,7 @@ public class MachineProcessor<T extends MachineOperation> {
     public @Nullable T getOperation(@Nonnull Location loc) {
         Validate.notNull(loc, "The location cannot be null");
 
-        return getOperation(new BlockPosition(loc));
+        return getOperation(SF4BlockPos.of(loc));
     }
 
     /**
@@ -160,7 +161,7 @@ public class MachineProcessor<T extends MachineOperation> {
     public @Nullable T getOperation(@Nonnull Block b) {
         Validate.notNull(b, "The Block cannot be null");
 
-        return getOperation(new BlockPosition(b));
+        return getOperation(SF4BlockPos.of(b));
     }
 
     /**
@@ -189,7 +190,7 @@ public class MachineProcessor<T extends MachineOperation> {
     public boolean endOperation(@Nonnull Location loc) {
         Validate.notNull(loc, "The location should not be null");
 
-        return endOperation(new BlockPosition(loc));
+        return endOperation(SF4BlockPos.of(loc));
     }
 
     /**
@@ -204,7 +205,7 @@ public class MachineProcessor<T extends MachineOperation> {
     public boolean endOperation(@Nonnull Block b) {
         Validate.notNull(b, "The Block should not be null");
 
-        return endOperation(new BlockPosition(b));
+        return endOperation(SF4BlockPos.of(b));
     }
 
     /**

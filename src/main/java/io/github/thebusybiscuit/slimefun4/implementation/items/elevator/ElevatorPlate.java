@@ -18,8 +18,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -96,7 +96,7 @@ public class ElevatorPlate extends SimpleSlimefunItem<BlockUseHandler> {
 
         for (int y = b.getWorld().getMinHeight(); y < b.getWorld().getMaxHeight(); y++) {
             if (y == b.getY()) {
-                String name = ChatColors.color(BlockStorage.getLocationInfo(b.getLocation(), DATA_KEY));
+                String name = SF4Colors.color(BlockStorage.getLocationInfo(b.getLocation(), DATA_KEY));
                 floors.addFirst(new ElevatorFloor(name, index, b));
                 index++;
                 continue;
@@ -105,7 +105,7 @@ public class ElevatorPlate extends SimpleSlimefunItem<BlockUseHandler> {
             Block block = b.getWorld().getBlockAt(b.getX(), y, b.getZ());
 
             if (block.getType() == getItem().getType() && BlockStorage.check(block, getId())) {
-                String name = ChatColors.color(BlockStorage.getLocationInfo(block.getLocation(), DATA_KEY));
+                String name = SF4Colors.color(BlockStorage.getLocationInfo(block.getLocation(), DATA_KEY));
                 floors.addFirst(new ElevatorFloor(name, index, block));
                 index++;
             }
@@ -141,11 +141,11 @@ public class ElevatorPlate extends SimpleSlimefunItem<BlockUseHandler> {
 
             // @formatter:off
             if (floor.getAltitude() == b.getY()) {
-                menu.addItem(i, CustomItemStack.create(Material.COMPASS,
+                menu.addItem(i, SF4Items.create(Material.COMPASS,
                     ChatColor.GRAY.toString() + floor.getNumber() + ". " + ChatColor.BLACK + floor.getName(),
                     Slimefun.getLocalization().getMessage(p, "machines.ELEVATOR.current-floor") + ' ' + ChatColor.WHITE + floor.getName()), ChestMenuUtils.getEmptyClickHandler());
             } else {
-                menu.addItem(i, CustomItemStack.create(Material.PAPER,
+                menu.addItem(i, SF4Items.create(Material.PAPER,
                     ChatColor.GRAY.toString() + floor.getNumber() + ". " + ChatColor.BLACK + floor.getName(),
                     Slimefun.getLocalization().getMessage(p, "machines.ELEVATOR.click-to-teleport") + ' ' + ChatColor.WHITE + floor.getName()), (player, slot, itemStack, clickAction) -> {
                     teleport(player, floor);
@@ -193,7 +193,7 @@ public class ElevatorPlate extends SimpleSlimefunItem<BlockUseHandler> {
 
             PaperLib.teleportAsync(player, destination).thenAccept(teleported -> {
                 if (teleported.booleanValue()) {
-                    player.sendTitle(ChatColor.WHITE + ChatColors.color(floor.getName()), null, 20, 60, 20);
+                    player.sendTitle(ChatColor.WHITE + SF4Colors.color(floor.getName()), null, 20, 60, 20);
                 }
             });
         });
@@ -203,7 +203,7 @@ public class ElevatorPlate extends SimpleSlimefunItem<BlockUseHandler> {
     public void openEditor(Player p, Block b) {
         ChestMenu menu = new ChestMenu(Slimefun.getLocalization().getMessage(p, "machines.ELEVATOR.editor-title"));
 
-        menu.addItem(4, CustomItemStack.create(Material.NAME_TAG, "&7Floor Name &e(Click to edit)", "", ChatColor.WHITE + ChatColors.color(BlockStorage.getLocationInfo(b.getLocation(), DATA_KEY))));
+        menu.addItem(4, SF4Items.create(Material.NAME_TAG, "&7Floor Name &e(Click to edit)", "", ChatColor.WHITE + SF4Colors.color(BlockStorage.getLocationInfo(b.getLocation(), DATA_KEY))));
         menu.addMenuClickHandler(4, (pl, slot, item, action) -> {
             pl.closeInventory();
             pl.sendMessage("");

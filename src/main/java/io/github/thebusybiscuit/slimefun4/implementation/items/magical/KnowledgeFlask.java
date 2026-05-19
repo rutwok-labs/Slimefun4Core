@@ -6,7 +6,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -47,7 +47,7 @@ public class KnowledgeFlask extends SimpleSlimefunItem<ItemUseHandler> {
                 }
 
                 SoundEffect.FLASK_OF_KNOWLEDGE_FILLUP_SOUND.playFor(p);
-                ItemUtils.consumeItem(e.getItem(), false);
+                SF4ItemUtils.consumeItem(e.getItem(), false);
             }
         };
     }

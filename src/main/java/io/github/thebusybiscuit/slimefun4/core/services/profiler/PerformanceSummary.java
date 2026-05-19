@@ -9,7 +9,7 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import io.github.bakedlibs.dough.common.ChatColors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
 import io.github.thebusybiscuit.slimefun4.core.services.profiler.inspectors.PlayerPerformanceInspector;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
@@ -134,7 +134,7 @@ class PerformanceSummary {
                 builder.append("\n\n&c+ &6").append(hiddenEntries).append(" more");
             }
 
-            Content content = new Text(TextComponent.fromLegacyText(ChatColors.color(builder.toString())));
+            Content content = new Text(TextComponent.fromLegacyText(SF4Colors.color(builder.toString())));
             hoverComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, content));
 
             component.addExtra(hoverComponent);

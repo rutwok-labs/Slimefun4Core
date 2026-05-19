@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.common.CommonPatterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.commands.SlimefunCommand;
 import io.github.thebusybiscuit.slimefun4.core.commands.SubCommand;
@@ -47,7 +47,7 @@ class BackpackCommand extends SubCommand {
                     return;
                 }
 
-                if (!CommonPatterns.NUMERIC.matcher(args[2]).matches()) {
+                if (!SF4Patterns.NUMERIC.matcher(args[2]).matches()) {
                     Slimefun.getLocalization().sendMessage(sender, "commands.backpack.invalid-id");
                     return;
                 }

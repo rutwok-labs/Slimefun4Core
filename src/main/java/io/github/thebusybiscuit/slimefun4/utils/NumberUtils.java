@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 
-import io.github.bakedlibs.dough.common.CommonPatterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
 /**
@@ -197,7 +197,7 @@ public final class NumberUtils {
      * @return The resulting {@link Integer}
      */
     public static int getInt(@Nonnull String str, int defaultValue) {
-        if (CommonPatterns.NUMERIC.matcher(str).matches()) {
+        if (SF4Patterns.NUMERIC.matcher(str).matches()) {
             return Integer.parseInt(str);
         } else {
             return defaultValue;
@@ -210,7 +210,7 @@ public final class NumberUtils {
         }
 
         String number = roundDecimalNumber(nanoseconds / 1000000.0);
-        String[] parts = CommonPatterns.NUMBER_SEPARATOR.split(number);
+        String[] parts = SF4Patterns.NUMBER_SEPARATOR.split(number);
 
         if (parts.length == 1) {
             return parts[0] + "ms";
@@ -274,7 +274,7 @@ public final class NumberUtils {
             javaVer = javaVer.substring(0, javaVer.indexOf('.'));
         }
 
-        if (CommonPatterns.NUMERIC.matcher(javaVer).matches()) {
+        if (SF4Patterns.NUMERIC.matcher(javaVer).matches()) {
             return Integer.parseInt(javaVer);
         } else {
             Slimefun.logger().log(Level.SEVERE, "Error: Cannot identify Java version - {0}", javaVer);

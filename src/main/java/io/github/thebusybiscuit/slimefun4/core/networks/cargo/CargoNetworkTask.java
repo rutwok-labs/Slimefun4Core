@@ -20,6 +20,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSpawnReason;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.networks.NetworkManager;
@@ -84,7 +85,7 @@ class CargoNetworkTask implements Runnable {
                 timestamp += Slimefun.getProfiler().closeEntry(entry.getKey(), inputNode, nodeTimestamp);
             }
         } catch (Exception | LinkageError x) {
-            Slimefun.logger().log(Level.SEVERE, x, () -> "An Exception was caught while ticking a Cargo network @ " + new BlockPosition(network.getRegulator()));
+            Slimefun.logger().log(Level.SEVERE, x, () -> "An Exception was caught while ticking a Cargo network @ " + SF4BlockPos.of(network.getRegulator()));
         }
 
         // Submit a timings report

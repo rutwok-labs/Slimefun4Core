@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -77,7 +77,7 @@ public class StrangeNetherGoo extends SimpleSlimefunItem<ItemUseHandler> impleme
                 }
 
                 if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
-                    ItemUtils.consumeItem(item, false);
+                    SF4ItemUtils.consumeItem(item, false);
                 }
 
                 // Give Sheep color, name and effect

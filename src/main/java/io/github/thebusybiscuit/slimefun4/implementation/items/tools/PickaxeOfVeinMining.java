@@ -12,8 +12,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.blocks.Vein;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Vein;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
@@ -47,7 +47,7 @@ public class PickaxeOfVeinMining extends SimpleSlimefunItem<ToolUseHandler> {
     public @Nonnull ToolUseHandler getItemHandler() {
         return (e, tool, fortune, drops) -> {
             if (SlimefunTag.PICKAXE_OF_VEIN_MINING_BLOCKS.isTagged(e.getBlock().getType())) {
-                List<Block> blocks = Vein.find(e.getBlock(), maxBlocks.getValue(), b -> SlimefunTag.PICKAXE_OF_VEIN_MINING_BLOCKS.isTagged(b.getType()));
+                List<Block> blocks = SF4Vein.find(e.getBlock(), maxBlocks.getValue(), b -> SlimefunTag.PICKAXE_OF_VEIN_MINING_BLOCKS.isTagged(b.getType()));
                 breakBlocks(e.getPlayer(), blocks, fortune, tool);
             }
         };
@@ -63,7 +63,7 @@ public class PickaxeOfVeinMining extends SimpleSlimefunItem<ToolUseHandler> {
                     b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(b.getType()));
                 } else {
                     for (ItemStack drop : b.getDrops(tool)) {
-                        b.getWorld().dropItemNaturally(b.getLocation(), drop.getType().isBlock() ? drop : CustomItemStack.create(drop, fortune));
+                        b.getWorld().dropItemNaturally(b.getLocation(), drop.getType().isBlock() ? drop : SF4Items.create(drop, fortune));
                     }
                 }
 

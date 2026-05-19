@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
 
 import io.github.bakedlibs.dough.collections.OptionalMap;
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunBranch;
@@ -887,7 +887,7 @@ public class SlimefunItem implements Placeable {
      * @return This item's name in {@link ItemStack} form
      */
     public final @Nonnull String getItemName() {
-        return ItemUtils.getItemName(itemStackTemplate);
+        return SF4ItemUtils.getItemName(itemStackTemplate);
     }
 
     /**

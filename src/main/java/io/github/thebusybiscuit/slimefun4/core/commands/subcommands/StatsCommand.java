@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import io.github.bakedlibs.dough.common.PlayerList;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4PlayerUtils;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.commands.SlimefunCommand;
 import io.github.thebusybiscuit.slimefun4.core.commands.SubCommand;
@@ -31,7 +31,7 @@ class StatsCommand extends SubCommand {
 
         if (args.length > 1) {
             if (sender.hasPermission("slimefun.stats.others") || sender instanceof ConsoleCommandSender) {
-                Optional<Player> player = PlayerList.findByName(args[1]);
+                Optional<Player> player = SF4PlayerUtils.findByName(args[1]);
 
                 if (player.isPresent()) {
                     PlayerProfile.get(player.get(), profile -> profile.sendStats(sender));

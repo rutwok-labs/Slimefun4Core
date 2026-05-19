@@ -13,8 +13,8 @@ import org.bukkit.event.Event.Result;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
@@ -51,7 +51,7 @@ public class KnowledgeTome extends SimpleSlimefunItem<ItemUseHandler> {
             List<String> lore = im.getLore();
 
             if (lore.get(1).isEmpty()) {
-                lore.set(0, ChatColors.color("&7Owner: &b" + p.getName()));
+                lore.set(0, SF4Colors.color("&7Owner: &b" + p.getName()));
                 lore.set(1, ChatColor.BLACK + "" + p.getUniqueId());
                 im.setLore(lore);
                 item.setItemMeta(im);
@@ -71,7 +71,7 @@ public class KnowledgeTome extends SimpleSlimefunItem<ItemUseHandler> {
                 }));
 
                 if (p.getGameMode() != GameMode.CREATIVE) {
-                    ItemUtils.consumeItem(item, false);
+                    SF4ItemUtils.consumeItem(item, false);
                 }
             }
         };

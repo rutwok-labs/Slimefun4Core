@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.LockedItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.SeasonalItemGroup;
@@ -214,7 +214,7 @@ public class ItemGroup implements Keyed {
      * @return A localized display item for this {@link ItemGroup}
      */
     public @Nonnull ItemStack getItem(@Nonnull Player p) {
-        return CustomItemStack.create(item, meta -> {
+        return SF4Items.create(item, meta -> {
             String name = Slimefun.getLocalization().getItemGroupName(p, getKey());
 
             if (name == null) {

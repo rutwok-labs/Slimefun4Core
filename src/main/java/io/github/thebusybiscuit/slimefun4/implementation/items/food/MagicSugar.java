@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -47,7 +47,7 @@ public class MagicSugar extends SimpleSlimefunItem<ItemUseHandler> {
             Player p = e.getPlayer();
 
             if (p.getGameMode() != GameMode.CREATIVE) {
-                ItemUtils.consumeItem(e.getItem(), false);
+                SF4ItemUtils.consumeItem(e.getItem(), false);
             }
 
             SoundEffect.MAGIC_SUGAR_CONSUME_SOUND.playFor(p);

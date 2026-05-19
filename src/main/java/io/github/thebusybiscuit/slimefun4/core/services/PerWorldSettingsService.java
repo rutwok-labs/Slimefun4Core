@@ -19,6 +19,7 @@ import org.bukkit.World;
 
 import io.github.bakedlibs.dough.collections.OptionalMap;
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -250,7 +251,7 @@ public class PerWorldSettingsService {
     @Nonnull
     private Config getConfig(@Nonnull World world) {
         Validate.notNull(world, "World cannot be null");
-        return new Config(plugin, "world-settings/" + world.getName() + ".yml");
+        return SF4Config.forPlugin(plugin, "world-settings/" + world.getName() + ".yml");
     }
 
 }

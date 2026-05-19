@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -396,7 +396,7 @@ public final class SlimefunItemSetup {
                 .register(plugin);
 
         new BasicCircuitBoard(itemGroups.technicalComponents, SlimefunItems.BASIC_CIRCUIT_BOARD, RecipeType.MOB_DROP,
-                new ItemStack[] {null, null, null, null, CustomItemStack.create(SlimefunUtils.getCustomHead(HeadTexture.IRON_GOLEM.getTexture()), "&aIron Golem"), null, null, null, null})
+                new ItemStack[] {null, null, null, null, SF4Items.create(SlimefunUtils.getCustomHead(HeadTexture.IRON_GOLEM.getTexture()), "&aIron Golem"), null, null, null, null})
                 .register(plugin);
 
         new UnplaceableBlock(itemGroups.technicalComponents, SlimefunItems.ADVANCED_CIRCUIT_BOARD, RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -1104,7 +1104,7 @@ public final class SlimefunItemSetup {
 
         new Composter(itemGroups.basicMachines, SlimefunItems.COMPOSTER, RecipeType.ENHANCED_CRAFTING_TABLE,
                 // Recipe display fix: show the fence on the top row and the dispenser as facing up in the guide.
-                new ItemStack[] {new ItemStack(Material.OAK_SLAB), new ItemStack(Material.OAK_FENCE), new ItemStack(Material.OAK_SLAB), new ItemStack(Material.OAK_SLAB), CustomItemStack.create(Material.DISPENSER, "Dispenser (Facing up)"), new ItemStack(Material.OAK_SLAB), new ItemStack(Material.OAK_SLAB), new ItemStack(Material.CAULDRON), new ItemStack(Material.OAK_SLAB)})
+                new ItemStack[] {new ItemStack(Material.OAK_SLAB), new ItemStack(Material.OAK_FENCE), new ItemStack(Material.OAK_SLAB), new ItemStack(Material.OAK_SLAB), SF4Items.create(Material.DISPENSER, "Dispenser (Facing up)"), new ItemStack(Material.OAK_SLAB), new ItemStack(Material.OAK_SLAB), new ItemStack(Material.CAULDRON), new ItemStack(Material.OAK_SLAB)})
                 .register(plugin);
 
         new FarmerShoes(itemGroups.magicalArmor, SlimefunItems.FARMER_SHOES, RecipeType.ARMOR_FORGE,
@@ -1150,7 +1150,7 @@ public final class SlimefunItemSetup {
 
         new Crucible(itemGroups.basicMachines, SlimefunItems.CRUCIBLE, RecipeType.ENHANCED_CRAFTING_TABLE,
                 // Recipe display fix: show the fence on the top row and the dispenser as facing up in the guide.
-                new ItemStack[] {new ItemStack(Material.TERRACOTTA), new ItemStack(Material.OAK_FENCE), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), CustomItemStack.create(Material.DISPENSER, "Dispenser (Facing up)"), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.FLINT_AND_STEEL), new ItemStack(Material.TERRACOTTA)})
+                new ItemStack[] {new ItemStack(Material.TERRACOTTA), new ItemStack(Material.OAK_FENCE), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), SF4Items.create(Material.DISPENSER, "Dispenser (Facing up)"), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.FLINT_AND_STEEL), new ItemStack(Material.TERRACOTTA)})
                 .register(plugin);
 
         new SlimefunBackpack(45, itemGroups.usefulItems, SlimefunItems.GILDED_BACKPACK, RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -2665,7 +2665,7 @@ public final class SlimefunItemSetup {
                 .register(plugin);
 
         new StrangeNetherGoo(itemGroups.magicalResources, SlimefunItems.STRANGE_NETHER_GOO, RecipeType.BARTER_DROP,
-                new ItemStack[] {null, null, null, null, CustomItemStack.create(HeadTexture.PIGLIN_HEAD.getAsItemStack(), "&fPiglin"), null, null, null, null})
+                new ItemStack[] {null, null, null, null, SF4Items.create(HeadTexture.PIGLIN_HEAD.getAsItemStack(), "&fPiglin"), null, null, null, null})
                 .register(plugin);
 
         if (minecraftVersion.isAtLeast(MinecraftVersion.MINECRAFT_1_17)) {

@@ -40,10 +40,11 @@ public final class UpdateChecker {
 
         if (!definition.tracksLatestVersion()) {
             boolean updateAvailable = cache == null || cache.version() == null || !definition.version().equalsIgnoreCase(cache.version());
+            String downloadUrl = definition.resolveUrlForMinecraftVersion(Slimefun.getMinecraftVersion()).orElse(definition.url());
             return new RemoteAddonInfo(
                 updateAvailable,
                 definition.version(),
-                definition.url(),
+                downloadUrl,
                 normalizeSha(definition.sha256()),
                 null,
                 null,
@@ -51,9 +52,10 @@ public final class UpdateChecker {
             );
         }
 
-        HttpResponse<Void> response = sendMetadataRequest(definition.url());
+        String metadataUrl = definition.resolveUrlForMinecraftVersion(Slimefun.getMinecraftVersion()).orElse(definition.url());
+        HttpResponse<Void> response = sendMetadataRequest(metadataUrl);
         if (response.statusCode() >= 400) {
-            throw new IOException("Metadata request returned HTTP " + response.statusCode() + " for " + definition.url());
+            throw new IOException("Metadata request returned HTTP " + response.statusCode() + " for " + metadataUrl);
         }
 
         String etag = firstHeader(response, "ETag");
@@ -69,7 +71,7 @@ public final class UpdateChecker {
         return new RemoteAddonInfo(
             updateAvailable,
             advertisedVersion,
-            definition.url(),
+            metadataUrl,
             resolveExpectedChecksum(definition, response),
             etag,
             lastModified,
@@ -98,7 +100,8 @@ public final class UpdateChecker {
             version = "latest";
         }
 
-        String downloadUrl = definition.url();
+        String downloadUrl = definition.resolveUrlForMinecraftVersion(Slimefun.getMinecraftVersion()).orElse(definition.url());
+        String jarAssetName = null;
         JsonArray assets = payload.has("assets") && payload.get("assets").isJsonArray() ? payload.getAsJsonArray("assets") : null;
 
         if (assets != null) {
@@ -134,6 +137,7 @@ public final class UpdateChecker {
             }
 
             if (selectedAsset != null) {
+                jarAssetName = getString(selectedAsset, "name");
                 String browserDownloadUrl = getString(selectedAsset, "browser_download_url");
                 if (browserDownloadUrl != null && !browserDownloadUrl.isBlank()) {
                     downloadUrl = browserDownloadUrl;
@@ -141,16 +145,87 @@ public final class UpdateChecker {
             }
         }
 
+        String expectedSha256 = assets != null && jarAssetName != null ? findCompanionSha256Asset(assets, jarAssetName) : null;
+        if (expectedSha256 == null && definition.sha256() != null && !definition.sha256().isBlank()) {
+            expectedSha256 = normalizeSha(definition.sha256());
+        }
+        if (expectedSha256 == null && cache != null && cache.sha256() != null && cache.version() != null && version.equalsIgnoreCase(cache.version())) {
+            expectedSha256 = normalizeSha(cache.sha256());
+            plugin.getLogger().fine("Using cached SHA256 for " + definition.name() + " version " + version);
+        }
+
         boolean updateAvailable = cache == null || cache.version() == null || !version.equalsIgnoreCase(cache.version());
         return new RemoteAddonInfo(
             updateAvailable,
             version,
             downloadUrl,
-            normalizeSha(definition.sha256()),
+            expectedSha256,
             firstHeader(response, "ETag"),
             firstHeader(response, "Last-Modified"),
             updateAvailable ? "GitHub latest release differs from the cached version." : "GitHub latest release matches the cached version."
         );
+    }
+
+    /**
+     * Finds a SHA256 checksum asset that belongs to the selected jar asset and returns the checksum content.
+     *
+     * @param assets
+     *            The GitHub release assets to scan
+     * @param jarAssetName
+     *            The selected jar asset name
+     *
+     * @return The normalized checksum from a companion asset, or null if none was found/readable
+     */
+    private @Nullable String findCompanionSha256Asset(@Nonnull JsonArray assets, @Nonnull String jarAssetName) throws IOException, InterruptedException {
+        String normalizedJarName = jarAssetName.toLowerCase(Locale.ROOT);
+        String jarBaseName = normalizedJarName.endsWith(".jar") ? normalizedJarName.substring(0, normalizedJarName.length() - ".jar".length()) : normalizedJarName;
+
+        for (JsonElement element : assets) {
+            if (!element.isJsonObject()) {
+                continue;
+            }
+
+            JsonObject asset = element.getAsJsonObject();
+            String assetName = getString(asset, "name");
+
+            if (assetName == null) {
+                continue;
+            }
+
+            String normalizedAssetName = assetName.toLowerCase(Locale.ROOT);
+            boolean matchesJarSha = normalizedAssetName.equals(normalizedJarName + ".sha256");
+            boolean matchesBaseSha = normalizedAssetName.equals(jarBaseName + ".sha256");
+
+            if (!matchesJarSha && !matchesBaseSha) {
+                continue;
+            }
+
+            String checksumUrl = getString(asset, "browser_download_url");
+            if (checksumUrl == null || checksumUrl.isBlank()) {
+                return null;
+            }
+
+            try {
+                HttpRequest checksumRequest = HttpRequest.newBuilder(URI.create(checksumUrl))
+                    .header("User-Agent", USER_AGENT)
+                    .GET()
+                    .build();
+                HttpResponse<String> checksumResponse = client.send(checksumRequest, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+
+                if (checksumResponse.statusCode() >= 200 && checksumResponse.statusCode() < 300) {
+                    String body = checksumResponse.body() != null ? checksumResponse.body().trim() : "";
+                    if (!body.isBlank()) {
+                        return normalizeSha(body.split("\\s+")[0]);
+                    }
+                }
+            } catch (IOException | IllegalArgumentException x) {
+                return null;
+            }
+
+            return null;
+        }
+
+        return null;
     }
 
     private @Nonnull HttpResponse<Void> sendMetadataRequest(@Nonnull String url) throws IOException, InterruptedException {
@@ -183,7 +258,7 @@ public final class UpdateChecker {
 
         String checksumUrl = definition.checksumUrl();
         if (checksumUrl == null || checksumUrl.isBlank()) {
-            checksumUrl = definition.url() + ".sha256";
+            checksumUrl = definition.resolveUrlForMinecraftVersion(Slimefun.getMinecraftVersion()).orElse(definition.url()) + ".sha256";
         }
 
         try {
@@ -227,6 +302,6 @@ public final class UpdateChecker {
     }
 
     private @Nullable String normalizeSha(@Nullable String value) {
-        return value == null ? null : value.trim().toLowerCase(Locale.ROOT);
+        return value == null || value.isBlank() ? null : value.trim().toLowerCase(Locale.ROOT);
     }
 }

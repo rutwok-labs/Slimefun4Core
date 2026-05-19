@@ -1,8 +1,124 @@
+# SF4 Addon Manager - Cloud Configuration
+# ---------------------------------------
+# Multi-version URLs: fill in the URL for each SF4 build tag.
+# Leave blank ("") for versions not yet packaged.
+# The plugin auto-detects the running server version and uses the matching URL.
+
 cloud-sync:
   enabled: true
   url: "https://raw.githubusercontent.com/rutwok-labs/SF4-Addons/main/Addons/java/core/api/config/addonmanager.yml"
-  interval-minutes: 10
+  version-urls:
+    "26.0.2": ""
+    "26.0.1": ""
+    "1.21.11": "https://raw.githubusercontent.com/rutwok-labs/SF4-Addons/main/Addons/java/core/api/config/addonmanager.yml"
+    "1.20.4": ""
+    "1.19.4": ""
+  interval-minutes: 3
   fallback-to-local-on-empty: true
   fallback-to-local-on-failure: true
 
-addons: {}
+addons:
+  exoticgarden:
+    name: "ExoticGarden"
+    enabled: false
+    download: false
+    auto-update: false
+    sha256: ""
+    checksum-url: ""
+    api-url: ""
+    versions:
+      "26.0.2": ""
+      "26.0.1": ""
+      "1.21.11": "https://github.com/rutwok-labs/SF4-Addons/raw/refs/heads/main/Addons/ExoticGarden/releases/ExoticGarden-2607.jar"
+      "1.20.4": ""
+      "1.19.4": ""
+
+  electricspawners:
+    name: "ElectricSpawners"
+    enabled: false
+    download: false
+    auto-update: false
+    sha256: ""
+    checksum-url: ""
+    api-url: ""
+    versions:
+      "26.0.2": ""
+      "26.0.1": ""
+      "1.21.11": "https://github.com/rutwok-labs/SF4-Addons/raw/refs/heads/main/Addons/ElectricSpawners/releases/ElectricSpawners%20%23100.jar"
+      "1.20.4": ""
+      "1.19.4": ""
+
+  fluffymachines:
+    name: "FluffyMachines"
+    enabled: false
+    download: false
+    auto-update: false
+    sha256: ""
+    checksum-url: ""
+    api-url: ""
+    versions:
+      "26.0.2": ""
+      "26.0.1": ""
+      "1.21.11": "https://github.com/rutwok-labs/SF4-Addons/raw/refs/heads/main/Addons/FluffyMachines/releases/FluffyMachines%20v1.0.0.jar"
+      "1.20.4": ""
+      "1.19.4": ""
+
+  infinityexpansion:
+    name: "InfinityExpansion"
+    enabled: false
+    download: false
+    auto-update: false
+    sha256: ""
+    checksum-url: ""
+    api-url: ""
+    versions:
+      "26.0.2": ""
+      "26.0.1": ""
+      "1.21.11": "https://github.com/rutwok-labs/SF4-Addons/raw/refs/heads/main/Addons/InfinityExpansion/releases/InfinityExpansion-2617.jar"
+      "1.20.4": ""
+      "1.19.4": ""
+
+  foxymachines:
+    name: "FoxyMachines"
+    enabled: false
+    download: false
+    auto-update: false
+    sha256: ""
+    checksum-url: ""
+    api-url: ""
+    versions:
+      "26.0.2": ""
+      "26.0.1": ""
+      "1.21.11": "https://github.com/rutwok-labs/SF4-Addons/raw/refs/heads/main/Addons/FoxyMachines/releases/FoxyMachines.jar"
+      "1.20.4": ""
+      "1.19.4": ""
+
+  advancedtech:
+    name: "AdvancedTech"
+    enabled: false
+    download: false
+    auto-update: false
+    sha256: ""
+    checksum-url: ""
+    api-url: ""
+    versions:
+      "26.0.2": ""
+      "26.0.1": ""
+      "1.21.11": "https://github.com/rutwok-labs/SF4-Addons/raw/refs/heads/main/Addons/AdvancedTech/releases/AdvancedTech-2602.jar"
+      "1.20.4": ""
+      "1.19.4": ""
+
+  ecopower:
+    name: "EcoPower"
+    enabled: false
+    download: false
+    auto-update: false
+    sha256: ""
+    checksum-url: ""
+    api-url: ""
+    versions:
+      "26.0.2": ""
+      "26.0.1": ""
+      "1.21.11": "https://github.com/rutwok-labs/SF4-Addons/raw/refs/heads/main/Addons/EcoPower/releases/EcoPower.jar"
+      "1.20.4": ""
+      "1.19.4": ""

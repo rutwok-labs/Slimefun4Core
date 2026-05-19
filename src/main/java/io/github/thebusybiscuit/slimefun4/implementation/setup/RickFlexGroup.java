@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
@@ -25,7 +25,7 @@ class RickFlexGroup extends FlexItemGroup {
 
     // Never instantiate more than once.
     RickFlexGroup(@Nonnull NamespacedKey key) {
-        super(key, CustomItemStack.create(Material.NETHER_STAR, "&6&lSuper secret items"), 1);
+        super(key, SF4Items.create(Material.NETHER_STAR, "&6&lSuper secret items"), 1);
     }
 
     // Gonna override this method

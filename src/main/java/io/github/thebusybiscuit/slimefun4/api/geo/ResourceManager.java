@@ -21,8 +21,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
 import io.github.bakedlibs.dough.config.Config;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.events.GEOResourceGenerationEvent;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -58,7 +60,7 @@ public class ResourceManager {
      *            Our {@link Slimefun} instance
      */
     public ResourceManager(@Nonnull Slimefun plugin) {
-        config = new Config(plugin, "resources.yml");
+        config = SF4Config.forPlugin(plugin, "resources.yml");
     }
 
     /**
@@ -171,7 +173,7 @@ public class ResourceManager {
          * getBiome() is marked as NotNull, but it seems like some servers ignore this entirely.
          * We have seen multiple reports on Tuinity where it has indeed returned null.
          */
-        Validate.notNull(biome, "Biome appears to be null for position: " + new BlockPosition(block));
+        Validate.notNull(biome, "Biome appears to be null for position: " + SF4BlockPos.of(block));
 
         // Make sure the value is not below zero.
         int value = Math.max(0, resource.getDefaultSupply(world.getEnvironment(), biome));
@@ -227,7 +229,7 @@ public class ResourceManager {
             menu.addItem(slot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
 
-        menu.addItem(4, CustomItemStack.create(HeadTexture.MINECRAFT_CHUNK.getAsItemStack(), ChatColor.YELLOW + Slimefun.getLocalization().getResourceString(p, "tooltips.chunk"), "", "&8\u21E8 &7" + Slimefun.getLocalization().getResourceString(p, "tooltips.world") + ": " + block.getWorld().getName(), "&8\u21E8 &7X: " + x + " Z: " + z), ChestMenuUtils.getEmptyClickHandler());
+        menu.addItem(4, SF4Items.create(HeadTexture.MINECRAFT_CHUNK.getAsItemStack(), ChatColor.YELLOW + Slimefun.getLocalization().getResourceString(p, "tooltips.chunk"), "", "&8\u21E8 &7" + Slimefun.getLocalization().getResourceString(p, "tooltips.world") + ": " + block.getWorld().getName(), "&8\u21E8 &7X: " + x + " Z: " + z), ChestMenuUtils.getEmptyClickHandler());
         List<GEOResource> resources = new ArrayList<>(Slimefun.getRegistry().getGEOResources().values());
         resources.sort(Comparator.comparing(a -> a.getName(p).toLowerCase(Locale.ROOT)));
 
@@ -240,7 +242,7 @@ public class ResourceManager {
             int supplies = optional.orElseGet(() -> generate(resource, block.getWorld(), x, block.getY(), z));
             String suffix = Slimefun.getLocalization().getResourceString(p, ChatUtils.checkPlurality("tooltips.unit", supplies));
 
-            ItemStack item = CustomItemStack.create(resource.getItem(), "&f" + resource.getName(p), "&8\u21E8 &e" + supplies + ' ' + suffix);
+            ItemStack item = SF4Items.create(resource.getItem(), "&f" + resource.getName(p), "&8\u21E8 &e" + supplies + ' ' + suffix);
 
             if (supplies > 1) {
                 item.setAmount(Math.min(supplies, item.getMaxStackSize()));

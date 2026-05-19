@@ -24,8 +24,8 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import io.github.bakedlibs.dough.common.CommonPatterns;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -68,7 +68,7 @@ public class VanillaAutoCrafter extends AbstractAutoCrafter {
             String value = container.get(recipeStorageKey, PersistentDataType.STRING);
 
             if (value != null) {
-                String[] values = CommonPatterns.COLON.split(value);
+                String[] values = SF4Patterns.COLON.split(value);
 
                 /*
                  * Normally this constructor should not be used.
@@ -154,7 +154,7 @@ public class VanillaAutoCrafter extends AbstractAutoCrafter {
 
         AbstractRecipe recipe = AbstractRecipe.of(recipes.get(index));
 
-        menu.replaceExistingItem(49, CustomItemStack.create(Material.CRAFTING_TABLE, ChatColor.GREEN + Slimefun.getLocalization().getMessage(p, "messages.auto-crafting.select")));
+        menu.replaceExistingItem(49, SF4Items.create(Material.CRAFTING_TABLE, ChatColor.GREEN + Slimefun.getLocalization().getMessage(p, "messages.auto-crafting.select")));
         menu.addMenuClickHandler(49, (pl, slot, item, action) -> {
             setSelectedRecipe(b, recipe);
             pl.closeInventory();

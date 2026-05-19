@@ -16,6 +16,7 @@ import org.bukkit.Location;
 import org.bukkit.Server;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
 import io.github.bakedlibs.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.network.Network;
@@ -203,7 +204,7 @@ public class NetworkManager {
                 network.markDirty(l);
             }
         } catch (Exception x) {
-            Slimefun.logger().log(Level.SEVERE, x, () -> "An Exception was thrown while causing a networks update @ " + new BlockPosition(l));
+            Slimefun.logger().log(Level.SEVERE, x, () -> "An Exception was thrown while causing a networks update @ " + SF4BlockPos.of(l));
         }
     }
 

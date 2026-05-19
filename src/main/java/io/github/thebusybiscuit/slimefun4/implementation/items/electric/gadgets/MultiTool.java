@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4DataAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
@@ -41,8 +41,8 @@ public class MultiTool extends SlimefunItem implements Rechargeable {
     private final float capacity;
 
     private static final NamespacedKey key = new NamespacedKey(Slimefun.instance(), "multitool_mode");
-    private static final String LORE_PREFIX = ChatColors.color("&8\u21E8 &7Mode: ");
-    private static final Pattern REGEX = Pattern.compile(ChatColors.color("(&c&o)?" + LORE_PREFIX) + "(.+)");
+    private static final String LORE_PREFIX = SF4Colors.color("&8\u21E8 &7Mode: ");
+    private static final Pattern REGEX = Pattern.compile(SF4Colors.color("(&c&o)?" + LORE_PREFIX) + "(.+)");
 
     @ParametersAreNonnullByDefault
     public MultiTool(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, float capacity, String... items) {
@@ -82,7 +82,7 @@ public class MultiTool extends SlimefunItem implements Rechargeable {
             ItemMeta meta = item.getItemMeta();
             e.cancel();
 
-            int index = PersistentDataAPI.getInt(meta, key, 0);
+            int index = SF4DataAPI.getInt(meta, key, 0);
             SlimefunItem sfItem = modes.get(index).getItem();
 
             if (!p.isSneaking()) {
@@ -96,7 +96,7 @@ public class MultiTool extends SlimefunItem implements Rechargeable {
                 String itemName = selectedItem != null ? selectedItem.getItemName() : "Unknown";
                 Slimefun.getLocalization().sendMessage(p, "messages.multi-tool.mode-change", true, msg -> msg.replace("%device%", "Multi Tool").replace("%mode%", ChatColor.stripColor(itemName)));
 
-                PersistentDataAPI.setInt(meta, key, index);
+                SF4DataAPI.setInt(meta, key, index);
 
                 List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
 

@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockCraftEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -79,7 +79,7 @@ public class EnhancedCraftingTable extends AbstractCraftingTable {
                 ItemStack item = inv.getContents()[j];
 
                 if (item != null && item.getType() != Material.AIR) {
-                    ItemUtils.consumeItem(item, true);
+                    SF4ItemUtils.consumeItem(item, true);
                 }
             }
 

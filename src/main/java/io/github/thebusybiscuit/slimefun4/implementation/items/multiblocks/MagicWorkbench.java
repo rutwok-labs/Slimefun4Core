@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockCraftEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -86,7 +86,7 @@ public class MagicWorkbench extends AbstractCraftingTable {
             for (int j = 0; j < 9; j++) {
                 if (inv.getContents()[j] != null && inv.getContents()[j].getType() != Material.AIR) {
                     if (inv.getContents()[j].getAmount() > 1) {
-                        inv.setItem(j, CustomItemStack.create(inv.getContents()[j], inv.getContents()[j].getAmount() - 1));
+                        inv.setItem(j, SF4Items.create(inv.getContents()[j], inv.getContents()[j].getAmount() - 1));
                     } else {
                         inv.setItem(j, null);
                     }

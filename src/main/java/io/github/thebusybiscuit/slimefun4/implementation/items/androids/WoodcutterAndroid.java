@@ -16,7 +16,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.blocks.Vein;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Vein;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -51,7 +51,7 @@ public class WoodcutterAndroid extends ProgrammableAndroid {
         }
 
         if (Tag.LOGS.isTagged(target.getType())) {
-            List<Block> list = Vein.find(target, MAX_REACH, block -> Tag.LOGS.isTagged(block.getType()));
+            List<Block> list = SF4Vein.find(target, MAX_REACH, block -> Tag.LOGS.isTagged(block.getType()));
 
             if (!list.isEmpty()) {
                 Block log = list.get(list.size() - 1);

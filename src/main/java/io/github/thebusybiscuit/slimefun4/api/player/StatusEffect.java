@@ -10,8 +10,8 @@ import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 
-import io.github.bakedlibs.dough.common.CommonPatterns;
-import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4DataAPI;
 
 /**
  * A very simple API that is meant for adding/getting/clearing custom status effects
@@ -67,7 +67,7 @@ public class StatusEffect implements Keyed {
      *            The {@link TimeUnit} for the given duration
      */
     public void add(@Nonnull Player p, int level, int duration, @Nonnull TimeUnit unit) {
-        PersistentDataAPI.setString(p, getKey(), level + ";" + System.currentTimeMillis() + unit.toMillis(duration));
+        SF4DataAPI.setString(p, getKey(), level + ";" + System.currentTimeMillis() + unit.toMillis(duration));
     }
 
     /**
@@ -80,7 +80,7 @@ public class StatusEffect implements Keyed {
      *            The level of this effect
      */
     public void addPermanent(@Nonnull Player p, int level) {
-        PersistentDataAPI.setString(p, getKey(), level + ";0");
+        SF4DataAPI.setString(p, getKey(), level + ";0");
     }
 
     /**
@@ -94,10 +94,10 @@ public class StatusEffect implements Keyed {
      * @return Whether this {@link StatusEffect} is currently applied
      */
     public boolean isPresent(@Nonnull Player p) {
-        Optional<String> optional = PersistentDataAPI.getOptionalString(p, getKey());
+        Optional<String> optional = SF4DataAPI.getOptionalString(p, getKey());
 
         if (optional.isPresent()) {
-            String[] data = CommonPatterns.SEMICOLON.split(optional.get());
+            String[] data = SF4Patterns.SEMICOLON.split(optional.get());
             long timestamp = Long.parseLong(data[1]);
 
             if (timestamp == 0 || timestamp >= System.currentTimeMillis()) {
@@ -120,10 +120,10 @@ public class StatusEffect implements Keyed {
      * @return An {@link OptionalInt} that describes the result
      */
     public @Nonnull OptionalInt getLevel(@Nonnull Player p) {
-        Optional<String> optional = PersistentDataAPI.getOptionalString(p, getKey());
+        Optional<String> optional = SF4DataAPI.getOptionalString(p, getKey());
 
         if (optional.isPresent()) {
-            String[] data = CommonPatterns.SEMICOLON.split(optional.get());
+            String[] data = SF4Patterns.SEMICOLON.split(optional.get());
             return OptionalInt.of(Integer.parseInt(data[0]));
         } else {
             return OptionalInt.empty();
@@ -137,7 +137,7 @@ public class StatusEffect implements Keyed {
      *            The {@link Player} to clear it from
      */
     public void clear(@Nonnull Player p) {
-        PersistentDataAPI.remove(p, getKey());
+        SF4DataAPI.remove(p, getKey());
     }
 
 }

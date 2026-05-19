@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.scheduling.TaskQueue;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4TaskQueue;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -86,7 +87,7 @@ public class Composter extends SimpleSlimefunItem<BlockUseHandler> implements Re
                     ItemStack output = getOutput(p, input);
 
                     if (output != null) {
-                        TaskQueue tasks = new TaskQueue();
+                        TaskQueue tasks = SF4TaskQueue.create();
 
                         tasks.thenRepeatEvery(30, 10, () -> {
                             Material material = input.getType().isBlock() ? input.getType() : Material.HAY_BLOCK;

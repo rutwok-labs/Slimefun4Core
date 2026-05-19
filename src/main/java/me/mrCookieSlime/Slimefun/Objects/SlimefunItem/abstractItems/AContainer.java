@@ -16,8 +16,8 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemState;
@@ -109,7 +109,7 @@ public abstract class AContainer extends SlimefunItem implements InventoryBlock,
             preset.addItem(i, ChestMenuUtils.getOutputSlotTexture(), ChestMenuUtils.getEmptyClickHandler());
         }
 
-        preset.addItem(22, CustomItemStack.create(Material.BLACK_STAINED_GLASS_PANE, " "), ChestMenuUtils.getEmptyClickHandler());
+        preset.addItem(22, SF4Items.create(Material.BLACK_STAINED_GLASS_PANE, " "), ChestMenuUtils.getEmptyClickHandler());
 
         for (int i : getOutputSlots()) {
             preset.addMenuClickHandler(i, ChestMenuUtils.getDefaultOutputHandler());
@@ -361,7 +361,7 @@ public abstract class AContainer extends SlimefunItem implements InventoryBlock,
                     processor.updateProgressBar(inv, 22, currentOperation);
                     currentOperation.addProgress(1);
                 } else {
-                    inv.replaceExistingItem(22, CustomItemStack.create(Material.BLACK_STAINED_GLASS_PANE, " "));
+                    inv.replaceExistingItem(22, SF4Items.create(Material.BLACK_STAINED_GLASS_PANE, " "));
 
                     for (ItemStack output : currentOperation.getResults()) {
                         inv.pushItem(output.clone(), getOutputSlots());
@@ -431,7 +431,7 @@ public abstract class AContainer extends SlimefunItem implements InventoryBlock,
             }
 
             if (found.size() == recipe.getInput().length) {
-                if (!InvUtils.fitAll(inv.toInventory(), recipe.getOutput(), getOutputSlots())) {
+                if (!SF4InvUtils.fitAll(inv.toInventory(), recipe.getOutput(), getOutputSlots())) {
                     return null;
                 }
 

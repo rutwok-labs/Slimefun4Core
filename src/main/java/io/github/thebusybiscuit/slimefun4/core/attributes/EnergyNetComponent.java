@@ -8,6 +8,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNet;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
@@ -141,7 +142,7 @@ public interface EnergyNetComponent extends ItemAttribute {
                 }
             }
         } catch (Exception | LinkageError x) {
-            Slimefun.logger().log(Level.SEVERE, x, () -> "Exception while trying to set the energy-charge for \"" + getId() + "\" at " + new BlockPosition(l));
+            Slimefun.logger().log(Level.SEVERE, x, () -> "Exception while trying to set the energy-charge for \"" + getId() + "\" at " + SF4BlockPos.of(l));
         }
     }
 
@@ -168,7 +169,7 @@ public interface EnergyNetComponent extends ItemAttribute {
                 }
             }
         } catch (Exception | LinkageError x) {
-            Slimefun.logger().log(Level.SEVERE, x, () -> "Exception while trying to add an energy-charge for \"" + getId() + "\" at " + new BlockPosition(l));
+            Slimefun.logger().log(Level.SEVERE, x, () -> "Exception while trying to add an energy-charge for \"" + getId() + "\" at " + SF4BlockPos.of(l));
         }
     }
 
@@ -195,7 +196,7 @@ public interface EnergyNetComponent extends ItemAttribute {
                 }
             }
         } catch (Exception | LinkageError x) {
-            Slimefun.logger().log(Level.SEVERE, x, () -> "Exception while trying to remove an energy-charge for \"" + getId() + "\" at " + new BlockPosition(l));
+            Slimefun.logger().log(Level.SEVERE, x, () -> "Exception while trying to remove an energy-charge for \"" + getId() + "\" at " + SF4BlockPos.of(l));
         }
     }
 

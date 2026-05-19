@@ -15,7 +15,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.Plugin;
 
-import io.github.bakedlibs.dough.common.ChatColors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
 /**
@@ -68,10 +68,10 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            sender.sendMessage(ChatColors.color("&7Running remote addonmanager.yml sync..."));
+            sender.sendMessage(SF4Colors.color("&7Running remote addonmanager.yml sync..."));
             gitHubSyncService.syncNow().whenComplete((result, error) -> Slimefun.runSync(() -> {
                 if (error != null) {
-                    sender.sendMessage(ChatColors.color("&cRemote sync failed: &4" + error.getMessage()));
+                    sender.sendMessage(SF4Colors.color("&cRemote sync failed: &4" + error.getMessage()));
                     return;
                 }
 
@@ -85,7 +85,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
 
         String action = args[0].toLowerCase(Locale.ROOT);
         if (args.length < 2) {
-            sender.sendMessage(ChatColors.color("&cUsage: /" + label + ' ' + action + " <name>"));
+            sender.sendMessage(SF4Colors.color("&cUsage: /" + label + ' ' + action + " <name>"));
             return true;
         }
 
@@ -98,7 +98,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
                     noPermission(sender);
                     return true;
                 }
-                sender.sendMessage(ChatColors.color("&7Processing addon download for &f" + addonKey + "&7..."));
+                sender.sendMessage(SF4Colors.color("&7Processing addon download for &f" + addonKey + "&7..."));
                 future = addonService.download(addonKey);
             }
             case "update" -> {
@@ -106,7 +106,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
                     noPermission(sender);
                     return true;
                 }
-                sender.sendMessage(ChatColors.color("&7Checking addon update for &f" + addonKey + "&7..."));
+                sender.sendMessage(SF4Colors.color("&7Checking addon update for &f" + addonKey + "&7..."));
                 future = addonService.update(addonKey);
             }
             case "remove" -> {
@@ -114,7 +114,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
                     noPermission(sender);
                     return true;
                 }
-                sender.sendMessage(ChatColors.color("&7Removing managed addon &f" + addonKey + "&7..."));
+                sender.sendMessage(SF4Colors.color("&7Removing managed addon &f" + addonKey + "&7..."));
                 future = addonService.remove(addonKey);
             }
             case "enable" -> {
@@ -122,7 +122,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
                     noPermission(sender);
                     return true;
                 }
-                sender.sendMessage(ChatColors.color("&7Downloading and enabling managed addon &f" + addonKey + "&7 for the next restart..."));
+                sender.sendMessage(SF4Colors.color("&7Downloading and enabling managed addon &f" + addonKey + "&7 for the next restart..."));
                 future = addonService.enable(addonKey);
             }
             case "disable" -> {
@@ -130,25 +130,25 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
                     noPermission(sender);
                     return true;
                 }
-                sender.sendMessage(ChatColors.color("&7Disabling and deleting managed addon &f" + addonKey + "&7 for the next restart..."));
+                sender.sendMessage(SF4Colors.color("&7Disabling and deleting managed addon &f" + addonKey + "&7 for the next restart..."));
                 future = addonService.disable(addonKey);
             }
             default -> {
-                sender.sendMessage(ChatColors.color("&cUnknown subcommand. Try /" + label + " list"));
+                sender.sendMessage(SF4Colors.color("&cUnknown subcommand. Try /" + label + " list"));
                 return true;
             }
         }
 
         future.whenComplete((result, error) -> Slimefun.runSync(() -> {
             if (error != null) {
-                sender.sendMessage(ChatColors.color("&cAddon operation failed: &4" + error.getMessage()));
+                sender.sendMessage(SF4Colors.color("&cAddon operation failed: &4" + error.getMessage()));
                 return;
             }
 
             ChatColor color = result.success() ? ChatColor.GREEN : ChatColor.RED;
             sender.sendMessage(color + result.message());
             if (result.restartRequired()) {
-                sender.sendMessage(ChatColors.color("&eThis change takes effect on the next restart."));
+                sender.sendMessage(SF4Colors.color("&eThis change takes effect on the next restart."));
             }
         }));
         return true;
@@ -178,15 +178,19 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
     private void sendList(@Nonnull CommandSender sender) {
         List<ManagedAddonStatus> statuses = addonService.listAddons();
         List<Plugin> unmanagedLoadedAddons = getUnmanagedLoadedAddons(statuses);
+        int configuredAddons = addonService.countConfiguredAddons();
+        int hiddenAddons = Math.max(0, configuredAddons - statuses.size());
         sender.sendMessage("");
-        sender.sendMessage(ChatColors.color("&bManaged Slimefun Addons"));
+        sender.sendMessage(SF4Colors.color("&8[&bAddonManager&8] &7Server version: &f" + Slimefun.getMinecraftVersion().getName() + " &7-> using SF4 build tag: &f" + addonService.getActiveVersionTag()));
+        sender.sendMessage(SF4Colors.color("&8[&bAddonManager&8] &7Showing &f" + statuses.size() + " &7compatible addons (&f" + hiddenAddons + " &7hidden - no URL for this version)"));
+        sender.sendMessage(SF4Colors.color("&bManaged Slimefun Addons"));
 
         if (statuses.isEmpty()) {
-            sender.sendMessage(ChatColors.color("&7No addons are configured in addonmanager.yml"));
+            sender.sendMessage(SF4Colors.color("&7No addons are configured in addonmanager.yml"));
         } else {
             for (ManagedAddonStatus status : statuses) {
                 AddonDefinition definition = status.definition();
-                sender.sendMessage(ChatColors.color(
+                sender.sendMessage(SF4Colors.color(
                     "&7- &f" + definition.key()
                         + "&8 (&b" + definition.name() + "&8) "
                         + (definition.enabled() ? "&aenabled" : "&cdisabled")
@@ -203,7 +207,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
 
         if (!unmanagedLoadedAddons.isEmpty()) {
             sender.sendMessage("");
-            sender.sendMessage(ChatColors.color("&bOther Installed Slimefun Addons"));
+            sender.sendMessage(SF4Colors.color("&bOther Installed Slimefun Addons"));
 
             for (Plugin plugin : unmanagedLoadedAddons) {
                 sendLoadedAddonLine(sender, plugin);
@@ -218,19 +222,19 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
         List<Plugin> unmanagedLoadedAddons = getUnmanagedLoadedAddons(statuses);
 
         sender.sendMessage("");
-        sender.sendMessage(ChatColors.color("&bAddonManager Cloud Sync Status"));
-        sender.sendMessage(ChatColors.color("&7Enabled: &f" + settings.enabled()));
-        sender.sendMessage(ChatColors.color("&7Interval: &f" + settings.intervalMinutes() + " minute(s)"));
-        sender.sendMessage(ChatColors.color("&7Last Status: &f" + (state.lastStatus() != null ? state.lastStatus() : "never synced")));
-        sender.sendMessage(ChatColors.color("&7Last Sync: &f" + (state.lastSyncedAt() != null ? state.lastSyncedAt() : "never")));
-        sender.sendMessage(ChatColors.color("&7ETag: &f" + (state.etag() != null ? state.etag() : "none")));
-        sender.sendMessage(ChatColors.color("&7Managed entries: &f" + statuses.size()));
-        sender.sendMessage(ChatColors.color("&7Loaded Slimefun addons: &f" + Slimefun.getInstalledAddons().size()));
-        sender.sendMessage(ChatColors.color("&7Loaded unmanaged addons: &f" + unmanagedLoadedAddons.size()));
+        sender.sendMessage(SF4Colors.color("&bAddonManager Cloud Sync Status"));
+        sender.sendMessage(SF4Colors.color("&7Enabled: &f" + settings.enabled()));
+        sender.sendMessage(SF4Colors.color("&7Interval: &f" + settings.intervalMinutes() + " minute(s)"));
+        sender.sendMessage(SF4Colors.color("&7Last Status: &f" + (state.lastStatus() != null ? state.lastStatus() : "never synced")));
+        sender.sendMessage(SF4Colors.color("&7Last Sync: &f" + (state.lastSyncedAt() != null ? state.lastSyncedAt() : "never")));
+        sender.sendMessage(SF4Colors.color("&7ETag: &f" + (state.etag() != null ? state.etag() : "none")));
+        sender.sendMessage(SF4Colors.color("&7Managed entries: &f" + statuses.size()));
+        sender.sendMessage(SF4Colors.color("&7Loaded Slimefun addons: &f" + Slimefun.getInstalledAddons().size()));
+        sender.sendMessage(SF4Colors.color("&7Loaded unmanaged addons: &f" + unmanagedLoadedAddons.size()));
 
         if (!unmanagedLoadedAddons.isEmpty()) {
             sender.sendMessage("");
-            sender.sendMessage(ChatColors.color("&bLoaded Addons Outside addonmanager.yml"));
+            sender.sendMessage(SF4Colors.color("&bLoaded Addons Outside addonmanager.yml"));
 
             for (Plugin plugin : unmanagedLoadedAddons) {
                 sendLoadedAddonLine(sender, plugin);
@@ -238,7 +242,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
         }
 
         sender.sendMessage("");
-        sender.sendMessage(ChatColors.color("&eNote: Downloaded, updated, enabled, disabled or removed addons take effect only after a server restart."));
+        sender.sendMessage(SF4Colors.color("&eNote: Downloaded, updated, enabled, disabled or removed addons take effect only after a server restart."));
     }
 
     private @Nonnull List<Plugin> getUnmanagedLoadedAddons(@Nonnull List<ManagedAddonStatus> statuses) {
@@ -257,7 +261,7 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
             ? "unknown"
             : String.join(", ", plugin.getDescription().getAuthors());
 
-        sender.sendMessage(ChatColors.color(
+        sender.sendMessage(SF4Colors.color(
             "&7- &f" + plugin.getName()
                 + " &7v&f" + plugin.getDescription().getVersion()
                 + "&7, authors=&f" + authors
@@ -272,6 +276,6 @@ public final class CommandManager implements CommandExecutor, TabCompleter {
     }
 
     private void noPermission(@Nonnull CommandSender sender) {
-        sender.sendMessage(ChatColors.color("&cYou do not have permission to manage addons."));
+        sender.sendMessage(SF4Colors.color("&cYou do not have permission to manage addons."));
     }
 }

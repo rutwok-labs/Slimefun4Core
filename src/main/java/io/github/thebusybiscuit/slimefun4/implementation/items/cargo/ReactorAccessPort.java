@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -72,7 +72,7 @@ public class ReactorAccessPort extends SlimefunItem {
                 BlockMenu reactor = getReactor(b.getLocation());
 
                 if (reactor != null) {
-                    menu.replaceExistingItem(INFO_SLOT, CustomItemStack.create(Material.GREEN_WOOL, "&7Reactor", "", "&6Detected", "", "&7> Click to view Reactor"));
+                    menu.replaceExistingItem(INFO_SLOT, SF4Items.create(Material.GREEN_WOOL, "&7Reactor", "", "&6Detected", "", "&7> Click to view Reactor"));
                     menu.addMenuClickHandler(INFO_SLOT, (p, slot, item, action) -> {
                         if (reactor != null) {
                             reactor.open(p);
@@ -83,7 +83,7 @@ public class ReactorAccessPort extends SlimefunItem {
                         return false;
                     });
                 } else {
-                    menu.replaceExistingItem(INFO_SLOT, CustomItemStack.create(Material.RED_WOOL, "&7Reactor", "", "&cNot detected", "", "&7Reactor must be", "&7placed 3 blocks below", "&7the access port!"));
+                    menu.replaceExistingItem(INFO_SLOT, SF4Items.create(Material.RED_WOOL, "&7Reactor", "", "&cNot detected", "", "&7Reactor must be", "&7placed 3 blocks below", "&7the access port!"));
                     menu.addMenuClickHandler(INFO_SLOT, (p, slot, item, action) -> {
                         newInstance(menu, b);
                         return false;
@@ -135,13 +135,13 @@ public class ReactorAccessPort extends SlimefunItem {
     private void constructMenu(@Nonnull BlockMenuPreset preset) {
         preset.drawBackground(ChestMenuUtils.getBackground(), background);
 
-        preset.drawBackground(CustomItemStack.create(Material.LIME_STAINED_GLASS_PANE, " "), fuelBorder);
-        preset.drawBackground(CustomItemStack.create(Material.CYAN_STAINED_GLASS_PANE, " "), inputBorder);
-        preset.drawBackground(CustomItemStack.create(Material.GREEN_STAINED_GLASS_PANE, " "), outputBorder);
+        preset.drawBackground(SF4Items.create(Material.LIME_STAINED_GLASS_PANE, " "), fuelBorder);
+        preset.drawBackground(SF4Items.create(Material.CYAN_STAINED_GLASS_PANE, " "), inputBorder);
+        preset.drawBackground(SF4Items.create(Material.GREEN_STAINED_GLASS_PANE, " "), outputBorder);
 
-        preset.addItem(1, CustomItemStack.create(SlimefunItems.URANIUM.item(), "&7Fuel Slot", "", "&rThis Slot accepts radioactive Fuel such as:", "&2Uranium &ror &aNeptunium"), ChestMenuUtils.getEmptyClickHandler());
-        preset.addItem(22, CustomItemStack.create(SlimefunItems.PLUTONIUM.item(), "&7Byproduct Slot", "", "&rThis Slot contains the Reactor's Byproduct", "&rsuch as &aNeptunium &ror &7Plutonium"), ChestMenuUtils.getEmptyClickHandler());
-        preset.addItem(7, CustomItemStack.create(SlimefunItems.REACTOR_COOLANT_CELL.item(), "&bCoolant Slot", "", "&rThis Slot accepts Coolant Cells", "&4Without any Coolant Cells, your Reactor", "&4will explode"), ChestMenuUtils.getEmptyClickHandler());
+        preset.addItem(1, SF4Items.create(SlimefunItems.URANIUM.item(), "&7Fuel Slot", "", "&rThis Slot accepts radioactive Fuel such as:", "&2Uranium &ror &aNeptunium"), ChestMenuUtils.getEmptyClickHandler());
+        preset.addItem(22, SF4Items.create(SlimefunItems.PLUTONIUM.item(), "&7Byproduct Slot", "", "&rThis Slot contains the Reactor's Byproduct", "&rsuch as &aNeptunium &ror &7Plutonium"), ChestMenuUtils.getEmptyClickHandler());
+        preset.addItem(7, SF4Items.create(SlimefunItems.REACTOR_COOLANT_CELL.item(), "&bCoolant Slot", "", "&rThis Slot accepts Coolant Cells", "&4Without any Coolant Cells, your Reactor", "&4will explode"), ChestMenuUtils.getEmptyClickHandler());
     }
 
     @Nonnull

@@ -25,6 +25,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
 import io.github.thebusybiscuit.slimefun4.core.attributes.HologramOwner;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
@@ -134,7 +135,7 @@ public class HologramsService {
             return null;
         }
 
-        BlockPosition position = new BlockPosition(loc);
+        BlockPosition position = SF4BlockPos.of(loc);
         Hologram hologram = cache.get(position);
 
         // Check if the ArmorStand was cached and still exists
@@ -264,7 +265,7 @@ public class HologramsService {
                     consumer.accept(hologram);
                 }
             } catch (Exception | LinkageError x) {
-                Slimefun.logger().log(Level.SEVERE, "Hologram located at {0}", new BlockPosition(loc));
+                Slimefun.logger().log(Level.SEVERE, "Hologram located at {0}", SF4BlockPos.of(loc));
                 Slimefun.logger().log(Level.SEVERE, "Something went wrong while trying to update this hologram", x);
             }
         };
@@ -295,14 +296,14 @@ public class HologramsService {
                 Hologram hologram = getHologram(loc, false);
 
                 if (hologram != null) {
-                    cache.remove(new BlockPosition(loc));
+                    cache.remove(SF4BlockPos.of(loc));
                     hologram.remove();
                     return true;
                 } else {
                     return false;
                 }
             } catch (Exception | LinkageError x) {
-                Slimefun.logger().log(Level.SEVERE, "Hologram located at {0}", new BlockPosition(loc));
+                Slimefun.logger().log(Level.SEVERE, "Hologram located at {0}", SF4BlockPos.of(loc));
                 Slimefun.logger().log(Level.SEVERE, "Something went wrong while trying to remove this hologram", x);
                 return false;
             }

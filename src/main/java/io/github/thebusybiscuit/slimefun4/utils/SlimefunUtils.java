@@ -35,7 +35,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
-import io.github.bakedlibs.dough.common.CommonPatterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
 import io.github.bakedlibs.dough.items.ItemMetaSnapshot;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.events.SlimefunItemSpawnEvent;
@@ -243,7 +243,7 @@ public final class SlimefunUtils {
 
         String base64 = texture;
 
-        if (CommonPatterns.HEXADECIMAL.matcher(texture).matches()) {
+        if (SF4Patterns.HEXADECIMAL.matcher(texture).matches()) {
             base64 = Base64.getEncoder().encodeToString(("{\"textures\":{\"SKIN\":{\"url\":\"http://textures.minecraft.net/texture/" + texture + "\"}}}").getBytes(StandardCharsets.UTF_8));
         }
 
@@ -296,7 +296,7 @@ public final class SlimefunUtils {
     }
 
     private static @Nonnull String extractTextureUrl(@Nonnull String texture) {
-        if (CommonPatterns.HEXADECIMAL.matcher(texture).matches()) {
+        if (SF4Patterns.HEXADECIMAL.matcher(texture).matches()) {
             return "https://textures.minecraft.net/texture/" + texture;
         }
 

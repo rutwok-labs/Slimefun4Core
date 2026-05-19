@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.common.ChatColors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -45,9 +45,9 @@ public class EnergyConnector extends SimpleSlimefunItem<BlockUseHandler> impleme
             Block b = e.getClickedBlock().get();
 
             if (EnergyNet.getNetworkFromLocation(b.getLocation()) != null) {
-                p.sendMessage(ChatColors.color("&7Connected: " + "&2\u2714"));
+                p.sendMessage(SF4Colors.color("&7Connected: " + "&2\u2714"));
             } else {
-                p.sendMessage(ChatColors.color("&7Connected: " + "&4\u2718"));
+                p.sendMessage(SF4Colors.color("&7Connected: " + "&4\u2718"));
             }
         };
     }

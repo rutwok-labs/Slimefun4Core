@@ -21,8 +21,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
@@ -116,15 +116,15 @@ public class ProduceCollector extends AContainer implements RecipeDisplayItem {
     public @Nonnull List<ItemStack> getDisplayRecipes() {
         List<ItemStack> displayRecipes = new ArrayList<>();
 
-        displayRecipes.add(CustomItemStack.create(Material.BUCKET, null, "&fRequires &bCow &fnearby"));
+        displayRecipes.add(SF4Items.create(Material.BUCKET, null, "&fRequires &bCow &fnearby"));
         displayRecipes.add(new ItemStack(Material.MILK_BUCKET));
 
         if (Slimefun.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_17)) {
-            displayRecipes.add(CustomItemStack.create(Material.BUCKET, null, "&fRequires &bGoat &fnearby"));
+            displayRecipes.add(SF4Items.create(Material.BUCKET, null, "&fRequires &bGoat &fnearby"));
             displayRecipes.add(new ItemStack(Material.MILK_BUCKET));
         }
 
-        displayRecipes.add(CustomItemStack.create(Material.BOWL, null, "&fRequires &bMooshroom &fnearby"));
+        displayRecipes.add(SF4Items.create(Material.BOWL, null, "&fRequires &bMooshroom &fnearby"));
         displayRecipes.add(new ItemStack(Material.MUSHROOM_STEW));
 
         return displayRecipes;
@@ -136,7 +136,7 @@ public class ProduceCollector extends AContainer implements RecipeDisplayItem {
             for (AnimalProduce produce : animalProduces) {
                 ItemStack item = inv.getItemInSlot(slot);
 
-                if (!SlimefunUtils.isItemSimilar(item, produce.getInput()[0], true) || !InvUtils.fits(inv.toInventory(), produce.getOutput()[0], getOutputSlots())) {
+                if (!SlimefunUtils.isItemSimilar(item, produce.getInput()[0], true) || !SF4InvUtils.fits(inv.toInventory(), produce.getOutput()[0], getOutputSlots())) {
                     continue;
                 }
 

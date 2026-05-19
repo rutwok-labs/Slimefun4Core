@@ -17,9 +17,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.common.CommonPatterns;
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -60,7 +60,7 @@ abstract class AbstractCraftingTable extends MultiBlockMachine {
              */
             if (stack != null) {
                 stack = stack.clone();
-                ItemUtils.consumeItem(stack, true);
+                SF4ItemUtils.consumeItem(stack, true);
             }
 
             fakeInv.setItem(j, stack);
@@ -90,7 +90,7 @@ abstract class AbstractCraftingTable extends MultiBlockMachine {
 
         if (id.isPresent()) {
             for (int line = 0; line < output.getItemMeta().getLore().size(); line++) {
-                if (output.getItemMeta().getLore().get(line).equals(ChatColors.color("&7ID: <ID>"))) {
+                if (output.getItemMeta().getLore().get(line).equals(SF4Colors.color("&7ID: <ID>"))) {
                     ItemMeta im = output.getItemMeta();
                     List<String> lore = im.getLore();
                     lore.set(line, lore.get(line).replace("<ID>", id.get()));
@@ -101,7 +101,7 @@ abstract class AbstractCraftingTable extends MultiBlockMachine {
             }
         } else {
             for (int line = 0; line < output.getItemMeta().getLore().size(); line++) {
-                if (output.getItemMeta().getLore().get(line).equals(ChatColors.color("&7ID: <ID>"))) {
+                if (output.getItemMeta().getLore().get(line).equals(SF4Colors.color("&7ID: <ID>"))) {
                     int target = line;
 
                     PlayerProfile.get(p, profile -> {
@@ -118,9 +118,9 @@ abstract class AbstractCraftingTable extends MultiBlockMachine {
     private @Nonnull Optional<String> retrieveID(@Nullable ItemStack backpack, int size) {
         if (backpack != null) {
             for (String line : backpack.getItemMeta().getLore()) {
-                if (line.startsWith(ChatColors.color("&7ID: ")) && line.contains("#")) {
-                    String id = line.replace(ChatColors.color("&7ID: "), "");
-                    String[] idSplit = CommonPatterns.HASH.split(id);
+                if (line.startsWith(SF4Colors.color("&7ID: ")) && line.contains("#")) {
+                    String id = line.replace(SF4Colors.color("&7ID: "), "");
+                    String[] idSplit = SF4Patterns.HASH.split(id);
 
                     PlayerProfile.fromUUID(UUID.fromString(idSplit[0]), profile -> {
                         Optional<PlayerBackpack> optional = profile.getBackpack(Integer.parseInt(idSplit[1]));

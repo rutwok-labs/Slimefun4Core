@@ -21,8 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
@@ -63,7 +63,7 @@ public class IndustrialMiner extends MultiBlockMachine {
         // @formatter:off
         super(itemGroup, item, new ItemStack[] {
             null, null, null,
-            CustomItemStack.create(Material.PISTON, "Piston (facing up)"), new ItemStack(Material.CHEST), CustomItemStack.create(Material.PISTON, "Piston (facing up)"),
+            SF4Items.create(Material.PISTON, "Piston (facing up)"), new ItemStack(Material.CHEST), SF4Items.create(Material.PISTON, "Piston (facing up)"),
             new ItemStack(baseMaterial), new ItemStack(Material.BLAST_FURNACE), new ItemStack(baseMaterial)
         }, BlockFace.UP);
         // @formatter:on
@@ -165,7 +165,7 @@ public class IndustrialMiner extends MultiBlockMachine {
             ItemStack item = fuel.getInput().clone();
             ItemMeta im = item.getItemMeta();
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColors.color("&8\u21E8 &7Lasts for max. " + fuel.getTicks() + " Ores"));
+            lore.add(SF4Colors.color("&8\u21E8 &7Lasts for max. " + fuel.getTicks() + " Ores"));
             im.setLore(lore);
             item.setItemMeta(im);
             list.add(item);

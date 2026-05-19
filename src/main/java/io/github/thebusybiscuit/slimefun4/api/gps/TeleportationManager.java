@@ -17,8 +17,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.services.sounds.SoundEffect;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -79,7 +79,7 @@ public final class TeleportationManager {
                     menu.addItem(slot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
                 }
 
-                menu.addItem(4, CustomItemStack.create(HeadTexture.GLOBE_OVERWORLD.getAsItemStack(), ChatColor.YELLOW + Slimefun.getLocalization().getMessage(p, "machines.TELEPORTER.gui.title")));
+                menu.addItem(4, SF4Items.create(HeadTexture.GLOBE_OVERWORLD.getAsItemStack(), ChatColor.YELLOW + Slimefun.getLocalization().getMessage(p, "machines.TELEPORTER.gui.title")));
                 menu.addMenuClickHandler(4, ChestMenuUtils.getEmptyClickHandler());
 
                 Location source = new Location(b.getWorld(), b.getX() + 0.5D, b.getY() + 2D, b.getZ() + 0.5D);
@@ -107,7 +107,7 @@ public final class TeleportationManager {
                     };
                     // @formatter:on
 
-                    menu.addItem(slot, CustomItemStack.create(waypoint.getIcon(), waypoint.getName().replace("player:death ", ""), lore));
+                    menu.addItem(slot, SF4Items.create(waypoint.getIcon(), waypoint.getName().replace("player:death ", ""), lore));
                     menu.addMenuClickHandler(slot, (pl, s, item, action) -> {
                         pl.closeInventory();
                         teleport(pl.getUniqueId(), complexity, source, l, false);
@@ -186,7 +186,7 @@ public final class TeleportationManager {
         teleporterUsers.remove(uuid);
 
         if (p != null) {
-            p.sendTitle(ChatColors.color(Slimefun.getLocalization().getMessage(p, "machines.TELEPORTER.cancelled")), ChatColors.color("&c&k40&f&c%"), 20, 60, 20);
+            p.sendTitle(SF4Colors.color(Slimefun.getLocalization().getMessage(p, "machines.TELEPORTER.cancelled")), SF4Colors.color("&c&k40&f&c%"), 20, 60, 20);
         }
     }
 
@@ -196,10 +196,10 @@ public final class TeleportationManager {
 
         if (isValid(p, source)) {
             if (progress > 99) {
-                p.sendTitle(ChatColors.color(Slimefun.getLocalization().getMessage(p, "machines.TELEPORTER.teleported")), ChatColors.color("&b100%"), 20, 60, 20);
+                p.sendTitle(SF4Colors.color(Slimefun.getLocalization().getMessage(p, "machines.TELEPORTER.teleported")), SF4Colors.color("&b100%"), 20, 60, 20);
                 PaperLib.teleportAsync(p, destination).thenAccept(success -> onTeleport(p, destination, success, resistance));
             } else {
-                p.sendTitle(ChatColors.color(Slimefun.getLocalization().getMessage(p, "machines.TELEPORTER.teleporting")), ChatColors.color("&b" + progress + "%"), 0, 60, 0);
+                p.sendTitle(SF4Colors.color(Slimefun.getLocalization().getMessage(p, "machines.TELEPORTER.teleporting")), SF4Colors.color("&b" + progress + "%"), 0, 60, 0);
 
                 source.getWorld().spawnParticle(Particle.PORTAL, source, progress * 2, 0.2F, 0.8F, 0.2F);
                 SoundEffect.TELEPORT_UPDATE_SOUND.playFor(p);

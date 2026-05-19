@@ -16,7 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
 import io.github.thebusybiscuit.slimefun4.core.debug.Debug;
 import io.github.thebusybiscuit.slimefun4.core.debug.TestCase;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -317,7 +317,7 @@ final class CargoUtils {
          * If the Inventory does not accept this Item Type, bounce the item back.
          * Example: Shulker boxes within shulker boxes (fixes #2662)
          */
-        if (!InvUtils.isItemAllowed(stack.getType(), inv.getType())) {
+        if (!SF4InvUtils.isItemAllowed(stack.getType(), inv.getType())) {
             return stack;
         }
 

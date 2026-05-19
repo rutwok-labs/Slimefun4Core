@@ -19,7 +19,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import io.github.bakedlibs.dough.common.CommonPatterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
 import io.github.thebusybiscuit.slimefun4.api.exceptions.BiomeMapException;
 import io.github.thebusybiscuit.slimefun4.utils.JsonUtils;
 import io.github.thebusybiscuit.slimefun4.utils.PatternUtils;
@@ -167,7 +167,7 @@ public class BiomeMapParser<T> {
                 String value = element.getAsString();
 
                 if (PatternUtils.MINECRAFT_NAMESPACEDKEY.matcher(value).matches()) {
-                    String formattedValue = CommonPatterns.COLON.split(value)[1].toUpperCase(Locale.ROOT);
+                    String formattedValue = SF4Patterns.COLON.split(value)[1].toUpperCase(Locale.ROOT);
 
                     try {
                         Biome biome = Biome.valueOf(formattedValue);

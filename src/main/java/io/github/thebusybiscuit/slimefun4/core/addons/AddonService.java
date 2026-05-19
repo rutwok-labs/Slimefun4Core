@@ -59,7 +59,7 @@ public final class AddonService {
         refreshDefinitions();
         List<ManagedAddonStatus> statuses = new ArrayList<>();
 
-        for (AddonDefinition definition : definitions.get().values().stream().sorted(Comparator.comparing(AddonDefinition::key)).toList()) {
+        for (AddonDefinition definition : compatibleDefinitions().stream().sorted(Comparator.comparing(AddonDefinition::key)).toList()) {
             Optional<AddonCacheEntry> cache = configManager.getCacheEntry(definition.key());
             statuses.add(new ManagedAddonStatus(
                 definition,
@@ -73,10 +73,20 @@ public final class AddonService {
         return statuses;
     }
 
+    public int countConfiguredAddons() {
+        refreshDefinitions();
+        return definitions.get().size();
+    }
+
+    public @Nonnull String getActiveVersionTag() {
+        return VersionTagResolver.resolveTag(Slimefun.getMinecraftVersion());
+    }
+
     public @Nonnull CompletableFuture<AddonOperationResult> download(@Nonnull String key) {
         return withDefinition(key, definition -> {
             AddonDefinition updated = definition.withDownload(true);
             configManager.saveAddon(updated);
+            configManager.clearAddonJarDeletionMarker(updated);
             refreshDefinitions();
             RemoteAddonInfo remoteInfo = updateChecker.inspect(updated, configManager.getCacheEntry(updated.key()).orElse(null));
             return downloadService.download(updated, remoteInfo);
@@ -106,7 +116,9 @@ public final class AddonService {
             configManager.saveAddon(updated);
             if (configManager.addonJarExists(updated) && !addonLoader.isLoaded(updated)) {
                 configManager.deleteAddonJar(updated);
+                configManager.clearAddonJarDeletionMarker(updated);
             } else if (addonLoader.isLoaded(updated)) {
+                configManager.markAddonJarForDeletion(updated);
                 plugin.getLogger().info("Managed addon " + updated.name() + " is currently loaded. Its jar will be removed safely during the next startup pass.");
             }
             refreshDefinitions();
@@ -118,6 +130,7 @@ public final class AddonService {
         return withDefinition(key, definition -> {
             AddonDefinition updated = definition.withEnabled(true).withDownload(true);
             configManager.saveAddon(updated);
+            configManager.clearAddonJarDeletionMarker(updated);
             refreshDefinitions();
 
             RemoteAddonInfo remoteInfo = updateChecker.inspect(updated, configManager.getCacheEntry(updated.key()).orElse(null));
@@ -138,12 +151,14 @@ public final class AddonService {
 
             if (configManager.addonJarExists(updated) && !addonLoader.isLoaded(updated)) {
                 configManager.deleteAddonJar(updated);
+                configManager.clearAddonJarDeletionMarker(updated);
                 configManager.removeCacheEntry(updated.key());
                 refreshDefinitions();
                 return AddonOperationResult.success("Disabled and deleted " + updated.name() + ". No restart needed.", false);
             }
 
             if (addonLoader.isLoaded(updated)) {
+                configManager.markAddonJarForDeletion(updated);
                 plugin.getLogger().info("Managed addon " + updated.name() + " is currently loaded. Its jar will be deleted safely during the next startup pass.");
             } else {
                 configManager.removeCacheEntry(updated.key());
@@ -159,13 +174,19 @@ public final class AddonService {
             refreshDefinitions();
             List<AddonDefinition> toLoad = new ArrayList<>();
 
-            for (AddonDefinition definition : definitions.get().values().stream().sorted(Comparator.comparing(AddonDefinition::key)).toList()) {
+            for (AddonDefinition definition : compatibleDefinitions().stream().sorted(Comparator.comparing(AddonDefinition::key)).toList()) {
                 try {
                     if (!definition.download()) {
                         if (configManager.addonJarExists(definition)) {
-                            configManager.deleteAddonJar(definition);
-                            configManager.removeCacheEntry(definition.key());
-                            plugin.getLogger().info("Deleted managed addon jar because download=false: " + definition.name());
+                            if (configManager.isAddonJarDeletionScheduled(definition)) {
+                                configManager.deleteAddonJar(definition);
+                                configManager.clearAddonJarDeletionMarker(definition);
+                                configManager.removeCacheEntry(definition.key());
+                                plugin.getLogger().info("Deleted managed addon jar because deletion was scheduled: " + definition.name());
+                            } else {
+                                configManager.appendLog("Preserved existing jar for " + definition.name() + " because download=false was not scheduled by a disable/remove command.");
+                                plugin.getLogger().info("Preserved managed addon jar with download=false because no deletion marker exists: " + definition.name());
+                            }
                         }
                         continue;
                     }
@@ -199,6 +220,12 @@ public final class AddonService {
 
             Slimefun.runSync(() -> addonLoader.loadManagedAddons(toLoad), 1L);
         });
+    }
+
+    private @Nonnull List<AddonDefinition> compatibleDefinitions() {
+        return definitions.get().values().stream()
+            .filter(definition -> definition.resolveUrlForMinecraftVersion(Slimefun.getMinecraftVersion()).isPresent())
+            .toList();
     }
 
     private @Nonnull CompletableFuture<AddonOperationResult> withDefinition(@Nonnull String key, @Nonnull AddonWork work) {

@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.slimefun4.storage;
 import com.google.common.annotations.Beta;
 
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.storage.data.PlayerData;
@@ -139,7 +140,7 @@ public class StorageConsistencyChecker {
 
     private int inspectStoredBlockFile(@Nonnull File file) {
         try {
-            Config config = new Config(file);
+            Config config = SF4Config.forFile(file);
             config.getKeys();
             return 0;
         } catch (Exception x) {

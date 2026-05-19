@@ -12,9 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
-import io.github.bakedlibs.dough.items.CustomItemStack;
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
@@ -84,7 +84,7 @@ public class DirtyChestMenu extends ChestMenu {
             }
         }
 
-        return InvUtils.fits(toInventory(), ItemStackWrapper.wrap(item), slots);
+        return SF4InvUtils.fits(toInventory(), ItemStackWrapper.wrap(item), slots);
     }
 
     /**
@@ -126,7 +126,7 @@ public class DirtyChestMenu extends ChestMenu {
                         wrapper = ItemStackWrapper.wrap(item);
                     }
 
-                    if (ItemUtils.canStack(wrapper, stack)) {
+                    if (SF4ItemUtils.canStack(wrapper, stack)) {
                         amount -= (maxStackSize - stack.getAmount());
                         stack.setAmount(Math.min(stack.getAmount() + item.getAmount(), maxStackSize));
                         item.setAmount(amount);
@@ -136,7 +136,7 @@ public class DirtyChestMenu extends ChestMenu {
         }
 
         if (amount > 0) {
-            return CustomItemStack.create(item, amount);
+            return SF4Items.create(item, amount);
         } else {
             return null;
         }
@@ -151,7 +151,7 @@ public class DirtyChestMenu extends ChestMenu {
     }
 
     public void consumeItem(int slot, int amount, boolean replaceConsumables) {
-        ItemUtils.consumeItem(getItemInSlot(slot), amount, replaceConsumables);
+        SF4ItemUtils.consumeItem(getItemInSlot(slot), amount, replaceConsumables);
         markDirty();
     }
 

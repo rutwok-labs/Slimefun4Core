@@ -12,7 +12,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -52,7 +52,7 @@ public class VillagerRune extends SimpleSlimefunItem<EntityInteractHandler> {
                 }
 
                 if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
-                    ItemUtils.consumeItem(item, false);
+                    SF4ItemUtils.consumeItem(item, false);
                 }
 
                 // Reset Villager

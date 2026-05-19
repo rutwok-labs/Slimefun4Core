@@ -11,8 +11,8 @@ import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -65,9 +65,9 @@ abstract class AbstractEnchantmentMachine extends AContainer {
             throw new IllegalStateException("Enchantment level limit not enabled, cannot display a warning.");
         }
 
-        String notice = ChatColors.color(Slimefun.getLocalization().getMessage("messages.above-limit-level"));
+        String notice = SF4Colors.color(Slimefun.getLocalization().getMessage("messages.above-limit-level"));
         notice = notice.replace("%level%", String.valueOf(levelLimit.getValue()));
-        ItemStack progressBar = CustomItemStack.create(Material.BARRIER, " ", notice);
+        ItemStack progressBar = SF4Items.create(Material.BARRIER, " ", notice);
         menu.replaceExistingItem(22, progressBar);
     }
 
@@ -81,7 +81,7 @@ abstract class AbstractEnchantmentMachine extends AContainer {
 
                 // Check if any of the lines are found on the item
                 for (String lore : ignoredLore) {
-                    if (itemLore.contains(ChatColors.color(lore))) {
+                    if (itemLore.contains(SF4Colors.color(lore))) {
                         return true;
                     }
                 }

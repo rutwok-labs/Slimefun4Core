@@ -12,7 +12,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
 import io.github.thebusybiscuit.slimefun4.api.events.AsyncAutoEnchanterProcessEvent;
 import io.github.thebusybiscuit.slimefun4.api.events.AutoEnchantEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -140,7 +140,7 @@ public class AutoEnchanter extends AbstractEnchantmentMachine {
 
             MachineRecipe recipe = new MachineRecipe(75 * enchantments.size() / getSpeed(), new ItemStack[] { target, enchantedBook }, new ItemStack[] { enchantedItem, new ItemStack(Material.BOOK) });
 
-            if (!InvUtils.fitAll(menu.toInventory(), recipe.getOutput(), getOutputSlots())) {
+            if (!SF4InvUtils.fitAll(menu.toInventory(), recipe.getOutput(), getOutputSlots())) {
                 return null;
             }
 

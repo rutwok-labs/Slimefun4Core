@@ -72,6 +72,19 @@ storage:
   backend: legacy
   consistency-check-interval-minutes: 60
 
+slimefun:
+  world-backup:
+    enabled: true
+    max-backups: 10
+    include-nether: true
+    include-end: true
+  discord:
+    enabled: true
+    invite-url: "https://discord.gg/pT8P9gwA"
+    show-on-join: true
+    show-in-guide: true
+    join-message: "&9&lJoin our Discord! &rhttps://discord.gg/pT8P9gwA"
+
 research-ranks:
 - Chicken
 - Cow

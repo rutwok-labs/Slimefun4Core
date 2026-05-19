@@ -3,6 +3,7 @@ package me.mrCookieSlime.Slimefun.api.inventory;
 import java.io.File;
 
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 
 // This class will be deprecated, relocated and rewritten in a future version.
 public class UniversalBlockMenu extends DirtyChestMenu {
@@ -42,7 +43,7 @@ public class UniversalBlockMenu extends DirtyChestMenu {
         this.getContents();
 
         File file = new File("data-storage/Slimefun/universal-inventories/" + preset.getID() + ".sfi");
-        Config cfg = new Config(file);
+        Config cfg = SF4Config.forFile(file);
         cfg.setValue("preset", preset.getID());
 
         for (int slot : preset.getInventorySlots()) {

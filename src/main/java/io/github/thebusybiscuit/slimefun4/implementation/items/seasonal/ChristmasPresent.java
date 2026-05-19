@@ -9,7 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSpawnReason;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -48,7 +48,7 @@ public class ChristmasPresent extends SimpleSlimefunItem<ItemUseHandler> impleme
 
             e.getClickedBlock().ifPresent(block -> {
                 if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
-                    ItemUtils.consumeItem(e.getItem(), false);
+                    SF4ItemUtils.consumeItem(e.getItem(), false);
                 }
 
                 FireworkUtils.launchRandom(e.getPlayer(), 3);

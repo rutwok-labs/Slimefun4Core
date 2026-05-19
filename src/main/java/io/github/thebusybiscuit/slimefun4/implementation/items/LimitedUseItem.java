@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import io.github.bakedlibs.dough.common.ChatColors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -132,7 +132,7 @@ public abstract class LimitedUseItem extends SimpleSlimefunItem<ItemUseHandler> 
     private void updateItemLore(ItemStack item, ItemMeta meta, int usesLeft) {
         List<String> lore = meta.getLore();
 
-        String newLine = ChatColors.color(LoreBuilder.usesLeft(usesLeft));
+        String newLine = SF4Colors.color(LoreBuilder.usesLeft(usesLeft));
         if (lore != null && !lore.isEmpty()) {
             // find the correct line
             for (int i = 0; i < lore.size(); i++) {

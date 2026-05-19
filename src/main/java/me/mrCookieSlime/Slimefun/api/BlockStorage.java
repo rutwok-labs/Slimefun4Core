@@ -37,7 +37,8 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
-import io.github.bakedlibs.dough.common.CommonPatterns;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Patterns;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
@@ -97,7 +98,7 @@ public class BlockStorage {
 
     private static Location deserializeLocation(String l) {
         try {
-            String[] components = CommonPatterns.SEMICOLON.split(l);
+            String[] components = SF4Patterns.SEMICOLON.split(l);
             if (components.length != 4) {
                 return null;
             }
@@ -200,7 +201,7 @@ public class BlockStorage {
             Config blockInfo = parseBlockInfo(l, json);
 
             if (blockInfo != null && blockInfo.contains("id")) {
-                BlockPosition position = new BlockPosition(l);
+                BlockPosition position = SF4BlockPos.of(l);
 
                 if (storage.putIfAbsent(position, blockInfo) != null) {
                     /*
@@ -234,7 +235,7 @@ public class BlockStorage {
 
             for (String key : cfg.getKeys(false)) {
                 try {
-                    if (world.getName().equals(CommonPatterns.SEMICOLON.split(key)[0])) {
+                    if (world.getName().equals(SF4Patterns.SEMICOLON.split(key)[0])) {
                         BlockInfoConfig data = new BlockInfoConfig(parseJSON(cfg.getString(key)));
                         Slimefun.getRegistry().getChunks().put(key, data);
                     }
@@ -469,7 +470,7 @@ public class BlockStorage {
             return emptyBlockData;
         }
 
-        Config cfg = storage.storage.get(new BlockPosition(l));
+        Config cfg = storage.storage.get(SF4BlockPos.of(l));
         return cfg == null ? emptyBlockData : cfg;
     }
 
@@ -571,7 +572,7 @@ public class BlockStorage {
         BlockStorage storage = getStorage(l.getWorld());
 
         if (storage != null) {
-            Config cfg = storage.storage.get(new BlockPosition(l));
+            Config cfg = storage.storage.get(SF4BlockPos.of(l));
             return cfg != null && cfg.getString("id") != null;
         } else {
             return false;
@@ -586,7 +587,7 @@ public class BlockStorage {
             return;
         }
 
-        storage.storage.put(new BlockPosition(l), cfg);
+        storage.storage.put(SF4BlockPos.of(l), cfg);
         String id = cfg.getString("id");
         BlockMenuPreset preset = BlockMenuPreset.getPreset(id);
 
@@ -677,7 +678,7 @@ public class BlockStorage {
 
         if (hasBlockInfo(l)) {
             refreshCache(storage, l, getLocationInfo(l).getString("id"), null, destroy);
-            storage.storage.remove(new BlockPosition(l));
+            storage.storage.remove(SF4BlockPos.of(l));
         }
 
         if (destroy) {
@@ -728,7 +729,7 @@ public class BlockStorage {
         }
 
         refreshCache(storage, from, previousData.getString("id"), null, true);
-        storage.storage.remove(new BlockPosition(from));
+        storage.storage.remove(SF4BlockPos.of(from));
 
         Slimefun.getTickerTask().disableTicker(from);
     }

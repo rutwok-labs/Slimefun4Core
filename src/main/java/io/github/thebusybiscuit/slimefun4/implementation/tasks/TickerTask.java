@@ -22,6 +22,7 @@ import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import io.github.bakedlibs.dough.blocks.BlockPosition;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4BlockPos;
 import io.github.bakedlibs.dough.blocks.ChunkPosition;
 import io.github.thebusybiscuit.slimefun4.api.ErrorReport;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -183,7 +184,7 @@ public class TickerTask implements Runnable {
     private void tickBlock(Location l, Block b, SlimefunItem item, Config data, long timestamp) {
         try {
             item.getBlockTicker().tick(b, item, data);
-            bugs.remove(new BlockPosition(l));
+            bugs.remove(SF4BlockPos.of(l));
         } catch (Exception | LinkageError x) {
             reportErrors(l, item, x);
         } finally {
@@ -193,7 +194,7 @@ public class TickerTask implements Runnable {
 
     @ParametersAreNonnullByDefault
     private void reportErrors(Location l, SlimefunItem item, Throwable x) {
-        BlockPosition position = new BlockPosition(l);
+        BlockPosition position = SF4BlockPos.of(l);
         int errors = bugs.getOrDefault(position, 0) + 1;
 
         if (errors == 1) {

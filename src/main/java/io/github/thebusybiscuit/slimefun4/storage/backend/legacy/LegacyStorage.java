@@ -1,6 +1,7 @@
 package io.github.thebusybiscuit.slimefun4.storage.backend.legacy;
 
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 import io.github.thebusybiscuit.slimefun4.api.gps.Waypoint;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerBackpack;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
@@ -39,9 +40,9 @@ public class LegacyStorage implements Storage {
     public PlayerData loadPlayerData(@Nonnull UUID uuid) {
         long start = System.nanoTime();
 
-        Config playerFile = new Config("data-storage/Slimefun/Players/" + uuid + ".yml");
+        Config playerFile = SF4Config.forPath("data-storage/Slimefun/Players/" + uuid + ".yml");
         // Not too sure why this is its own file
-        Config waypointsFile = new Config("data-storage/Slimefun/waypoints/" + uuid + ".yml");
+        Config waypointsFile = SF4Config.forPath("data-storage/Slimefun/waypoints/" + uuid + ".yml");
 
         // Load research
         Set<Research> researches = new HashSet<>();
@@ -135,9 +136,9 @@ public class LegacyStorage implements Storage {
 
         boolean playerSectionsDirty = data.isResearchesDirty() || data.isBackpacksDirty();
         boolean waypointsDirty = data.isWaypointsDirty();
-        Config playerFile = playerSectionsDirty ? new Config("data-storage/Slimefun/Players/" + uuid + ".yml") : null;
+        Config playerFile = playerSectionsDirty ? SF4Config.forPath("data-storage/Slimefun/Players/" + uuid + ".yml") : null;
         // Not too sure why this is its own file
-        Config waypointsFile = waypointsDirty ? new Config("data-storage/Slimefun/waypoints/" + uuid + ".yml") : null;
+        Config waypointsFile = waypointsDirty ? SF4Config.forPath("data-storage/Slimefun/waypoints/" + uuid + ".yml") : null;
 
         if (data.isResearchesDirty()) {
             if (playerFile == null) {

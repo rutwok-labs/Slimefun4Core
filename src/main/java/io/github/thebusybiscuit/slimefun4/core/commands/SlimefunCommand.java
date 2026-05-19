@@ -16,7 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import io.github.bakedlibs.dough.common.ChatColors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
 import io.github.thebusybiscuit.slimefun4.core.commands.subcommands.SlimefunSubCommands;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
@@ -92,12 +92,12 @@ public class SlimefunCommand implements CommandExecutor, Listener {
 
     public void sendHelp(@Nonnull CommandSender sender) {
         sender.sendMessage("");
-        sender.sendMessage(ChatColors.color("&aSlimefun &2v" + Slimefun.getVersion()));
+        sender.sendMessage(SF4Colors.color("&aSlimefun &2v" + Slimefun.getVersion()));
         sender.sendMessage("");
 
         for (SubCommand cmd : commands) {
             if (!cmd.isHidden()) {
-                sender.sendMessage(ChatColors.color("&3/sf " + cmd.getName() + " &b") + cmd.getDescription(sender));
+                sender.sendMessage(SF4Colors.color("&3/sf " + cmd.getName() + " &b") + cmd.getDescription(sender));
             }
         }
     }

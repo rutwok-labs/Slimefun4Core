@@ -27,8 +27,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
-import io.github.bakedlibs.dough.items.ItemUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4ItemUtils;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -179,7 +179,7 @@ public class AncientAltarListener implements Listener {
             return;
         }
 
-        ItemStack catalyst = CustomItemStack.create(p.getInventory().getItemInMainHand(), 1);
+        ItemStack catalyst = SF4Items.create(p.getInventory().getItemInMainHand(), 1);
         List<Block> pedestals = getPedestals(altar);
 
         if (!altars.contains(altar)) {
@@ -229,7 +229,7 @@ public class AncientAltarListener implements Listener {
                 consumed.add(catalyst);
 
                 if (p.getGameMode() != GameMode.CREATIVE) {
-                    ItemUtils.consumeItem(p.getInventory().getItemInMainHand(), false);
+                    SF4ItemUtils.consumeItem(p.getInventory().getItemInMainHand(), false);
                 }
 
                 SoundEffect.ANCIENT_ALTAR_START_SOUND.playAt(b);

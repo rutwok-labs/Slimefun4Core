@@ -8,7 +8,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.common.ChatColors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -39,7 +39,7 @@ public class FortuneCookie extends SimpleSlimefunItem<ItemConsumptionHandler> {
             List<String> messages = Slimefun.getLocalization().getMessages(p, "messages.fortune-cookie");
             String message = messages.get(ThreadLocalRandom.current().nextInt(messages.size()));
 
-            p.sendMessage(ChatColors.color(message));
+            p.sendMessage(SF4Colors.color(message));
         };
     }
 

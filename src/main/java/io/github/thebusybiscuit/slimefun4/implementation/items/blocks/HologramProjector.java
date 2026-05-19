@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -97,7 +97,7 @@ public class HologramProjector extends SlimefunItem implements HologramOwner {
     private void openEditor(@Nonnull Player p, @Nonnull Block projector) {
         ChestMenu menu = new ChestMenu(Slimefun.getLocalization().getMessage(p, "machines.HOLOGRAM_PROJECTOR.inventory-title"));
 
-        menu.addItem(0, CustomItemStack.create(Material.NAME_TAG, "&7Text &e(Click to edit)", "", "&f" + ChatColors.color(BlockStorage.getLocationInfo(projector.getLocation(), "text"))));
+        menu.addItem(0, SF4Items.create(Material.NAME_TAG, "&7Text &e(Click to edit)", "", "&f" + SF4Colors.color(BlockStorage.getLocationInfo(projector.getLocation(), "text"))));
         menu.addMenuClickHandler(0, (pl, slot, item, action) -> {
             pl.closeInventory();
             Slimefun.getLocalization().sendMessage(pl, "machines.HOLOGRAM_PROJECTOR.enter-text", true);
@@ -111,7 +111,7 @@ public class HologramProjector extends SlimefunItem implements HologramOwner {
                 }
 
                 ArmorStand hologram = getArmorStand(projector, true);
-                hologram.setCustomName(ChatColors.color(message));
+                hologram.setCustomName(SF4Colors.color(message));
                 BlockStorage.addBlockInfo(projector, "text", hologram.getCustomName());
                 openEditor(pl, projector);
             });
@@ -119,7 +119,7 @@ public class HologramProjector extends SlimefunItem implements HologramOwner {
             return false;
         });
 
-        menu.addItem(1, CustomItemStack.create(Material.CLOCK, "&7Offset: &e" + NumberUtils.roundDecimalNumber(Double.valueOf(BlockStorage.getLocationInfo(projector.getLocation(), OFFSET_PARAMETER)) + 1.0D), "", "&fLeft Click: &7+0.1", "&fRight Click: &7-0.1"));
+        menu.addItem(1, SF4Items.create(Material.CLOCK, "&7Offset: &e" + NumberUtils.roundDecimalNumber(Double.valueOf(BlockStorage.getLocationInfo(projector.getLocation(), OFFSET_PARAMETER)) + 1.0D), "", "&fLeft Click: &7+0.1", "&fRight Click: &7-0.1"));
         menu.addMenuClickHandler(1, (pl, slot, item, action) -> {
             double offset = NumberUtils.reparseDouble(Double.valueOf(BlockStorage.getLocationInfo(projector.getLocation(), OFFSET_PARAMETER)) + (action.isRightClicked() ? -0.1F : 0.1F));
             ArmorStand hologram = getArmorStand(projector, true);

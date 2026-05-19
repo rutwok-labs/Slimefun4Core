@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.inventory.InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4InvUtils;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -173,7 +173,7 @@ public abstract class MultiBlockMachine extends SlimefunItem implements NotPlace
          * It's functionally the same as the old fit check for the dispenser,
          * only refactored.
          */
-        if (!outputChest.isPresent() && InvUtils.fits(placeCheckerInv, product)) {
+        if (!outputChest.isPresent() && SF4InvUtils.fits(placeCheckerInv, product)) {
             return dispInv;
         } else {
             return outputChest.orElse(null);

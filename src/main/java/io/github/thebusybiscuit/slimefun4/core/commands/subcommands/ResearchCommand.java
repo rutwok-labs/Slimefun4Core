@@ -9,7 +9,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import io.github.bakedlibs.dough.common.PlayerList;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4PlayerUtils;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.core.commands.SlimefunCommand;
@@ -41,7 +41,7 @@ class ResearchCommand extends SubCommand {
 
         if (args.length == 3) {
             if (!(sender instanceof Player) || sender.hasPermission("slimefun.cheat.researches")) {
-                Optional<Player> player = PlayerList.findByName(args[1]);
+                Optional<Player> player = SF4PlayerUtils.findByName(args[1]);
 
                 if (player.isPresent()) {
                     Player p = player.get();

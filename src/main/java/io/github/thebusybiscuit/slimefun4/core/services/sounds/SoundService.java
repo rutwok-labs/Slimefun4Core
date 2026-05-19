@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import io.github.bakedlibs.dough.config.Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 
 import com.google.common.base.Preconditions;
@@ -31,7 +32,7 @@ public class SoundService {
     private final Map<SoundEffect, SoundConfiguration> soundMap = new EnumMap<>(SoundEffect.class);
 
     public SoundService(@Nonnull Slimefun plugin) {
-        config = new Config(plugin, "sounds.yml");
+        config = SF4Config.forPlugin(plugin, "sounds.yml");
 
         // @formatter:off
         config.getConfiguration().options().header(

@@ -10,8 +10,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4DataAPI;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.core.SlimefunRegistry;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -51,7 +51,7 @@ class LearningAnimationOption implements SlimefunGuideOption<Boolean> {
             lore.add("");
             lore.add("&7\u21E8 " + Slimefun.getLocalization().getMessage(p, "guide.options.learning-animation." + optionState + ".click"));
 
-            ItemStack item = CustomItemStack.create(enabled ? Material.MAP : Material.PAPER, lore);
+            ItemStack item = SF4Items.create(enabled ? Material.MAP : Material.PAPER, lore);
             return Optional.of(item);
         }
     }
@@ -65,13 +65,13 @@ class LearningAnimationOption implements SlimefunGuideOption<Boolean> {
     @Override
     public Optional<Boolean> getSelectedOption(@Nonnull Player p, @Nonnull ItemStack guide) {
         NamespacedKey key = getKey();
-        boolean value = !PersistentDataAPI.hasByte(p, key) || PersistentDataAPI.getByte(p, key) == (byte) 1;
+        boolean value = !SF4DataAPI.hasByte(p, key) || SF4DataAPI.getByte(p, key) == (byte) 1;
         return Optional.of(value);
     }
 
     @Override
     public void setSelectedOption(@Nonnull Player p, @Nonnull ItemStack guide, @Nonnull Boolean value) {
-        PersistentDataAPI.setByte(p, getKey(), (byte) (value.booleanValue() ? 1 : 0));
+        SF4DataAPI.setByte(p, getKey(), (byte) (value.booleanValue() ? 1 : 0));
     }
 
 }

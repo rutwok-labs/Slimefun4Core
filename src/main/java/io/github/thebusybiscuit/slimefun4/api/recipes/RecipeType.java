@@ -22,7 +22,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Items;
 import io.github.bakedlibs.dough.recipes.MinecraftRecipe;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -35,7 +35,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.altar.AncientAlta
 // TODO: Remove this class and rewrite the recipe system
 public class RecipeType implements Keyed {
 
-    public static final RecipeType MULTIBLOCK = new RecipeType(new NamespacedKey(Slimefun.instance(), "multiblock"), CustomItemStack.create(Material.BRICKS, "&bMultiBlock", "", "&a&oBuild it in the World"));
+    public static final RecipeType MULTIBLOCK = new RecipeType(new NamespacedKey(Slimefun.instance(), "multiblock"), SF4Items.create(Material.BRICKS, "&bMultiBlock", "", "&a&oBuild it in the World"));
     public static final RecipeType ARMOR_FORGE = new RecipeType(new NamespacedKey(Slimefun.instance(), "armor_forge"), SlimefunItems.ARMOR_FORGE, "", "&a&oCraft it in an Armor Forge");
     public static final RecipeType GRIND_STONE = new RecipeType(new NamespacedKey(Slimefun.instance(), "grind_stone"), SlimefunItems.GRIND_STONE, "", "&a&oGrind it using the Grind Stone");
     public static final RecipeType SMELTERY = new RecipeType(new NamespacedKey(Slimefun.instance(), "smeltery"), SlimefunItems.SMELTERY, "", "&a&oSmelt it using a Smeltery");
@@ -54,9 +54,9 @@ public class RecipeType implements Keyed {
         altar.getRecipes().add(altarRecipe);
     });
 
-    public static final RecipeType MOB_DROP = new RecipeType(new NamespacedKey(Slimefun.instance(), "mob_drop"), CustomItemStack.create(Material.IRON_SWORD, "&bMob Drop"), RecipeType::registerMobDrop, "", "&rKill the specified Mob to obtain this Item");
-    public static final RecipeType BARTER_DROP = new RecipeType(new NamespacedKey(Slimefun.instance(), "barter_drop"), CustomItemStack.create(Material.GOLD_INGOT, "&bBarter Drop"), RecipeType::registerBarterDrop, "&aBarter with piglins for a chance", "&ato obtain this item");
-    public static final RecipeType INTERACT = new RecipeType(new NamespacedKey(Slimefun.instance(), "interact"), CustomItemStack.create(Material.PLAYER_HEAD, "&bInteract", "", "&a&oRight click with this item"));
+    public static final RecipeType MOB_DROP = new RecipeType(new NamespacedKey(Slimefun.instance(), "mob_drop"), SF4Items.create(Material.IRON_SWORD, "&bMob Drop"), RecipeType::registerMobDrop, "", "&rKill the specified Mob to obtain this Item");
+    public static final RecipeType BARTER_DROP = new RecipeType(new NamespacedKey(Slimefun.instance(), "barter_drop"), SF4Items.create(Material.GOLD_INGOT, "&bBarter Drop"), RecipeType::registerBarterDrop, "&aBarter with piglins for a chance", "&ato obtain this item");
+    public static final RecipeType INTERACT = new RecipeType(new NamespacedKey(Slimefun.instance(), "interact"), SF4Items.create(Material.PLAYER_HEAD, "&bInteract", "", "&a&oRight click with this item"));
 
     public static final RecipeType HEATED_PRESSURE_CHAMBER = new RecipeType(new NamespacedKey(Slimefun.instance(), "heated_pressure_chamber"), SlimefunItems.HEATED_PRESSURE_CHAMBER);
     public static final RecipeType FOOD_FABRICATOR = new RecipeType(new NamespacedKey(Slimefun.instance(), "food_fabricator"), SlimefunItems.FOOD_FABRICATOR);
@@ -96,7 +96,7 @@ public class RecipeType implements Keyed {
     }
 
     public RecipeType(NamespacedKey key, ItemStack item, BiConsumer<ItemStack[], ItemStack> callback, String... lore) {
-        this.item = CustomItemStack.create(item, null, lore);
+        this.item = SF4Items.create(item, null, lore);
         this.key = key;
         this.consumer = callback;
 

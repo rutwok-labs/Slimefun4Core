@@ -16,7 +16,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.bakedlibs.dough.blocks.Vein;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Vein;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -184,7 +184,7 @@ public class FluidPump extends SimpleSlimefunItem<BlockTicker> implements Invent
                 return fluid;
             }
         } else if (fluid.getType() == Material.LAVA) {
-            List<Block> list = Vein.find(fluid, RANGE, block -> block.getType() == fluid.getType());
+            List<Block> list = SF4Vein.find(fluid, RANGE, block -> block.getType() == fluid.getType());
 
             for (int i = list.size() - 1; i >= 0; i--) {
                 Block block = list.get(i);
