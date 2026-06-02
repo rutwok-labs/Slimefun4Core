@@ -1,8 +1,30 @@
 # Slimefun 4.0-UNOFFICIAL
 **Modified Version**  
-![Slimefun](https://img.shields.io/badge/Minecraft-1.21.11-62b47a?style=for-the-badge&logo=minecraft) 
-![Java](https://img.shields.io/badge/Java-21-007396?style=for-the-badge&logo=java) 
-![License](https://img.shields.io/badge/License-GNU%20GPLv3-green?style=for-the-badge)
+<hr />
+
+<p align="center">
+    <a href="https://github.com/rutwok-labs/Slimefun4Core/actions">
+        <img alt="Build Status" src="https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge" />
+    </a>
+    <a href="https://modrinth.com/plugin/slimefuncore">
+        <img alt="Downloads" src="https://img.shields.io/modrinth/dt/slimefuncore?style=for-the-badge&logo=modrinth" />
+    </a>
+    <a href="https://modrinth.com/plugin/slimefuncore">
+        <img alt="Latest Version" src="https://img.shields.io/modrinth/v/slimefuncore?style=for-the-badge&logo=modrinth" />
+    </a>
+   <a href="https://discord.gg/3ymnYRqg">
+        <img alt="Discord" src="https://img.shields.io/badge/Discord-Join%20Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
+ </a>
+</p>
+
+<p align="center">
+    <img alt="Minecraft" src="https://img.shields.io/badge/Minecraft-1.21.11-62B47A?style=for-the-badge&logo=minecraft" />
+    <img alt="Java" src="https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk" />
+    <img alt="License" src="https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge" />
+</p>
+
+<hr />
+
 
 Slimefun is a plugin which turns your Minecraft server into a **modpack without installing mods**. It adds a huge amount of content including advanced technology, powerful magic, machines, and full automation systems.
 
