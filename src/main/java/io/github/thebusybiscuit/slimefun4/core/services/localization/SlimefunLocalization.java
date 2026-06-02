@@ -150,7 +150,7 @@ public abstract class SlimefunLocalization implements Keyed {
         }
     }
 
-    private @Nonnull FileConfiguration getDefaultFile(@Nonnull LanguageFile file) {
+    private @Nonnull FileConfiguration getEnglishFile(@Nonnull LanguageFile file) {
         Language language = getLanguage(LanguagePreset.ENGLISH.getLanguageCode());
 
         if (language == null) {
@@ -167,7 +167,17 @@ public abstract class SlimefunLocalization implements Keyed {
     }
 
     @ParametersAreNonnullByDefault
-    private @Nullable String getStringOrNull(@Nullable Language language, LanguageFile file, String path) {
+    private @Nullable String readString(@Nullable Language language, LanguageFile file, String path) {
+        if (language == null) {
+            return null;
+        }
+
+        FileConfiguration config = language.getFile(file);
+        return config != null ? config.getString(path) : null;
+    }
+
+    @ParametersAreNonnullByDefault
+    private @Nullable String resolveString(@Nullable Language language, LanguageFile file, String path) {
         Validate.notNull(file, "You need to provide a LanguageFile!");
         Validate.notNull(path, "The path cannot be null!");
 
@@ -176,23 +186,28 @@ public abstract class SlimefunLocalization implements Keyed {
             return "Error: No language present";
         }
 
-        FileConfiguration config = language.getFile(file);
+        String value = readString(language, file, path);
+        if (value != null) {
+            return value;
+        }
 
-        if (config != null) {
-            String value = config.getString(path);
+        // Fallback step 2: server default language from config.yml/messages.yml.
+        Language serverDefault = getDefaultLanguage();
+        if (serverDefault != null && serverDefault != language) {
+            value = readString(serverDefault, file, path);
 
-            // Return the found value (unless null)
             if (value != null) {
                 return value;
             }
         }
 
-        // Fallback to default configuration
-        FileConfiguration defaults = getDefaultFile(file);
-        String defaultValue = defaults.getString(path);
+        // Fallback step 3: bundled English resources.
+        return getEnglishFile(file).getString(path);
+    }
 
-        // Return the default value or an error message
-        return defaultValue != null ? defaultValue : null;
+    @ParametersAreNonnullByDefault
+    private @Nullable String getStringOrNull(@Nullable Language language, LanguageFile file, String path) {
+        return resolveString(language, file, path);
     }
 
     @ParametersAreNonnullByDefault
@@ -202,7 +217,22 @@ public abstract class SlimefunLocalization implements Keyed {
     }
 
     @ParametersAreNonnullByDefault
-    private @Nullable List<String> getStringListOrNull(@Nullable Language language, LanguageFile file, String path) {
+    private @Nullable List<String> readStringList(@Nullable Language language, LanguageFile file, String path) {
+        if (language == null) {
+            return null;
+        }
+
+        FileConfiguration config = language.getFile(file);
+        if (config == null) {
+            return null;
+        }
+
+        List<String> value = config.getStringList(path);
+        return value.isEmpty() ? null : value;
+    }
+
+    @ParametersAreNonnullByDefault
+    private @Nullable List<String> resolveStringList(@Nullable Language language, LanguageFile file, String path) {
         Validate.notNull(file, "You need to provide a LanguageFile!");
         Validate.notNull(path, "The path cannot be null!");
 
@@ -211,23 +241,30 @@ public abstract class SlimefunLocalization implements Keyed {
             return Arrays.asList("Error: No language present");
         }
 
-        FileConfiguration config = language.getFile(file);
+        List<String> value = readStringList(language, file, path);
+        if (value != null) {
+            return value;
+        }
 
-        if (config != null) {
-            List<String> value = config.getStringList(path);
-
-            // Return the found value (unless empty)
-            if (!value.isEmpty()) {
+        // Fallback step 2: server default language from config.yml/messages.yml.
+        Language serverDefault = getDefaultLanguage();
+        if (serverDefault != null && serverDefault != language) {
+            value = readStringList(serverDefault, file, path);
+            if (value != null) {
                 return value;
             }
         }
 
-        // Fallback to default configuration
-        FileConfiguration defaults = getDefaultFile(file);
-        List<String> defaultValue = defaults.getStringList(path);
+        // Fallback step 3: bundled English resources.
+        List<String> defaultValue = getEnglishFile(file).getStringList(path);
 
         // Return the default value or an error message
         return !defaultValue.isEmpty() ? defaultValue : null;
+    }
+
+    @ParametersAreNonnullByDefault
+    private @Nullable List<String> getStringListOrNull(@Nullable Language language, LanguageFile file, String path) {
+        return resolveStringList(language, file, path);
     }
 
     @ParametersAreNonnullByDefault
@@ -239,22 +276,20 @@ public abstract class SlimefunLocalization implements Keyed {
     public @Nonnull String getMessage(@Nonnull String key) {
         Validate.notNull(key, "Message key must not be null!");
 
-        Language language = getDefaultLanguage();
+        return resolveMessage(null, key);
+    }
 
-        String message = language == null ? null : language.getFile(LanguageFile.MESSAGES).getString(key);
+    public @Nonnull String resolveMessage(@Nullable Player p, @Nonnull String key) {
+        Validate.notNull(key, "Message key must not be null!");
 
-        if (message == null) {
-            return getDefaultFile(LanguageFile.MESSAGES).getString(key);
-        }
-
-        return message;
+        return getString(p == null ? getDefaultLanguage() : getLanguage(p), LanguageFile.MESSAGES, key);
     }
 
     public @Nonnull String getMessage(@Nonnull Player p, @Nonnull String key) {
         Validate.notNull(p, "Player must not be null!");
         Validate.notNull(key, "Message key must not be null!");
 
-        return getString(getLanguage(p), LanguageFile.MESSAGES, key);
+        return resolveMessage(p, key);
     }
 
     /**

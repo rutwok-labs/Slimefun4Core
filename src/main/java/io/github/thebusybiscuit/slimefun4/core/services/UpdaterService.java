@@ -4,14 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -31,8 +33,13 @@ import io.github.bakedlibs.dough.updater.BlobBuildUpdater;
 import io.github.bakedlibs.dough.updater.PluginUpdater;
 import io.github.bakedlibs.dough.versions.PrefixedVersion;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunBranch;
+import io.github.thebusybiscuit.slimefun4.core.services.updater.CacheManager;
+import io.github.thebusybiscuit.slimefun4.core.services.updater.CacheManager.CachedRelease;
+import io.github.thebusybiscuit.slimefun4.core.services.updater.CompatibilityResolver;
+import io.github.thebusybiscuit.slimefun4.core.services.updater.CompatibilityResolver.Environment;
+import io.github.thebusybiscuit.slimefun4.core.services.updater.ModrinthClient;
+import io.github.thebusybiscuit.slimefun4.core.services.updater.StartupLogger;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.utils.JsonUtils;
 
 /**
  * This Class represents our {@link PluginUpdater} Service.
@@ -44,10 +51,12 @@ import io.github.thebusybiscuit.slimefun4.utils.JsonUtils;
 public class UpdaterService {
 
     private static final String DEFAULT_MODRINTH_PROJECT = "slimefuncore";
-    private static final String USER_AGENT = "SlimefunCoreV4.0-Updater";
     private static final String MODRINTH_VERSION_ENDPOINT = "https://api.modrinth.com/v2/project/%s/version?game_versions=%s&loaders=%s";
-    private static final Pattern BUILD_NUMBER_PATTERN = Pattern.compile("(\\d{4})(?=\\.jar$)");
-    private static final HttpClient HTTP_CLIENT = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NORMAL).build();
+    private static final Pattern BUILD_NUMBER_PATTERN = Pattern.compile("(\\d{4,})(?=\\.jar$)");
+    private static final int DEFAULT_CACHE_TTL_HOURS = 6;
+    private static final int DEFAULT_TIMEOUT_SECONDS = 10;
+    private static final int DEFAULT_RETRIES = 2;
+    private static final String WARNING_BORDER = "****************************************************";
 
     private final Slimefun plugin;
     private final File pluginFile;
@@ -168,7 +177,7 @@ public class UpdaterService {
     }
 
     private void printBorder() {
-        plugin.getLogger().log(Level.WARNING, "#######################################################");
+        plugin.getLogger().log(Level.WARNING, WARNING_BORDER);
     }
 
     private void checkUnofficialReleaseAsync() {
@@ -225,19 +234,31 @@ public class UpdaterService {
     }
 
     private void checkUnofficialRelease(boolean announceToConsole) {
+        StartupLogger startupLogger = new StartupLogger(plugin.getLogger());
+        CompatibilityResolver compatibilityResolver = new CompatibilityResolver();
+        Environment environment = compatibilityResolver.detect(plugin);
+
         try {
-            ReleaseInfo latestRelease = fetchLatestModrinthRelease();
+            logEnvironment(startupLogger, environment);
+
+            CacheManager cacheManager = new CacheManager(Duration.ofHours(getCacheTtlHours()), startupLogger);
+            ModrinthClient client = createModrinthClient();
+            ReleaseInfo latestRelease = fetchLatestModrinthRelease(startupLogger, compatibilityResolver, cacheManager, client, environment);
             this.latestRelease = latestRelease;
             this.lastCheckCompleted = true;
             this.lastCheckError = null;
             Integer currentBuild = parseBuildNumber(pluginFile.getName());
 
             if (latestRelease == null) {
-                if (announceToConsole) {
-                    plugin.getLogger().log(Level.INFO, "Could not determine the latest Modrinth release for project \"{0}\".", getModrinthProject());
-                }
+                startupLogger.warning("No compatible build found for " + environment.minecraftVersion());
+                startupLogger.warning("Plugin loading continued safely.");
                 return;
             }
+
+            startupLogger.info("Compatible build found: " + latestRelease.versionNumber());
+            startupLogger.info("Supports: " + latestRelease.gameVersion());
+            startupLogger.info("Compatibility validation passed.");
+            startupLogger.info("Loading compatible core...");
 
             if (currentBuild == null || latestRelease.buildNumber() == null) {
                 if (announceToConsole) {
@@ -284,7 +305,8 @@ public class UpdaterService {
             this.lastCheckCompleted = true;
             this.lastCheckError = x.getMessage();
             if (announceToConsole) {
-                plugin.getLogger().log(Level.WARNING, "Failed to check unofficial Modrinth releases: " + x.getMessage());
+                startupLogger.warning("Failed to check unofficial Modrinth releases: " + x.getMessage());
+                startupLogger.warning("Plugin loading continued safely.");
             }
 
             if (x instanceof InterruptedException) {
@@ -293,22 +315,42 @@ public class UpdaterService {
         }
     }
 
-    private @Nullable ReleaseInfo fetchLatestModrinthRelease() throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder(createModrinthVersionUri())
-            .header("User-Agent", USER_AGENT)
-            .header("Accept", "application/json")
-            .GET()
-            .build();
-        HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+    private void logEnvironment(@Nonnull StartupLogger logger, @Nonnull Environment environment) {
+        logger.info("Detecting server environment...");
+        logger.info("Platform: " + environment.platform());
+        logger.info("Minecraft: " + environment.minecraftVersion() + "  Java: " + environment.javaVersion());
+    }
 
-        if (response.statusCode() >= 400) {
-            return null;
-        }
+    private @Nullable ReleaseInfo fetchLatestModrinthRelease(
+        @Nonnull StartupLogger logger,
+        @Nonnull CompatibilityResolver resolver,
+        @Nonnull CacheManager cacheManager,
+        @Nonnull ModrinthClient client,
+        @Nonnull Environment environment
+    ) throws IOException, InterruptedException {
+        try {
+            logger.info("Querying Modrinth API...");
+            JsonArray versions = client.fetchVersions(createModrinthVersionUri(environment.minecraftVersion(), environment.queryLoaders()));
+            logger.info("Modrinth check: live API");
+            ReleaseInfo release = selectCompatibleRelease(versions, resolver, environment);
 
-        JsonArray versions = JsonUtils.parseString(response.body()).getAsJsonArray();
-        if (versions.isEmpty()) {
-            return null;
+            if (release != null) {
+                cacheManager.save(toCachedRelease(release));
+            }
+
+            return release;
+        } catch (IOException x) {
+            logger.warning("Live Modrinth API check failed: " + x.getMessage());
+            return cacheManager.load(environment.minecraftVersion()).map(this::fromCachedRelease).orElseThrow(() -> x);
         }
+    }
+
+    private @Nullable ReleaseInfo selectCompatibleRelease(
+        @Nonnull JsonArray versions,
+        @Nonnull CompatibilityResolver resolver,
+        @Nonnull Environment environment
+    ) {
+        List<ReleaseInfo> compatible = new ArrayList<>();
 
         for (JsonElement element : versions) {
             if (!element.isJsonObject()) {
@@ -319,13 +361,19 @@ public class UpdaterService {
             String versionNumber = getAsString(version, "version_number");
             String versionId = getAsString(version, "id");
             String publishedAtRaw = getAsString(version, "date_published");
-            JsonArray files = version.has("files") && version.get("files").isJsonArray() ? version.getAsJsonArray("files") : null;
+            JsonArray gameVersions = getAsArray(version, "game_versions");
+            JsonArray loaders = getAsArray(version, "loaders");
+            JsonArray files = getAsArray(version, "files");
 
-            if (versionNumber == null || versionId == null || publishedAtRaw == null || files == null) {
+            if (versionNumber == null || versionId == null || publishedAtRaw == null || gameVersions == null || loaders == null || files == null) {
                 continue;
             }
 
-            JsonObject selectedFile = selectModrinthJar(files);
+            if (!resolver.supportsGameVersion(gameVersions, environment.minecraftVersion()) || !resolver.supportsLoader(loaders, environment.compatibleLoaders())) {
+                continue;
+            }
+
+            JsonObject selectedFile = selectPrimaryModrinthJar(files);
             if (selectedFile == null) {
                 continue;
             }
@@ -333,21 +381,28 @@ public class UpdaterService {
             String assetName = getAsString(selectedFile, "filename");
             String downloadUrl = getAsString(selectedFile, "url");
 
-            if (assetName == null || downloadUrl == null) {
+            if (assetName == null || downloadUrl == null || !isSafeJarName(assetName)) {
+                continue;
+            }
+
+            Instant publishedAt;
+            try {
+                publishedAt = Instant.parse(publishedAtRaw);
+            } catch (RuntimeException ignored) {
                 continue;
             }
 
             Integer buildNumber = parseBuildNumber(assetName);
             String projectUrl = "https://modrinth.com/plugin/" + getModrinthProject() + "/version/" + versionId;
-            return new ReleaseInfo(versionNumber, projectUrl, Instant.parse(publishedAtRaw), assetName, downloadUrl, buildNumber);
+            compatible.add(new ReleaseInfo(versionNumber, projectUrl, publishedAt, assetName, downloadUrl, buildNumber, environment.minecraftVersion()));
         }
 
-        return null;
+        return compatible.stream()
+            .max(Comparator.comparing(ReleaseInfo::publishedAt))
+            .orElse(null);
     }
 
-    private @Nullable JsonObject selectModrinthJar(@Nonnull JsonArray files) {
-        JsonObject fallback = null;
-
+    private @Nullable JsonObject selectPrimaryModrinthJar(@Nonnull JsonArray files) {
         for (JsonElement fileElement : files) {
             if (!fileElement.isJsonObject()) {
                 continue;
@@ -356,20 +411,41 @@ public class UpdaterService {
             JsonObject file = fileElement.getAsJsonObject();
             String fileName = getAsString(file, "filename");
 
-            if (fileName == null || !fileName.endsWith(".jar") || fileName.endsWith("-sources.jar")) {
+            if (fileName == null || !isSafeJarName(fileName) || fileName.endsWith("-sources.jar")) {
                 continue;
             }
 
             if (file.has("primary") && file.get("primary").getAsBoolean()) {
                 return file;
             }
-
-            if (fallback == null) {
-                fallback = file;
-            }
         }
 
-        return fallback;
+        return null;
+    }
+
+    private @Nonnull CachedRelease toCachedRelease(@Nonnull ReleaseInfo release) {
+        return new CachedRelease(
+            release.versionNumber(),
+            release.assetName(),
+            release.downloadUrl(),
+            System.currentTimeMillis(),
+            release.gameVersion(),
+            release.projectUrl(),
+            release.publishedAt(),
+            release.buildNumber()
+        );
+    }
+
+    private @Nonnull ReleaseInfo fromCachedRelease(@Nonnull CachedRelease release) {
+        return new ReleaseInfo(
+            release.version(),
+            release.projectUrl(),
+            release.publishedAt(),
+            release.assetName(),
+            release.downloadUrl(),
+            release.buildNumber(),
+            release.gameVersion()
+        );
     }
 
     private @Nullable Integer parseBuildNumber(@Nonnull String fileName) {
@@ -394,32 +470,29 @@ public class UpdaterService {
         return object.get(key).getAsString();
     }
 
-    private @Nonnull URI createModrinthVersionUri() {
-        String project = getModrinthProject();
-        String gameVersions = encodeJsonArray(getCurrentGameVersion());
-        String loaders = encodeJsonArray("paper", "purpur", "spigot", "bukkit");
-        return URI.create(String.format(MODRINTH_VERSION_ENDPOINT, project, gameVersions, loaders));
+    private @Nullable JsonArray getAsArray(@Nonnull JsonObject object, @Nonnull String key) {
+        return object.has(key) && object.get(key).isJsonArray() ? object.getAsJsonArray(key) : null;
     }
 
-    private @Nonnull String encodeJsonArray(@Nonnull String... values) {
+    private @Nonnull URI createModrinthVersionUri(@Nonnull String gameVersion, @Nonnull List<String> loaders) {
+        String project = getModrinthProject();
+        String gameVersions = encodeJsonArray(List.of(gameVersion));
+        return URI.create(String.format(MODRINTH_VERSION_ENDPOINT, project, gameVersions, encodeJsonArray(loaders)));
+    }
+
+    private @Nonnull String encodeJsonArray(@Nonnull List<String> values) {
         StringBuilder builder = new StringBuilder("[");
 
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.size(); i++) {
             if (i > 0) {
                 builder.append(',');
             }
 
-            builder.append('"').append(values[i]).append('"');
+            builder.append('"').append(values.get(i)).append('"');
         }
 
         builder.append(']');
         return URLEncoder.encode(builder.toString(), StandardCharsets.UTF_8);
-    }
-
-    private @Nonnull String getCurrentGameVersion() {
-        String bukkitVersion = plugin.getServer().getBukkitVersion();
-        int separator = bukkitVersion.indexOf('-');
-        return separator >= 0 ? bukkitVersion.substring(0, separator) : bukkitVersion;
     }
 
     private @Nonnull String getModrinthProject() {
@@ -431,8 +504,34 @@ public class UpdaterService {
         return Slimefun.getCfg().getBoolean("options.auto-download-update");
     }
 
+    private int getCacheTtlHours() {
+        int ttl = Slimefun.getCfg().getInt("options.modrinth-cache-ttl-hours");
+        return ttl > 0 ? ttl : DEFAULT_CACHE_TTL_HOURS;
+    }
+
+    private int getTimeoutSeconds() {
+        int timeout = Slimefun.getCfg().getInt("options.modrinth-timeout-seconds");
+        return timeout > 0 ? timeout : DEFAULT_TIMEOUT_SECONDS;
+    }
+
+    private int getRetries() {
+        int retries = Slimefun.getCfg().getInt("options.modrinth-retries");
+        return retries > 0 ? Math.min(DEFAULT_RETRIES, retries) : DEFAULT_RETRIES;
+    }
+
+    private @Nonnull ModrinthClient createModrinthClient() {
+        return new ModrinthClient(Duration.ofSeconds(getTimeoutSeconds()), getRetries());
+    }
+
     private boolean downloadLatestRelease(@Nonnull ReleaseInfo latestRelease) {
+        Path temporary = null;
+
         try {
+            if (!isSafeJarName(latestRelease.assetName())) {
+                plugin.getLogger().log(Level.WARNING, "Rejected Modrinth asset with unsafe jar name: {0}", latestRelease.assetName());
+                return false;
+            }
+
             File updateFolder = plugin.getServer().getUpdateFolderFile();
 
             if (!updateFolder.exists() && !updateFolder.mkdirs()) {
@@ -440,29 +539,20 @@ public class UpdaterService {
                 return false;
             }
 
-            Path target = updateFolder.toPath().resolve(latestRelease.assetName());
-            Path temporary = Files.createTempFile(updateFolder.toPath(), "slimefun-update-", ".jar");
+            Path updatePath = updateFolder.toPath();
+            Path target = updatePath.resolve(latestRelease.assetName());
+            temporary = Files.createTempFile(updatePath, "slimefun-update-", ".jar.tmp");
+            createModrinthClient().downloadFile(URI.create(latestRelease.downloadUrl()), temporary);
 
-            try {
-                HttpRequest request = HttpRequest.newBuilder(URI.create(latestRelease.downloadUrl()))
-                    .header("User-Agent", USER_AGENT)
-                    .GET()
-                    .build();
-
-                HttpResponse<Path> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofFile(temporary));
-
-                if (response.statusCode() >= 400) {
-                    plugin.getLogger().log(Level.WARNING, "Failed to download the latest Modrinth release asset. Response code: {0}", response.statusCode());
-                    Files.deleteIfExists(temporary);
-                    return false;
-                }
-
-                Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING);
-                return true;
-            } finally {
-                Files.deleteIfExists(temporary);
+            if (!Files.isRegularFile(temporary) || Files.size(temporary) <= 0L) {
+                plugin.getLogger().log(Level.WARNING, "Rejected downloaded Modrinth asset because the temporary jar is empty or missing.");
+                return false;
             }
-        } catch (IOException | InterruptedException x) {
+
+            moveAtomically(temporary, target);
+            temporary = null;
+            return true;
+        } catch (IOException | InterruptedException | IllegalArgumentException x) {
             plugin.getLogger().log(Level.WARNING, "Failed to download the latest unofficial Modrinth release: " + x.getMessage());
 
             if (x instanceof InterruptedException) {
@@ -470,11 +560,33 @@ public class UpdaterService {
             }
 
             return false;
+        } finally {
+            if (temporary != null) {
+                try {
+                    Files.deleteIfExists(temporary);
+                } catch (IOException ignored) {
+                    // The next startup can safely overwrite a stale temp file.
+                }
+            }
         }
     }
 
+    private void moveAtomically(@Nonnull Path source, @Nonnull Path target) throws IOException {
+        try {
+            Files.move(source, target, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+        } catch (AtomicMoveNotSupportedException ignored) {
+            Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
+
+    private boolean isSafeJarName(@Nonnull String fileName) {
+        String lowerCase = fileName.toLowerCase();
+        return lowerCase.endsWith(".jar") && !fileName.contains("/") && !fileName.contains("\\");
+    }
+
     private record ReleaseInfo(@Nonnull String versionNumber, @Nonnull String projectUrl, @Nonnull Instant publishedAt,
-                               @Nonnull String assetName, @Nonnull String downloadUrl, @Nullable Integer buildNumber) {}
+                               @Nonnull String assetName, @Nonnull String downloadUrl, @Nullable Integer buildNumber,
+                               @Nonnull String gameVersion) {}
 
     public record UpdateStatus(
         @Nonnull SlimefunBranch branch,

@@ -1,9 +1,10 @@
 package io.github.thebusybiscuit.slimefun4.core.services.localization;
 
 import java.util.Arrays;
-import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.ToDoubleFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,10 +30,11 @@ import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
  */
 public final class Language {
 
-    private final Map<LanguageFile, FileConfiguration> files = new EnumMap<>(LanguageFile.class);
+    private final Map<LanguageFileDescriptor, FileConfiguration> files = new LinkedHashMap<>();
 
     private final String id;
     private final ItemStack item;
+    private ToDoubleFunction<Language> progressProvider = language -> 0.0;
     private double progress = -1;
 
     /**
@@ -75,7 +77,7 @@ public final class Language {
             return 100.0;
         } else {
             if (progress < 0) {
-                progress = Slimefun.getLocalization().calculateProgress(this);
+                progress = progressProvider.applyAsDouble(this);
             }
 
             return progress;
@@ -87,11 +89,28 @@ public final class Language {
         return files.get(file);
     }
 
+    @Nullable
+    FileConfiguration getFile(@Nonnull LanguageFileDescriptor file) {
+        return files.get(file);
+    }
+
     public void setFile(@Nonnull LanguageFile file, @Nonnull FileConfiguration config) {
+        setFile((LanguageFileDescriptor) file, config);
+    }
+
+    public void setFile(@Nonnull LanguageFileDescriptor file, @Nonnull FileConfiguration config) {
         Validate.notNull(file, "The provided file should not be null.");
         Validate.notNull(config, "The provided config should not be null.");
 
         files.put(file, config);
+        progress = -1;
+    }
+
+    public void setTranslationProgressProvider(@Nonnull ToDoubleFunction<Language> progressProvider) {
+        Validate.notNull(progressProvider, "The progress provider cannot be null.");
+
+        this.progressProvider = progressProvider;
+        progress = -1;
     }
 
     /**
@@ -133,6 +152,15 @@ public final class Language {
 
     @Nonnull
     FileConfiguration[] getFiles() {
+        // @formatter:off
+        return LanguageFileRegistry.getFiles().stream()
+                .map(this::getFile)
+                .toArray(FileConfiguration[]::new);
+        // @formatter:on
+    }
+
+    @Nonnull
+    FileConfiguration[] getCoreFiles() {
         // @formatter:off
         return Arrays.stream(LanguageFile.valuesCached)
                 .map(this::getFile)

@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Compatibility: use a stable per-build session stamp for the short YYNN build-number generator. -->
         <maven.build.timestamp.format>yyyyMMddHHmmssSSS</maven.build.timestamp.format>
-        <!-- Compatibility: jar names use a short YYNN build number such as 2601. -->
+        <!-- Compatibility: jar names use compact rolling build numbers such as 2601, 2699, 2700. -->
         <short.build.number>2600</short.build.number>
 
         <!-- Target Java 21 -->
@@ -440,9 +440,9 @@
         <!-- Shaded packages -->
 
         <dependency>
-            <groupId>com.github.Slimefun.dough</groupId>
+            <groupId>com.github.rutwok-labs.dough-core</groupId>
             <artifactId>dough-api</artifactId>
-            <version>cb22e71335</version>
+            <version>1.3.12</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

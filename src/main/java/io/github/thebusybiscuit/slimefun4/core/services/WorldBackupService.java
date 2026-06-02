@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -189,11 +188,6 @@ public class WorldBackupService implements Runnable {
     }
 
     private void uploadToCloud(@Nonnull Path file) {
-        CloudStorageProvider provider = (localFile, remotePath) -> {
-            Slimefun.logger().info("Cloud upload stub: " + localFile.getFileName() + " -> not yet configured");
-            return CompletableFuture.completedFuture(false);
-        };
-
-        provider.upload(file, "world-backups/" + file.getFileName());
+        // Cloud uploads are intentionally disabled until a provider is configured.
     }
 }

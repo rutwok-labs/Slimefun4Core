@@ -25,6 +25,12 @@ import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 
 class PlayerLanguageOption implements SlimefunGuideOption<String> {
 
+    private static final int HEADER_SIZE = 9;
+    private static final int BACK_SLOT = 1;
+    private static final int TRANSLATION_HELP_SLOT = 7;
+    private static final int DEFAULT_LANGUAGE_SLOT = 9;
+    private static final int LANGUAGE_START_SLOT = 10;
+
     @Override
     public SlimefunAddon getAddon() {
         return Slimefun.instance();
@@ -80,28 +86,45 @@ class PlayerLanguageOption implements SlimefunGuideOption<String> {
 
         menu.setEmptySlotsClickable(false);
         menu.addMenuOpeningHandler(SoundEffect.GUIDE_LANGUAGE_OPEN_SOUND::playFor);
+        addHeader(menu, p, guide);
+        addDefaultLanguage(menu, p, guide);
+        addLanguages(menu, p, guide);
 
-        for (int i = 0; i < 9; i++) {
-            if (i == 1) {
-                menu.addItem(1, ChestMenuUtils.getBackButton(p, "", "&7" + Slimefun.getLocalization().getMessage(p, "guide.back.settings")), (pl, slot, item, action) -> {
-                    SlimefunGuideSettings.openSettings(pl, guide);
-                    return false;
-                });
-            } else if (i == 7) {
-                menu.addItem(7, SF4Items.create(SlimefunUtils.getCustomHead(HeadTexture.ADD_NEW_LANGUAGE.getTexture()), Slimefun.getLocalization().getMessage(p, "guide.languages.translations.name"), "", "&7\u21E8 &e" + Slimefun.getLocalization().getMessage(p, "guide.languages.translations.lore")), (pl, slot, item, action) -> {
-                    ChatUtils.sendURL(pl, "https://github.com/Slimefun/Slimefun4/wiki/Translating-Slimefun");
-                    pl.closeInventory();
-                    return false;
-                });
+        menu.open(p);
+    }
+
+    private void addHeader(ChestMenu menu, Player p, ItemStack guide) {
+        for (int i = 0; i < HEADER_SIZE; i++) {
+            if (i == BACK_SLOT) {
+                addBackButton(menu, p, guide);
+            } else if (i == TRANSLATION_HELP_SLOT) {
+                addTranslationHelpButton(menu, p);
             } else {
                 menu.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
             }
         }
+    }
 
+    private void addBackButton(ChestMenu menu, Player p, ItemStack guide) {
+        menu.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(p, "", "&7" + Slimefun.getLocalization().getMessage(p, "guide.back.settings")), (pl, slot, item, action) -> {
+            SlimefunGuideSettings.openSettings(pl, guide);
+            return false;
+        });
+    }
+
+    private void addTranslationHelpButton(ChestMenu menu, Player p) {
+        menu.addItem(TRANSLATION_HELP_SLOT, SF4Items.create(SlimefunUtils.getCustomHead(HeadTexture.ADD_NEW_LANGUAGE.getTexture()), Slimefun.getLocalization().getMessage(p, "guide.languages.translations.name"), "", "&7\u21E8 &e" + Slimefun.getLocalization().getMessage(p, "guide.languages.translations.lore")), (pl, slot, item, action) -> {
+            ChatUtils.sendURL(pl, "https://github.com/Slimefun/Slimefun4/wiki/Translating-Slimefun");
+            pl.closeInventory();
+            return false;
+        });
+    }
+
+    private void addDefaultLanguage(ChestMenu menu, Player p, ItemStack guide) {
         Language defaultLanguage = Slimefun.getLocalization().getDefaultLanguage();
         String defaultLanguageString = Slimefun.getLocalization().getMessage(p, "languages.default");
 
-        menu.addItem(9, SF4Items.create(defaultLanguage.getItem(), ChatColor.GRAY + defaultLanguageString + ChatColor.DARK_GRAY + " (" + defaultLanguage.getName(p) + ")", "", "&7\u21E8 &e" + Slimefun.getLocalization().getMessage(p, "guide.languages.select-default")), (pl, i, item, action) -> {
+        menu.addItem(DEFAULT_LANGUAGE_SLOT, SF4Items.create(defaultLanguage.getItem(), ChatColor.GRAY + defaultLanguageString + ChatColor.DARK_GRAY + " (" + defaultLanguage.getName(p) + ")", "", "&7\u21E8 &e" + Slimefun.getLocalization().getMessage(p, "guide.languages.select-default")), (pl, i, item, action) -> {
             Slimefun.instance().getServer().getPluginManager().callEvent(new PlayerLanguageChangeEvent(pl, Slimefun.getLocalization().getLanguage(pl), defaultLanguage));
             setSelectedOption(pl, guide, null);
 
@@ -110,8 +133,10 @@ class PlayerLanguageOption implements SlimefunGuideOption<String> {
             SlimefunGuideSettings.openSettings(pl, guide);
             return false;
         });
+    }
 
-        int slot = 10;
+    private void addLanguages(ChestMenu menu, Player p, ItemStack guide) {
+        int slot = LANGUAGE_START_SLOT;
 
         for (Language language : Slimefun.getLocalization().getLanguages()) {
             menu.addItem(slot, SF4Items.create(language.getItem(), ChatColor.GREEN + language.getName(p), "&b" + language.getTranslationProgress() + '%', "", "&7\u21E8 &e" + Slimefun.getLocalization().getMessage(p, "guide.languages.select")), (pl, i, item, action) -> {
@@ -127,8 +152,6 @@ class PlayerLanguageOption implements SlimefunGuideOption<String> {
 
             slot++;
         }
-
-        menu.open(p);
     }
 
 }

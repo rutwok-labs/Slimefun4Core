@@ -84,6 +84,11 @@ public final class AddonService {
 
     public @Nonnull CompletableFuture<AddonOperationResult> download(@Nonnull String key) {
         return withDefinition(key, definition -> {
+            AddonOperationResult validation = addonLoader.validateInstallCandidate(definition);
+            if (!validation.success()) {
+                return validation;
+            }
+
             AddonDefinition updated = definition.withDownload(true);
             configManager.saveAddon(updated);
             configManager.clearAddonJarDeletionMarker(updated);
@@ -128,6 +133,11 @@ public final class AddonService {
 
     public @Nonnull CompletableFuture<AddonOperationResult> enable(@Nonnull String key) {
         return withDefinition(key, definition -> {
+            AddonOperationResult validation = addonLoader.validateInstallCandidate(definition);
+            if (!validation.success()) {
+                return validation;
+            }
+
             AddonDefinition updated = definition.withEnabled(true).withDownload(true);
             configManager.saveAddon(updated);
             configManager.clearAddonJarDeletionMarker(updated);
@@ -195,6 +205,12 @@ public final class AddonService {
                     AddonCacheEntry cache = configManager.getCacheEntry(definition.key()).orElse(null);
 
                     if (!present) {
+                        AddonOperationResult validation = addonLoader.validateInstallCandidate(definition);
+                        if (!validation.success()) {
+                            plugin.getLogger().warning(validation.message());
+                            continue;
+                        }
+
                         AddonOperationResult result = downloadService.download(definition, updateChecker.inspect(definition, cache));
                         if (!result.success()) {
                             plugin.getLogger().warning(result.message());

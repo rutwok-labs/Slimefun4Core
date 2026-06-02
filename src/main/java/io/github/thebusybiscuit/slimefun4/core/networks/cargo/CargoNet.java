@@ -77,6 +77,19 @@ public class CargoNet extends AbstractItemNetwork implements HologramOwner {
     }
 
     @Override
+    public @Nonnull Optional<Block> getAttachedBlock(@Nonnull Location l) {
+        return super.getAttachedBlock(l);
+    }
+
+    public @Nonnull Set<Location> getInputNodes() {
+        return inputNodes;
+    }
+
+    public @Nonnull Set<Location> getOutputNodes() {
+        return outputNodes;
+    }
+
+    @Override
     public String getId() {
         return "CARGO_NETWORK";
     }

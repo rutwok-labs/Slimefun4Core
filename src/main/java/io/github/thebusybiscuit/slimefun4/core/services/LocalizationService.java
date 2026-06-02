@@ -1,16 +1,14 @@
 package io.github.thebusybiscuit.slimefun4.core.services;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,9 +26,11 @@ import org.bukkit.persistence.PersistentDataType;
 
 import io.github.thebusybiscuit.slimefun4.core.services.localization.Language;
 import io.github.thebusybiscuit.slimefun4.core.services.localization.LanguageFile;
+import io.github.thebusybiscuit.slimefun4.core.services.localization.LanguageFileDescriptor;
+import io.github.thebusybiscuit.slimefun4.core.services.localization.LanguageFileRegistry;
 import io.github.thebusybiscuit.slimefun4.core.services.localization.SlimefunLocalization;
+import io.github.thebusybiscuit.slimefun4.core.services.localization.TranslationProgressCalculator;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
 import io.github.thebusybiscuit.slimefun4.utils.PatternUtils;
 
 /**
@@ -48,6 +48,7 @@ public class LocalizationService extends SlimefunLocalization {
 
     // All supported languages are stored in this LinkedHashMap, it is Linked so we keep the order
     private final Map<String, Language> languages = new LinkedHashMap<>();
+    private final Set<String> loggedStubFiles = ConcurrentHashMap.newKeySet();
     private final boolean translationsEnabled;
     private final Slimefun plugin;
     private final String prefix;
@@ -129,7 +130,7 @@ public class LocalizationService extends SlimefunLocalization {
 
         // Checks if our jar files contains a messages.yml file for that language
         String file = LanguageFile.MESSAGES.getFilePath(id);
-        return !getConfigurationFromStream(file, null).getKeys(false).isEmpty();
+        return !getConfigurationFromStream(file, null, false).getKeys(false).isEmpty();
     }
 
     /**
@@ -174,9 +175,9 @@ public class LocalizationService extends SlimefunLocalization {
             getConfig().clear();
         }
 
-        // Copy defaults
-        for (LanguageFile file : LanguageFile.values()) {
-            if (file != LanguageFile.MESSAGES) {
+        // Copy all non-message resource files for the selected server default language.
+        for (LanguageFileDescriptor file : LanguageFileRegistry.getFiles()) {
+            if (!file.usesServerDefaultConfigDefaults()) {
                 copyToDefaultLanguage(language, file);
             }
         }
@@ -187,18 +188,14 @@ public class LocalizationService extends SlimefunLocalization {
         // Loading in the defaults from our resources folder
         String path = "/languages/" + language + "/messages.yml";
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(plugin.getClass().getResourceAsStream(path), StandardCharsets.UTF_8))) {
-            FileConfiguration config = YamlConfiguration.loadConfiguration(reader);
-            getConfig().getConfiguration().setDefaults(config);
-        } catch (IOException e) {
-            Slimefun.logger().log(Level.SEVERE, e, () -> "Failed to load language file: \"" + path + "\"");
-        }
+        FileConfiguration config = getConfigurationFromStream(path, null);
+        getConfig().getConfiguration().setDefaults(config);
 
         save();
     }
 
     @ParametersAreNonnullByDefault
-    private void copyToDefaultLanguage(String language, LanguageFile file) {
+    private void copyToDefaultLanguage(String language, LanguageFileDescriptor file) {
         FileConfiguration config = getConfigurationFromStream(file.getFilePath(language), null);
         defaultLanguage.setFile(file, config);
     }
@@ -210,14 +207,33 @@ public class LocalizationService extends SlimefunLocalization {
 
         if (hasLanguage(id)) {
             Language language = new Language(id, texture);
+            language.setTranslationProgressProvider(this::calculateProgress);
 
-            for (LanguageFile file : LanguageFile.values()) {
-                FileConfiguration defaults = file == LanguageFile.MESSAGES ? getConfig().getConfiguration() : null;
-                FileConfiguration config = getConfigurationFromStream(file.getFilePath(language), defaults);
-                language.setFile(file, config);
-            }
+            loadLanguageFiles(language, id);
 
             languages.put(id, language);
+        }
+    }
+
+    /**
+     * Loads every registered language file for the given {@link Language}.
+     * The messages.yml file gets server-default defaults because server owners may override chat/UI messages in plugins/Slimefun/messages.yml.
+     */
+    private void loadLanguageFiles(@Nonnull Language language, @Nonnull String id) {
+        for (LanguageFileDescriptor file : LanguageFileRegistry.getFiles()) {
+            FileConfiguration defaults = file.usesServerDefaultConfigDefaults() ? getConfig().getConfiguration() : null;
+            FileConfiguration config = getConfigurationFromStream(file.getFilePath(id), defaults);
+            language.setFile(file, config);
+        }
+    }
+
+    public void registerLanguageFile(@Nonnull LanguageFileDescriptor file) {
+        Validate.notNull(file, "Language file descriptor cannot be null!");
+        LanguageFileRegistry.register(file);
+
+        for (Language language : languages.values()) {
+            FileConfiguration config = getConfigurationFromStream(file.getFilePath(language), null);
+            language.setFile(file, config);
         }
     }
 
@@ -234,51 +250,66 @@ public class LocalizationService extends SlimefunLocalization {
     public double calculateProgress(@Nonnull Language lang) {
         Validate.notNull(lang, "Cannot get the language progress of null");
 
-        Set<String> defaultKeys = getTotalKeys(languages.get("en"));
-
-        if (defaultKeys.isEmpty()) {
+        Language english = languages.get("en");
+        if (english == null) {
             return 0;
         }
-
-        Set<String> keys = getTotalKeys(lang);
-        int matches = 0;
-
-        for (String key : defaultKeys) {
-            if (keys.contains(key)) {
-                matches++;
-            }
+        if (lang.getId().equals("en")) {
+            return 100.0;
         }
 
-        return Math.min(NumberUtils.reparseDouble(100.0 * (matches / (double) defaultKeys.size())), 100.0);
+        return TranslationProgressCalculator.calculate(english, lang);
     }
 
     private @Nonnull FileConfiguration getConfigurationFromStream(@Nonnull String file, @Nullable FileConfiguration defaults) {
+        return getConfigurationFromStream(file, defaults, true);
+    }
+
+    private @Nonnull FileConfiguration getConfigurationFromStream(@Nonnull String file, @Nullable FileConfiguration defaults, boolean reportMissing) {
         InputStream inputStream = plugin.getClass().getResourceAsStream(file);
 
         if (inputStream == null) {
+            if (reportMissing) {
+                Slimefun.logger().log(Level.FINE, "Language file is missing: \"{0}\"", file);
+            }
             return new YamlConfiguration();
         }
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            String content = reader.lines().collect(Collectors.joining("\n"));
+        try (inputStream) {
+            byte[] bytes = inputStream.readAllBytes();
+            String content = new String(bytes, StandardCharsets.UTF_8);
             YamlConfiguration config = new YamlConfiguration();
 
-            /*
-             * Fixes #3400 - Only attempt to load yaml files that contain data.
-             * This is not a perfect fix but should be sufficient to circumvent this issue.
-             */
-            if (PatternUtils.YAML_ENTRY.matcher(content).find()) {
-                config.loadFromString(content);
+            if (isLanguageStub(bytes, content)) {
+                logStubOnce(file);
+                return config;
+            }
 
-                if (defaults != null) {
-                    config.setDefaults(defaults);
-                }
+            if (!PatternUtils.YAML_ENTRY.matcher(content).find()) {
+                Slimefun.logger().log(Level.FINE, "Language file has no YAML entries: \"{0}\"", file);
+                return config;
+            }
+
+            config.loadFromString(content);
+
+            if (defaults != null) {
+                config.setDefaults(defaults);
             }
 
             return config;
         } catch (IOException | InvalidConfigurationException e) {
             Slimefun.logger().log(Level.WARNING, e, () -> "Failed to load language file into memory: \"" + file + "\"");
             return new YamlConfiguration();
+        }
+    }
+
+    private boolean isLanguageStub(byte[] bytes, String content) {
+        return bytes.length <= 4 || content.isBlank();
+    }
+
+    private void logStubOnce(@Nonnull String file) {
+        if (loggedStubFiles.add(file)) {
+            Slimefun.logger().log(Level.FINE, "Skipping placeholder language stub: \"{0}\"", file);
         }
     }
 }

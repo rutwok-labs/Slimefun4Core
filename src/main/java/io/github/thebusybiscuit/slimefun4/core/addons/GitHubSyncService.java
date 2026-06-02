@@ -115,11 +115,18 @@ public final class GitHubSyncService {
             HttpResponse<String> response = client.send(builder.build(), HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
             if (response.statusCode() == 304) {
+                Map<String, AddonDefinition> cachedRemoteAddons = configManager.loadRemoteAddons();
+                if (!cachedRemoteAddons.isEmpty()) {
+                    configManager.saveRemoteAddonsToLocal(cachedRemoteAddons);
+                    addonService.refreshDefinitions();
+                    addonService.syncConfiguredAddons();
+                }
+
                 configManager.saveRemoteSyncState(new RemoteSyncState(
                     state.etag(),
                     state.lastModified(),
                     syncUrl,
-                    "Not modified",
+                    cachedRemoteAddons.isEmpty() ? "Not modified" : "Not modified; local cache refreshed",
                     Instant.now()
                 ));
                 return new RemoteSyncResult(RemoteSyncOutcome.UNCHANGED, "Remote addonmanager.yml has not changed.", null);

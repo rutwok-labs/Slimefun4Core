@@ -13,9 +13,9 @@ import org.apache.commons.lang.Validate;
  * @see SlimefunLocalization
  *
  */
-public enum LanguageFile {
+public enum LanguageFile implements LanguageFileDescriptor {
 
-    MESSAGES("messages.yml"),
+    MESSAGES("messages.yml", true),
     CATEGORIES("categories.yml"),
     RECIPES("recipes.yml"),
     RESOURCES("resources.yml"),
@@ -24,20 +24,38 @@ public enum LanguageFile {
     protected static final LanguageFile[] valuesCached = values();
 
     private final String fileName;
+    private final boolean serverDefaultConfigDefaults;
 
     LanguageFile(@Nonnull String fileName) {
-        this.fileName = fileName;
+        this(fileName, false);
     }
 
+    LanguageFile(@Nonnull String fileName, boolean serverDefaultConfigDefaults) {
+        this.fileName = fileName;
+        this.serverDefaultConfigDefaults = serverDefaultConfigDefaults;
+    }
+
+    @Override
+    @Nonnull
+    public String getFileName() {
+        return fileName;
+    }
+
+    @Override
     @Nonnull
     public String getFilePath(@Nonnull Language language) {
-        return getFilePath(language.getId());
+        return LanguageFileDescriptor.super.getFilePath(language);
     }
 
+    @Override
     @Nonnull
     public String getFilePath(@Nonnull String languageId) {
         Validate.notNull(languageId, "Language id must not be null!");
-        return "/languages/" + languageId + '/' + fileName;
+        return LanguageFileDescriptor.super.getFilePath(languageId);
     }
 
+    @Override
+    public boolean usesServerDefaultConfigDefaults() {
+        return serverDefaultConfigDefaults;
+    }
 }
