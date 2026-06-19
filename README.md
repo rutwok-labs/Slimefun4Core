@@ -25,6 +25,30 @@
 
 <hr />
 
+---
+
+## 📊 Live Statistics
+
+<p align="center">
+    <a href="https://bstats.org/plugin/bukkit/SlimefunCore-V4/30622">
+        <img alt="Servers" src="https://img.shields.io/bstats/servers/30622?style=for-the-badge&label=Servers" />
+    </a>
+    <a href="https://bstats.org/plugin/bukkit/SlimefunCore-V4/30622">
+        <img alt="Players" src="https://img.shields.io/bstats/players/30622?style=for-the-badge&label=Players" />
+    </a>
+</p>
+
+<p align="center">
+    <a href="https://bstats.org/plugin/bukkit/SlimefunCore-V4/30622">
+        <img src="https://bstats.org/signatures/bukkit/SlimefunCore-V4.svg" alt="bStats Statistics">
+    </a>
+</p>
+
+<p align="center">
+    <sub>Statistics powered by bStats</sub>
+</p>
+
+---
 
 Slimefun is a plugin which turns your Minecraft server into a **modpack without installing mods**. It adds a huge amount of content including advanced technology, powerful magic, machines, and full automation systems.
 
