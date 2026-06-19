@@ -55,8 +55,8 @@ public final class StorageFactory {
         return switch (backendType) {
             case "sqlite" -> new SQLiteStorage(plugin);
             case "mysql" -> {
-                plugin.getLogger().log(Level.SEVERE, "MySQL storage is not implemented yet, using legacy YAML storage instead");
-                plugin.getLogger().log(Level.SEVERE, "Server is running with LEGACY YAML storage. If this is not intended, set storage.backend to 'legacy' explicitly.");
+                plugin.getLogger().log(Level.WARNING, "MySQL storage is not implemented yet, using legacy YAML storage instead");
+                plugin.getLogger().log(Level.WARNING, "Server is running with LEGACY YAML storage. If this is not intended, set storage.backend to 'legacy' explicitly.");
                 yield new LegacyStorage();
             }
             default -> new LegacyStorage();

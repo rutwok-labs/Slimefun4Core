@@ -60,17 +60,11 @@ public enum LanguagePreset {
     SINHALA("si-LK", false, "4b26572c48344ee1fc4b2d89fd0866989a3e256ce19ee05384bc3ca76f2409c5"),
     LITHUANIAN("lt", false, "de3d829741976d8330d6947d6eea64ee57aed2f26286ff63844e9089367c11");
 
-    private final String id;
-    private final boolean releaseReady;
-    private final String textureHash;
-    private final TextDirection textDirection;
+    private final LanguageMetadata metadata;
 
     @ParametersAreNonnullByDefault
     LanguagePreset(String id, boolean releaseReady, TextDirection direction, String textureHash) {
-        this.id = id;
-        this.releaseReady = releaseReady;
-        this.textureHash = textureHash;
-        this.textDirection = direction;
+        this.metadata = new LanguageMetadata(id, releaseReady, direction, textureHash);
     }
 
     @ParametersAreNonnullByDefault
@@ -94,7 +88,7 @@ public enum LanguagePreset {
      * @return The language code
      */
     public @Nonnull String getLanguageCode() {
-        return id;
+        return metadata.id();
     }
 
     /**
@@ -104,7 +98,7 @@ public enum LanguagePreset {
      * @return Whether this {@link Language} is "release-ready"
      */
     boolean isReadyForRelease() {
-        return releaseReady;
+        return metadata.releaseReady();
     }
 
     /**
@@ -116,7 +110,7 @@ public enum LanguagePreset {
      * @return The texture hash of this language
      */
     public @Nonnull String getTexture() {
-        return textureHash;
+        return metadata.textureHash();
     }
 
     /**
@@ -126,6 +120,10 @@ public enum LanguagePreset {
      * @return The direction of text for this language
      */
     public @Nonnull TextDirection getTextDirection() {
-        return textDirection;
+        return metadata.textDirection();
+    }
+
+    public @Nonnull LanguageMetadata getMetadata() {
+        return metadata;
     }
 }

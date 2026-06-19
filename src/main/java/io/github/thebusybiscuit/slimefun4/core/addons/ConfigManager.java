@@ -42,8 +42,6 @@ public final class ConfigManager {
           interval-minutes: 3
           fallback-to-local-on-empty: true
           fallback-to-local-on-failure: true
-
-        addons: {}
         """;
 
     private final Slimefun plugin;
@@ -434,9 +432,7 @@ public final class ConfigManager {
         ConfigurationSection versionsSection = section.getConfigurationSection("versions");
 
         if (versionsSection != null) {
-            for (String version : versionsSection.getKeys(false)) {
-                versionUrls.put(version, versionsSection.getString(version, ""));
-            }
+            readDottedKeyStringMap(versionsSection, "", versionUrls);
         }
 
         if (versionUrls.isEmpty()) {
@@ -477,12 +473,28 @@ public final class ConfigManager {
             return urls;
         }
 
-        for (String version : urlsSection.getKeys(false)) {
-            String configuredUrl = urlsSection.getString(version, "");
-            urls.put(version, configuredUrl == null || configuredUrl.isBlank() ? "" : normalizeRemoteUrl(configuredUrl));
+        Map<String, String> rawUrls = new LinkedHashMap<>();
+        readDottedKeyStringMap(urlsSection, "", rawUrls);
+
+        for (Map.Entry<String, String> entry : rawUrls.entrySet()) {
+            String configuredUrl = entry.getValue();
+            urls.put(entry.getKey(), configuredUrl == null || configuredUrl.isBlank() ? "" : normalizeRemoteUrl(configuredUrl));
         }
 
         return urls;
+    }
+
+    private void readDottedKeyStringMap(@Nonnull ConfigurationSection section, @Nonnull String prefix, @Nonnull Map<String, String> values) {
+        for (Map.Entry<String, Object> entry : section.getValues(false).entrySet()) {
+            String key = prefix.isEmpty() ? entry.getKey() : prefix + '.' + entry.getKey();
+            Object value = entry.getValue();
+
+            if (value instanceof ConfigurationSection nestedSection) {
+                readDottedKeyStringMap(nestedSection, key, values);
+            } else {
+                values.put(key, value == null ? "" : value.toString());
+            }
+        }
     }
 
     private @Nonnull String normalizeRemoteUrl(@Nullable String url) {

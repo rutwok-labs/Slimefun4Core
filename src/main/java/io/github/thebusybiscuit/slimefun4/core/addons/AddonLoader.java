@@ -58,12 +58,84 @@ public final class AddonLoader {
                     plugin.getLogger().warning("Managed addon \"" + definition.key() + "\" does not declare a dependency on Slimefun.");
                 }
 
+                if (hasDuplicateJar(description.getName(), jarPath, configManager.resolveAddonPath(definition))) {
+                    plugin.getLogger().warning("Managed addon \"" + definition.name() + "\" conflicts with another installed jar named " + description.getName() + '.');
+                    return false;
+                }
+
+                if (!hasRequiredDependencies(description)) {
+                    plugin.getLogger().warning("Managed addon \"" + definition.name() + "\" is missing one or more hard dependencies.");
+                    return false;
+                }
+
                 return true;
             }
         } catch (Exception x) {
             plugin.getLogger().log(Level.WARNING, "Failed to validate managed addon jar " + jarPath.getFileName(), x);
             return false;
         }
+    }
+
+    public @Nonnull AddonOperationResult validateInstallCandidate(@Nonnull AddonDefinition definition) {
+        Validate.notNull(definition, "Addon definition must not be null");
+
+        Plugin loadedByName = Bukkit.getPluginManager().getPlugin(definition.name());
+        Plugin loadedByKey = Bukkit.getPluginManager().getPlugin(definition.key());
+
+        if (loadedByName != null || loadedByKey != null) {
+            if (hasMatchingJarOnDisk(definition)) {
+                return AddonOperationResult.failure("Addon " + definition.name() + " is already installed. Remove the existing plugin jar before using the managed installer.", null);
+            }
+
+            configManager.appendLog("PluginManager reports " + definition.name() + " as loaded, but no matching jar exists on disk. Treating this as stale state and allowing managed download.");
+        }
+
+        try {
+            Path expectedPath = configManager.resolveAddonPath(definition);
+            String normalizedDefinitionName = definition.name().toLowerCase(java.util.Locale.ROOT);
+
+            for (Path jar : findCandidateJars()) {
+                if (isSameFile(jar, expectedPath)) {
+                    continue;
+                }
+
+                try {
+                    PluginDescriptionFile description = readDescription(jar.toFile());
+                    if (description.getName().equalsIgnoreCase(definition.name()) || description.getName().toLowerCase(java.util.Locale.ROOT).equals(normalizedDefinitionName)) {
+                        return AddonOperationResult.failure("Addon " + definition.name() + " already exists as " + jar.getFileName() + ". Duplicate installs are blocked.", null);
+                    }
+                } catch (InvalidDescriptionException ignored) {
+                    // Ignore non-plugin jars in the server plugins folder.
+                }
+            }
+        } catch (Exception x) {
+            plugin.getLogger().log(Level.WARNING, "Could not complete duplicate addon preflight for " + definition.name(), x);
+            return AddonOperationResult.failure("Could not validate addon install safety for " + definition.name() + ": " + x.getMessage(), x);
+        }
+
+        int javaFeature = Runtime.version().feature();
+        if (javaFeature < 17) {
+            return AddonOperationResult.failure("Addon " + definition.name() + " requires a modern Java runtime. Detected Java " + javaFeature + '.', null);
+        }
+
+        return AddonOperationResult.success("Addon " + definition.name() + " passed install preflight.", false);
+    }
+
+    public boolean hasMatchingJarOnDisk(@Nonnull AddonDefinition definition) {
+        Validate.notNull(definition, "Addon definition must not be null");
+
+        for (Path jar : findCandidateJars()) {
+            try {
+                PluginDescriptionFile description = readDescription(jar.toFile());
+                if (description.getName().equalsIgnoreCase(definition.name()) || description.getName().equalsIgnoreCase(definition.key())) {
+                    return true;
+                }
+            } catch (InvalidDescriptionException ignored) {
+                // Ignore non-plugin jars in the server plugins folder.
+            }
+        }
+
+        return false;
     }
 
     public void loadManagedAddons(@Nonnull Collection<AddonDefinition> definitions) {
@@ -137,6 +209,92 @@ public final class AddonLoader {
             throw x;
         } catch (Exception x) {
             throw new InvalidDescriptionException(x);
+        }
+    }
+
+    private boolean hasRequiredDependencies(@Nonnull PluginDescriptionFile description) throws InvalidDescriptionException {
+        for (String dependency : description.getDepend()) {
+            if (dependency.equalsIgnoreCase(plugin.getName())) {
+                continue;
+            }
+
+            if (Bukkit.getPluginManager().getPlugin(dependency) == null && !repositoryContainsPlugin(dependency)) {
+                plugin.getLogger().warning("Missing hard dependency for managed addon " + description.getName() + ": " + dependency);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean repositoryContainsPlugin(@Nonnull String pluginName) {
+        try {
+            for (File jar : configManager.getRepositoryJars()) {
+                try {
+                    PluginDescriptionFile description = readDescription(jar);
+                    if (description.getName().equalsIgnoreCase(pluginName)) {
+                        return true;
+                    }
+                } catch (InvalidDescriptionException ignored) {
+                    // Ignore invalid jars here, validateAddonJar will report them when selected.
+                }
+            }
+        } catch (Exception x) {
+            plugin.getLogger().log(Level.WARNING, "Failed to inspect managed addon repository dependencies", x);
+        }
+
+        return false;
+    }
+
+    private boolean hasDuplicateJar(@Nonnull String pluginName, @Nonnull Path currentJar, @Nonnull Path expectedManagedJar) throws InvalidDescriptionException {
+        for (Path jar : findCandidateJars()) {
+            if (isSameFile(jar, currentJar) || isSameFile(jar, expectedManagedJar)) {
+                continue;
+            }
+
+            try {
+                PluginDescriptionFile description = readDescription(jar.toFile());
+                if (description.getName().equalsIgnoreCase(pluginName)) {
+                    return true;
+                }
+            } catch (InvalidDescriptionException ignored) {
+                // Ignore invalid jars here, validateAddonJar reports the selected jar explicitly.
+            }
+        }
+
+        return false;
+    }
+
+    private @Nonnull Set<Path> findCandidateJars() {
+        Set<Path> jars = new LinkedHashSet<>();
+        Path pluginsDirectory = plugin.getDataFolder().toPath().getParent();
+
+        if (pluginsDirectory != null && Files.isDirectory(pluginsDirectory)) {
+            try (var stream = Files.list(pluginsDirectory)) {
+                stream
+                    .filter(path -> path.getFileName().toString().endsWith(".jar"))
+                    .forEach(jars::add);
+            } catch (Exception x) {
+                plugin.getLogger().log(Level.WARNING, "Failed to scan server plugin directory for managed addon duplicates", x);
+            }
+        }
+
+        try {
+            for (File jar : configManager.getRepositoryJars()) {
+                jars.add(jar.toPath());
+            }
+        } catch (Exception x) {
+            plugin.getLogger().log(Level.WARNING, "Failed to scan managed addon repository for duplicates", x);
+        }
+
+        return jars;
+    }
+
+    private boolean isSameFile(@Nonnull Path left, @Nonnull Path right) {
+        try {
+            return Files.exists(left) && Files.exists(right) && Files.isSameFile(left, right);
+        } catch (Exception x) {
+            return left.toAbsolutePath().normalize().equals(right.toAbsolutePath().normalize());
         }
     }
 }

@@ -42,12 +42,8 @@ if (Test-Path -LiteralPath $PropertiesPath) {
 
 $nextCount = $currentCount + 1
 
-if ($nextCount -gt 99) {
-    throw "The 4-digit YYNN build number format only supports up to 99 builds per year. Reset or expand the format before building again."
-}
-
-$buildCount = '{0:D2}' -f $nextCount
-$shortBuildNumber = "$currentYear$buildCount"
+$buildCount = if ($nextCount -lt 100) { '{0:D2}' -f $nextCount } else { [string]$nextCount }
+$shortBuildNumber = [string](([int]$currentYear * 100) + $nextCount)
 
 @(
     "# Auto-generated build number for SlimefunCore."

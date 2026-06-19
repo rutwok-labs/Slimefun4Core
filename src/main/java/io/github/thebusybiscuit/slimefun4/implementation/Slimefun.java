@@ -36,6 +36,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import io.github.bakedlibs.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Config;
+import io.github.thebusybiscuit.slimefun4.libraries.bridge.SF4Colors;
 import io.github.bakedlibs.dough.protection.ProtectionManager;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
@@ -274,10 +275,11 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
     private void onPluginStart() {
         long timestamp = System.nanoTime();
         Logger logger = getLogger();
+        sendStartupBanner();
 
         // Check if Paper (<3) is installed
         if (PaperLib.isPaper()) {
-            logger.log(Level.INFO, "Paper was detected! Performance optimizations have been applied.");
+            sendStartupStep("Platform", Bukkit.getName() + " detected - performance optimizations enabled");
         } else {
             PaperLib.suggestPaper(this);
         }
@@ -298,14 +300,15 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
         isNewlyInstalled = !new File("data-storage/Slimefun").exists();
 
         // Creating all necessary Folders
-        logger.log(Level.INFO, "Creating directories...");
+        sendStartupStep("Storage", "Creating directories");
         createDirectories();
 
         // Load various config settings into our cache
+        sendStartupStep("Registry", "Loading cached settings");
         registry.load(this, config);
 
         // Set up localization
-        logger.log(Level.INFO, "Loading language files...");
+        sendStartupStep("Language", "Loading language files");
         String chatPrefix = config.getString("options.chat-prefix");
         String serverDefaultLanguage = config.getString("options.language");
         local = new LocalizationService(this, chatPrefix, serverDefaultLanguage);
@@ -322,40 +325,43 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
 
         // Data storage
         playerStorage = new LegacyStorage();
-        logger.log(Level.INFO, "Using legacy storage for player data");
+        sendStartupStep("Profiles", "Using legacy player storage");
 
         // Compatibility note: embedded bStats now starts directly from the plugin jar instead of downloading an external module.
+        sendStartupStep("Metrics", "Starting analytics services");
         metricsService.start();
         analyticsService.start();
 
         // Starting the Auto-Updater
         if (config.getBoolean("options.auto-update")) {
-            logger.log(Level.INFO, "Starting Auto-Updater...");
+            sendStartupStep("Updater", "Starting compatibility checks");
             updaterService.start();
         } else {
+            sendStartupStep("Updater", "Disabled by config");
             updaterService.disable();
         }
 
         // Registering all GEO Resources
-        logger.log(Level.INFO, "Loading GEO-Resources...");
+        sendStartupStep("Resources", "Loading GEO resources");
         GEOResourcesSetup.setup();
 
-        logger.log(Level.INFO, "Loading Tags...");
+        sendStartupStep("Tags", "Loading item and block tags");
         loadTags();
 
-        logger.log(Level.INFO, "Loading items...");
+        sendStartupStep("Items", "Registering Slimefun items");
         loadItems();
 
-        logger.log(Level.INFO, "Loading researches...");
+        sendStartupStep("Research", "Loading researches");
         loadResearches();
 
         registry.setResearchingEnabled(getResearchCfg().getBoolean("enable-researching"));
         PostSetup.setupWiki();
 
-        logger.log(Level.INFO, "Registering listeners...");
+        sendStartupStep("Events", "Registering listeners");
         registerListeners();
 
         // Initiating various Stuff and all items with a slight delay (0ms after the Server finished loading)
+        sendStartupStep("Runtime", "Queuing recipe, texture, permission and sound refresh");
         runSync(new SlimefunStartupTask(this, () -> {
             textureService.register(registry.getAllSlimefunItems(), true);
             permissionsService.register(registry.getAllSlimefunItems(), true);
@@ -372,14 +378,16 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
 
         // Setting up our commands
         try {
+            sendStartupStep("Commands", "Registering /slimefun and /addon");
             command.register();
         } catch (Exception | LinkageError x) {
             logger.log(Level.SEVERE, "An Exception occurred while registering the /slimefun command", x);
         }
 
+        sendStartupStep("Addons", "Starting managed addon services");
         addonManager.start();
         if (config.getBoolean("slimefun.discord.enabled")) {
-            logger.log(Level.INFO, "[Slimefun] Community Discord: {0}", config.getString("slimefun.discord.invite-url"));
+            sendStartupStep("Discord", "Community invite: " + config.getString("slimefun.discord.invite-url"));
         }
 
         // Armor Update Task
@@ -395,17 +403,18 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
         }
 
         // Starting our tasks
+        sendStartupStep("Tasks", "Starting autosave, holograms and tickers");
         autoSavingService.start(this, config.getInt("options.auto-save-delay-in-minutes"));
         hologramsService.start();
         ticker.start(this);
 
         // Loading integrations
-        logger.log(Level.INFO, "Loading Third-Party plugin integrations...");
+        sendStartupStep("Hooks", "Loading third-party integrations");
         integrations.start();
         gitHubService.start(this);
 
         // Hooray!
-        logger.log(Level.INFO, "Slimefun has finished loading in {0}", getStartupTime(timestamp));
+        sendStartupSuccess(getStartupTime(timestamp));
     }
 
     @Override
@@ -416,6 +425,30 @@ public class Slimefun extends JavaPlugin implements SlimefunAddon {
     @Override
     public String getBugTrackerURL() {
         return "https://github.com/Slimefun/Slimefun4/issues";
+    }
+
+    private void sendStartupBanner() {
+        sendStartupLine("&8+--------------------------------------------------+");
+        sendStartupLine("&8| &b ____  _ _                 __                  &8|");
+        sendStartupLine("&8| &b/ ___|| (_)_ __ ___   ___ / _|_   _ _ __       &8|");
+        sendStartupLine("&8| &b\\___ \\| | | '_ ` _ \\ / _ \\ |_| | | | '_ \\      &8|");
+        sendStartupLine("&8| &b ___) | | | | | | | |  __/  _| |_| | | | |     &8|");
+        sendStartupLine("&8| &b|____/|_|_|_| |_| |_|\\___|_|  \\__,_|_| |_|     &8|");
+        sendStartupLine("&8| &7Core: &f" + getVersion() + " &8| &7MC: &f" + minecraftVersion.getName() + " &8| &7Java: &f" + NumberUtils.getJavaVersion());
+        sendStartupLine("&8+--------------------------------------------------+");
+    }
+
+    private void sendStartupStep(@Nonnull String label, @Nonnull String message) {
+        sendStartupLine("&8[&bSlimefunCore&8] &3LOAD &8| &f" + label + " &8> &7" + message);
+    }
+
+    private void sendStartupSuccess(@Nonnull String startupTime) {
+        sendStartupLine("&8[&bSlimefunCore&8] &aOK   &8| &fLoaded successfully &8> &a" + startupTime);
+        sendStartupLine("&8+--------------------------------------------------+");
+    }
+
+    private void sendStartupLine(@Nonnull String message) {
+        getServer().getConsoleSender().sendMessage(SF4Colors.color(message));
     }
 
     /**

@@ -11,6 +11,12 @@ options:
   auto-download-update: true
   # Modrinth project slug used by unofficial builds for update checks.
   modrinth-project: slimefuncore
+  # How long a successful Modrinth compatibility response can be reused if the API is unavailable.
+  modrinth-cache-ttl-hours: 6
+  # HTTP timeout for Modrinth API and update downloads.
+  modrinth-timeout-seconds: 10
+  # Retry count for transient Modrinth API/download failures (max 2).
+  modrinth-retries: 2
   # Send update notices to players with slimefun.command.update when they join.
   notify-admins-about-updates: true
 
@@ -80,10 +86,10 @@ slimefun:
     include-end: true
   discord:
     enabled: true
-    invite-url: "https://discord.gg/pT8P9gwA"
+    invite-url: "https://discord.gg/27ZparyG"
     show-on-join: true
     show-in-guide: true
-    join-message: "&9&lJoin our Discord! &rhttps://discord.gg/pT8P9gwA"
+    join-message: "&9&lJoin our Discord! &rhttps://discord.gg/27ZparyG"
 
 research-ranks:
 - Chicken

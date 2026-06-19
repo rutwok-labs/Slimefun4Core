@@ -60,10 +60,11 @@ public final class AddonService {
         List<ManagedAddonStatus> statuses = new ArrayList<>();
 
         for (AddonDefinition definition : compatibleDefinitions().stream().sorted(Comparator.comparing(AddonDefinition::key)).toList()) {
+            pruneStaleCache(definition);
             Optional<AddonCacheEntry> cache = configManager.getCacheEntry(definition.key());
             statuses.add(new ManagedAddonStatus(
                 definition,
-                configManager.addonJarExists(definition),
+                configManager.addonJarExists(definition) || addonLoader.hasMatchingJarOnDisk(definition),
                 addonLoader.isLoaded(definition),
                 cache.map(AddonCacheEntry::version).orElse(null),
                 configManager.resolveAddonPath(definition)
@@ -84,6 +85,12 @@ public final class AddonService {
 
     public @Nonnull CompletableFuture<AddonOperationResult> download(@Nonnull String key) {
         return withDefinition(key, definition -> {
+            pruneStaleCache(definition);
+            AddonOperationResult validation = addonLoader.validateInstallCandidate(definition);
+            if (!validation.success()) {
+                return validation;
+            }
+
             AddonDefinition updated = definition.withDownload(true);
             configManager.saveAddon(updated);
             configManager.clearAddonJarDeletionMarker(updated);
@@ -95,6 +102,7 @@ public final class AddonService {
 
     public @Nonnull CompletableFuture<AddonOperationResult> update(@Nonnull String key) {
         return withDefinition(key, definition -> {
+            pruneStaleCache(definition);
             if (!definition.download()) {
                 return AddonOperationResult.failure("Addon " + definition.name() + " is configured with download=false.", null);
             }
@@ -128,6 +136,12 @@ public final class AddonService {
 
     public @Nonnull CompletableFuture<AddonOperationResult> enable(@Nonnull String key) {
         return withDefinition(key, definition -> {
+            pruneStaleCache(definition);
+            AddonOperationResult validation = addonLoader.validateInstallCandidate(definition);
+            if (!validation.success()) {
+                return validation;
+            }
+
             AddonDefinition updated = definition.withEnabled(true).withDownload(true);
             configManager.saveAddon(updated);
             configManager.clearAddonJarDeletionMarker(updated);
@@ -176,6 +190,7 @@ public final class AddonService {
 
             for (AddonDefinition definition : compatibleDefinitions().stream().sorted(Comparator.comparing(AddonDefinition::key)).toList()) {
                 try {
+                    pruneStaleCache(definition);
                     if (!definition.download()) {
                         if (configManager.addonJarExists(definition)) {
                             if (configManager.isAddonJarDeletionScheduled(definition)) {
@@ -191,10 +206,16 @@ public final class AddonService {
                         continue;
                     }
 
-                    boolean present = configManager.addonJarExists(definition);
+                    boolean present = configManager.addonJarExists(definition) || addonLoader.hasMatchingJarOnDisk(definition);
                     AddonCacheEntry cache = configManager.getCacheEntry(definition.key()).orElse(null);
 
                     if (!present) {
+                        AddonOperationResult validation = addonLoader.validateInstallCandidate(definition);
+                        if (!validation.success()) {
+                            plugin.getLogger().warning(validation.message());
+                            continue;
+                        }
+
                         AddonOperationResult result = downloadService.download(definition, updateChecker.inspect(definition, cache));
                         if (!result.success()) {
                             plugin.getLogger().warning(result.message());
@@ -226,6 +247,20 @@ public final class AddonService {
         return definitions.get().values().stream()
             .filter(definition -> definition.resolveUrlForMinecraftVersion(Slimefun.getMinecraftVersion()).isPresent())
             .toList();
+    }
+
+    private void pruneStaleCache(@Nonnull AddonDefinition definition) {
+        try {
+            if (configManager.getCacheEntry(definition.key()).isPresent()
+                && !configManager.addonJarExists(definition)
+                && !addonLoader.hasMatchingJarOnDisk(definition)) {
+                configManager.removeCacheEntry(definition.key());
+                configManager.appendLog("Detected stale cache entry for " + definition.name() + ". No matching jar exists on disk; cache entry removed.");
+                plugin.getLogger().info("[AddonManager] Removed stale cache entry for " + definition.name() + ". Download is allowed.");
+            }
+        } catch (IOException x) {
+            plugin.getLogger().log(Level.WARNING, "Failed to prune stale managed addon cache for " + definition.name(), x);
+        }
     }
 
     private @Nonnull CompletableFuture<AddonOperationResult> withDefinition(@Nonnull String key, @Nonnull AddonWork work) {

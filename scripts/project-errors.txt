@@ -1,0 +1,924 @@
+[14:14:17] [Server thread/INFO]: [TAB] Loading server plugin TAB v5.5.0
+[14:14:17] [Server thread/INFO]: [ViaBackwards] Loading server plugin ViaBackwards v5.9.1
+[14:14:17] [Server thread/INFO]: [Slimefun] Loading server plugin Slimefun v4.0-UNOFFICIAL
+[14:14:17] [Server thread/INFO]: [SmartSpawner] Loading server plugin SmartSpawner v1.6.4
+[14:14:17] [Server thread/INFO]: [[38;5;11m?[0m] Loading server plugin LagFixer v1.5.1.9 [build 140]
+[14:14:17] [Server thread/INFO]: [WorldGuardExtraFlagsPlus] Loading server plugin WorldGuardExtraFlagsPlus v4.3.11
+[14:14:17] [Server thread/INFO]: [BetterRTP] Loading server plugin BetterRTP v3.6.13
+[14:14:17] [Server thread/INFO]: [MiniMOTD] Loading server plugin MiniMOTD v2.2.2
+[14:14:17] [Server thread/INFO]: [EssentialsChat] Loading server plugin EssentialsChat v2.22.0-dev+75-8e3b24f
+[14:14:17] [Server thread/INFO]: [SimpleScore] Loading server plugin SimpleScore v4.1.0
+[14:14:17] [Server thread/WARN]: [SimpleScore] Unknown condition 'inNether' in 'nether.conditions'.
+---
+[14:14:22] [Server thread/INFO]: [TAB] Enabled in 216ms
+[14:14:22] [Server thread/INFO]: [ViaBackwards] Enabling ViaBackwards v5.9.1
+[14:14:22] [Server thread/INFO]: [Slimefun] Enabling Slimefun v4.0-UNOFFICIAL
+[14:14:22] [Server thread/INFO]: +--------------------------------------------------+
+[14:14:22] [Server thread/INFO]: |  ____  _ _                 __                  |
+[14:14:22] [Server thread/INFO]: | / ___|| (_)_ __ ___   ___ / _|_   _ _ __       |
+[14:14:22] [Server thread/INFO]: | \___ \| | | '_ ` _ \ / _ \ |_| | | | '_ \      |
+[14:14:22] [Server thread/INFO]: |  ___) | | | | | | | |  __/  _| |_| | | | |     |
+[14:14:22] [Server thread/INFO]: | |____/|_|_|_| |_| |_|\___|_|  \__,_|_| |_|     |
+[14:14:22] [Server thread/INFO]: | Core: 4.0-UNOFFICIAL | MC: 1.21.1-1.21.11 | Java: 21
+[14:14:22] [Server thread/INFO]: +--------------------------------------------------+
+---
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Language > Loading language files
+[14:14:22] [Server thread/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[14:14:22] [Server thread/INFO]: [Slimefun] Loaded language "en"
+[14:14:22] [Server thread/INFO]: [Slimefun] Available languages: en, de, fr, it, es, ru, pl, uk, sv, nl, da, cs, ro, bg, pt, pt-BR, hu, lv, sk, vi, id, zh-CN, zh-TW, ja, ko, he, ar, tr, fa, th, tl
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Profiles > Using legacy player storage
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Metrics > Starting analytics services
+[14:14:22] [Server thread/INFO]: [Slimefun] Embedded bStats started. Plugin ID: 30622
+[14:14:22] [Server thread/INFO]: [Slimefun] Enabled Analytics Service
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Updater > Starting compatibility checks
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/WARN]: [Slimefun] It looks like you are using an unofficially modified build of Slimefun!
+---
+[14:14:22] [Server thread/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[14:14:22] [Server thread/INFO]: [Slimefun] Loaded language "en"
+[14:14:22] [Server thread/INFO]: [Slimefun] Available languages: en, de, fr, it, es, ru, pl, uk, sv, nl, da, cs, ro, bg, pt, pt-BR, hu, lv, sk, vi, id, zh-CN, zh-TW, ja, ko, he, ar, tr, fa, th, tl
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Profiles > Using legacy player storage
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Metrics > Starting analytics services
+[14:14:22] [Server thread/INFO]: [Slimefun] Embedded bStats started. Plugin ID: 30622
+[14:14:22] [Server thread/INFO]: [Slimefun] Enabled Analytics Service
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Updater > Starting compatibility checks
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/WARN]: [Slimefun] It looks like you are using an unofficially modified build of Slimefun!
+[14:14:22] [Server thread/WARN]: [Slimefun] Modrinth release checks are enabled for this unofficial build.
+---
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Profiles > Using legacy player storage
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Metrics > Starting analytics services
+[14:14:22] [Server thread/INFO]: [Slimefun] Embedded bStats started. Plugin ID: 30622
+[14:14:22] [Server thread/INFO]: [Slimefun] Enabled Analytics Service
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Updater > Starting compatibility checks
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/WARN]: [Slimefun] It looks like you are using an unofficially modified build of Slimefun!
+[14:14:22] [Server thread/WARN]: [Slimefun] Modrinth release checks are enabled for this unofficial build.
+[14:14:22] [Server thread/WARN]: [Slimefun] Project: slimefuncore
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+---
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Metrics > Starting analytics services
+[14:14:22] [Server thread/INFO]: [Slimefun] Embedded bStats started. Plugin ID: 30622
+[14:14:22] [Server thread/INFO]: [Slimefun] Enabled Analytics Service
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Updater > Starting compatibility checks
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/WARN]: [Slimefun] It looks like you are using an unofficially modified build of Slimefun!
+[14:14:22] [Server thread/WARN]: [Slimefun] Modrinth release checks are enabled for this unofficial build.
+[14:14:22] [Server thread/WARN]: [Slimefun] Project: slimefuncore
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+---
+[14:14:22] [Server thread/INFO]: [Slimefun] Enabled Analytics Service
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Updater > Starting compatibility checks
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/WARN]: [Slimefun] It looks like you are using an unofficially modified build of Slimefun!
+[14:14:22] [Server thread/WARN]: [Slimefun] Modrinth release checks are enabled for this unofficial build.
+[14:14:22] [Server thread/WARN]: [Slimefun] Project: slimefuncore
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+---
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Updater > Starting compatibility checks
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/WARN]: [Slimefun] It looks like you are using an unofficially modified build of Slimefun!
+[14:14:22] [Server thread/WARN]: [Slimefun] Modrinth release checks are enabled for this unofficial build.
+[14:14:22] [Server thread/WARN]: [Slimefun] Project: slimefuncore
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+---
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/WARN]: [Slimefun] It looks like you are using an unofficially modified build of Slimefun!
+[14:14:22] [Server thread/WARN]: [Slimefun] Modrinth release checks are enabled for this unofficial build.
+[14:14:22] [Server thread/WARN]: [Slimefun] Project: slimefuncore
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+---
+[14:14:22] [Server thread/WARN]: [Slimefun] It looks like you are using an unofficially modified build of Slimefun!
+[14:14:22] [Server thread/WARN]: [Slimefun] Modrinth release checks are enabled for this unofficial build.
+[14:14:22] [Server thread/WARN]: [Slimefun] Project: slimefuncore
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Querying Modrinth API...
+---
+[14:14:22] [Server thread/WARN]: [Slimefun] Modrinth release checks are enabled for this unofficial build.
+[14:14:22] [Server thread/WARN]: [Slimefun] Project: slimefuncore
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Querying Modrinth API...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tags > Loading item and block tags
+---
+[14:14:22] [Server thread/WARN]: [Slimefun] Project: slimefuncore
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Querying Modrinth API...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tags > Loading item and block tags
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Items > Registering Slimefun items
+---
+[14:14:22] [Server thread/WARN]: [Slimefun] Auto-download updates: enabled
+[14:14:22] [Server thread/WARN]: [Slimefun] Do not report bugs encountered in this Version of Slimefun to any official sources.
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Querying Modrinth API...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tags > Loading item and block tags
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Items > Registering Slimefun items
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Modrinth check: live API
+---
+[14:14:22] [Server thread/WARN]: [Slimefun] ****************************************************
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Querying Modrinth API...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tags > Loading item and block tags
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Items > Registering Slimefun items
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Modrinth check: live API
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatible build found: 2700
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+---
+[14:14:22] [Server thread/INFO]: [SlimefunCore] LOAD | Resources > Loading GEO resources
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Querying Modrinth API...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tags > Loading item and block tags
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Items > Registering Slimefun items
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Modrinth check: live API
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatible build found: 2700
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+---
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Detecting server environment...
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Querying Modrinth API...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tags > Loading item and block tags
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Items > Registering Slimefun items
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Modrinth check: live API
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatible build found: 2700
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+---
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Platform: Purpur
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Minecraft: 1.21.11  Java: 21.0.11
+[14:14:22] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Querying Modrinth API...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tags > Loading item and block tags
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Items > Registering Slimefun items
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Modrinth check: live API
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatible build found: 2700
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+---
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tags > Loading item and block tags
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Items > Registering Slimefun items
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Modrinth check: live API
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatible build found: 2700
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+---
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Items > Registering Slimefun items
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Modrinth check: live API
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatible build found: 2700
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+---
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Modrinth check: live API
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatible build found: 2700
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+[14:14:23] [Server thread/INFO]: [Slimefun] Loading Wiki pages...
+---
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatible build found: 2700
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+[14:14:23] [Server thread/INFO]: [Slimefun] Loading Wiki pages...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Events > Registering listeners
+---
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Supports: 1.21.11
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+[14:14:23] [Server thread/INFO]: [Slimefun] Loading Wiki pages...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Events > Registering listeners
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Runtime > Queuing recipe, texture, permission and sound refresh
+---
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Compatibility validation passed.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+[14:14:23] [Server thread/INFO]: [Slimefun] Loading Wiki pages...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Events > Registering listeners
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Runtime > Queuing recipe, texture, permission and sound refresh
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Commands > Registering /slimefun and /addon
+---
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] [Slimefun4Core] Loading compatible core...
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+[14:14:23] [Server thread/INFO]: [Slimefun] Loading Wiki pages...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Events > Registering listeners
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Runtime > Queuing recipe, texture, permission and sound refresh
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Commands > Registering /slimefun and /addon
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Addons > Starting managed addon services
+---
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] SlimefunCore is already on the latest Modrinth release.
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+[14:14:23] [Server thread/INFO]: [Slimefun] Loading Wiki pages...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Events > Registering listeners
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Runtime > Queuing recipe, texture, permission and sound refresh
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Commands > Registering /slimefun and /addon
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Addons > Starting managed addon services
+[14:14:23] [Server thread/INFO]: [AddonManager] Managed addon system is ready. Repository: plugins/Slimefun/addons/repository
+---
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Current build: SlimefunCore4-2703.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest asset: SlimefunCore4-2700.jar
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+[14:14:23] [Server thread/INFO]: [Slimefun] Loading Wiki pages...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Events > Registering listeners
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Runtime > Queuing recipe, texture, permission and sound refresh
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Commands > Registering /slimefun and /addon
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Addons > Starting managed addon services
+[14:14:23] [Server thread/INFO]: [AddonManager] Managed addon system is ready. Repository: plugins/Slimefun/addons/repository
+[14:14:23] [Server thread/INFO]: [AddonManager] Cloud sync source: https://raw.githubusercontent.com/rutwok-labs/SF4-Addons/main/Addons/java/core/api/config/addonmanager.yml
+---
+[14:14:23] [Slimefun - UpdaterService#startupCheck/INFO]: [Slimefun] Latest version: 2700
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Research > Loading researches
+[14:14:23] [Server thread/INFO]: [Slimefun] Loading Wiki pages...
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Events > Registering listeners
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Runtime > Queuing recipe, texture, permission and sound refresh
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Commands > Registering /slimefun and /addon
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Addons > Starting managed addon services
+[14:14:23] [Server thread/INFO]: [AddonManager] Managed addon system is ready. Repository: plugins/Slimefun/addons/repository
+[14:14:23] [Server thread/INFO]: [AddonManager] Cloud sync source: https://raw.githubusercontent.com/rutwok-labs/SF4-Addons/main/Addons/java/core/api/config/addonmanager.yml
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Discord > Community invite: https://discord.gg/pT8P9gwA
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tasks > Starting autosave, holograms and tickers
+---
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Commands > Registering /slimefun and /addon
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Addons > Starting managed addon services
+[14:14:23] [Server thread/INFO]: [AddonManager] Managed addon system is ready. Repository: plugins/Slimefun/addons/repository
+[14:14:23] [Server thread/INFO]: [AddonManager] Cloud sync source: https://raw.githubusercontent.com/rutwok-labs/SF4-Addons/main/Addons/java/core/api/config/addonmanager.yml
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Discord > Community invite: https://discord.gg/pT8P9gwA
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tasks > Starting autosave, holograms and tickers
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Hooks > Loading third-party integrations
+[14:14:23] [Server thread/INFO]: [Slimefun] Hooked into Plugin: PlaceholderAPI v2.12.2
+[14:14:23] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: slimefun [4.0-UNOFFICIAL]
+[14:14:23] [Server thread/INFO]: [Slimefun] Hooked into Plugin: WorldEdit v7.4.2+7450-eb8e82c
+[14:14:23] [Server thread/INFO]: [SlimefunCore] OK   | Loaded successfully > 868ms
+---
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Addons > Starting managed addon services
+[14:14:23] [Server thread/INFO]: [AddonManager] Managed addon system is ready. Repository: plugins/Slimefun/addons/repository
+[14:14:23] [Server thread/INFO]: [AddonManager] Cloud sync source: https://raw.githubusercontent.com/rutwok-labs/SF4-Addons/main/Addons/java/core/api/config/addonmanager.yml
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Discord > Community invite: https://discord.gg/pT8P9gwA
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tasks > Starting autosave, holograms and tickers
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Hooks > Loading third-party integrations
+[14:14:23] [Server thread/INFO]: [Slimefun] Hooked into Plugin: PlaceholderAPI v2.12.2
+[14:14:23] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: slimefun [4.0-UNOFFICIAL]
+[14:14:23] [Server thread/INFO]: [Slimefun] Hooked into Plugin: WorldEdit v7.4.2+7450-eb8e82c
+[14:14:23] [Server thread/INFO]: [SlimefunCore] OK   | Loaded successfully > 868ms
+[14:14:23] [Server thread/INFO]: +--------------------------------------------------+
+---
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Tasks > Starting autosave, holograms and tickers
+[14:14:23] [Server thread/INFO]: [SlimefunCore] LOAD | Hooks > Loading third-party integrations
+[14:14:23] [Server thread/INFO]: [Slimefun] Hooked into Plugin: PlaceholderAPI v2.12.2
+[14:14:23] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: slimefun [4.0-UNOFFICIAL]
+[14:14:23] [Server thread/INFO]: [Slimefun] Hooked into Plugin: WorldEdit v7.4.2+7450-eb8e82c
+[14:14:23] [Server thread/INFO]: [SlimefunCore] OK   | Loaded successfully > 868ms
+[14:14:23] [Server thread/INFO]: +--------------------------------------------------+
+[14:14:23] [Server thread/INFO]: [SmartSpawner] Enabling SmartSpawner v1.6.4
+[14:14:23] [Server thread/INFO]: [SmartSpawner] Server supports DataComponent API (Paper 1.21.5+)
+[14:14:23] [Server thread/INFO]: [SmartSpawner] WorldGuard integration enabled successfully!
+[14:14:23] [Server thread/INFO]: [SmartSpawner] GriefPrevention integration enabled successfully!
+---
+[14:14:23] [Server thread/INFO]: [Slimefun] Hooked into Plugin: PlaceholderAPI v2.12.2
+[14:14:23] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: slimefun [4.0-UNOFFICIAL]
+[14:14:23] [Server thread/INFO]: [Slimefun] Hooked into Plugin: WorldEdit v7.4.2+7450-eb8e82c
+[14:14:23] [Server thread/INFO]: [SlimefunCore] OK   | Loaded successfully > 868ms
+[14:14:23] [Server thread/INFO]: +--------------------------------------------------+
+[14:14:23] [Server thread/INFO]: [SmartSpawner] Enabling SmartSpawner v1.6.4
+[14:14:23] [Server thread/INFO]: [SmartSpawner] Server supports DataComponent API (Paper 1.21.5+)
+[14:14:23] [Server thread/INFO]: [SmartSpawner] WorldGuard integration enabled successfully!
+[14:14:23] [Server thread/INFO]: [SmartSpawner] GriefPrevention integration enabled successfully!
+[14:14:23] [Server thread/INFO]: [SmartSpawner] Running on standard Paper server.
+[14:14:23] [Server thread/INFO]: [SmartSpawner] Successfully connected to Vault & Economy provider: EssentialsX Economy
+---
+
+
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Started listening console for LagFixer errors!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Enabled manager in 1ms!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Enabled manager in 34ms!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Loaded fork support ~ xyz.lychee.lagfixer.support.PaperSupport
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Loaded nms support ~ xyz.lychee.lagfixer.nms.v1_21_R7.SupportNms
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Enabled manager in 3ms!
+---
+
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Started listening console for LagFixer errors!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Enabled manager in 1ms!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Enabled manager in 34ms!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Loaded fork support ~ xyz.lychee.lagfixer.support.PaperSupport
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Loaded nms support ~ xyz.lychee.lagfixer.nms.v1_21_R7.SupportNms
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Enabled manager in 3ms!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (HookManager) -> Enabling manager...
+---
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Started listening console for LagFixer errors!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Enabled manager in 1ms!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Enabled manager in 34ms!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Loaded fork support ~ xyz.lychee.lagfixer.support.PaperSupport
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m]  • Loaded nms support ~ xyz.lychee.lagfixer.nms.v1_21_R7.SupportNms
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Enabled manager in 3ms!
+[14:14:23] [Server thread/INFO]: [[38;5;11m?[0m] (HookManager) -> Enabling manager...
+[14:14:23] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: lagfixer [1.5.1.9 [build 140]]
+---
+[14:14:26] [ForkJoinPool.commonPool-worker-1/INFO]: [MiniMOTD] Download the latest version, v2.2.3 from Modrinth at the link below:
+[14:14:26] [ForkJoinPool.commonPool-worker-1/INFO]: [MiniMOTD] https://modrinth.com/plugin/minimotd
+[14:14:26] [Server thread/INFO]: [Slimefun] Collecting Snapshots of all Recipes...
+[14:14:26] [Server thread/INFO]: [Slimefun] Found 1,470 Recipes!
+[14:14:26] [Server thread/INFO]: [EconomyShopGUI-Premium] [INFO]: Enabled Slimefun hook...
+[14:14:26] [Server thread/INFO]: [EconomyShopGUI-Premium] [DEBUG]: ITEMS provider loaded, waiting...
+[14:14:26] [Server thread/INFO]: 
+[14:14:26] [Server thread/INFO]: ######################### - Slimefun v4.0-UNOFFICIAL - #########################
+[14:14:26] [Server thread/INFO]: 
+[14:14:26] [Server thread/INFO]: Successfully loaded 1322 Items and 300 Researches
+[14:14:26] [Server thread/INFO]: ( 555 Items from Slimefun, 767 Items from 4 Addons )
+---
+[14:14:26] [ForkJoinPool.commonPool-worker-1/INFO]: [MiniMOTD] https://modrinth.com/plugin/minimotd
+[14:14:26] [Server thread/INFO]: [Slimefun] Collecting Snapshots of all Recipes...
+[14:14:26] [Server thread/INFO]: [Slimefun] Found 1,470 Recipes!
+[14:14:26] [Server thread/INFO]: [EconomyShopGUI-Premium] [INFO]: Enabled Slimefun hook...
+[14:14:26] [Server thread/INFO]: [EconomyShopGUI-Premium] [DEBUG]: ITEMS provider loaded, waiting...
+[14:14:26] [Server thread/INFO]: 
+[14:14:26] [Server thread/INFO]: ######################### - Slimefun v4.0-UNOFFICIAL - #########################
+[14:14:26] [Server thread/INFO]: 
+[14:14:26] [Server thread/INFO]: Successfully loaded 1322 Items and 300 Researches
+[14:14:26] [Server thread/INFO]: ( 555 Items from Slimefun, 767 Items from 4 Addons )
+[14:14:26] [Server thread/INFO]: 
+---
+[14:14:26] [Craft Scheduler Thread - 6 - SimpleScore/WARN]: [SimpleScore] New version (v4.2.0) available. Download at:
+[14:14:26] [Craft Scheduler Thread - 6 - SimpleScore/WARN]: [SimpleScore] https://modrinth.com/plugin/simplescore
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Craft Scheduler Thread - 1 - Essentials/WARN]: [Essentials] You're 50 EssentialsX dev build(s) out of date!
+[14:14:26] [Craft Scheduler Thread - 1 - Essentials/WARN]: [Essentials] Download it here: https://essentialsx.net/downloads.html
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 17ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 3,149 Blocks for World "world"
+[14:14:26] [Server thread/INFO]: [Slimefun] Avg: 0.01ms/Block
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+---
+[14:14:26] [Craft Scheduler Thread - 6 - SimpleScore/WARN]: [SimpleScore] https://modrinth.com/plugin/simplescore
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Craft Scheduler Thread - 1 - Essentials/WARN]: [Essentials] You're 50 EssentialsX dev build(s) out of date!
+[14:14:26] [Craft Scheduler Thread - 1 - Essentials/WARN]: [Essentials] Download it here: https://essentialsx.net/downloads.html
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 17ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 3,149 Blocks for World "world"
+[14:14:26] [Server thread/INFO]: [Slimefun] Avg: 0.01ms/Block
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+---
+[14:14:26] [Craft Scheduler Thread - 1 - Essentials/WARN]: [Essentials] You're 50 EssentialsX dev build(s) out of date!
+[14:14:26] [Craft Scheduler Thread - 1 - Essentials/WARN]: [Essentials] Download it here: https://essentialsx.net/downloads.html
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 17ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 3,149 Blocks for World "world"
+[14:14:26] [Server thread/INFO]: [Slimefun] Avg: 0.01ms/Block
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+---
+[14:14:26] [Craft Scheduler Thread - 1 - Essentials/WARN]: [Essentials] Download it here: https://essentialsx.net/downloads.html
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 17ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 3,149 Blocks for World "world"
+[14:14:26] [Server thread/INFO]: [Slimefun] Avg: 0.01ms/Block
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 17ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 3,149 Blocks for World "world"
+[14:14:26] [Server thread/INFO]: [Slimefun] Avg: 0.01ms/Block
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 3,149 Blocks for World "world"
+[14:14:26] [Server thread/INFO]: [Slimefun] Avg: 0.01ms/Block
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Avg: 0.01ms/Block
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_nether"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loading Protection Modules...
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "world_the_end"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loading Protection Modules...
+[14:14:26] [Server thread/INFO]: [dough: protection] This may happen more than once.
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loading Protection Modules...
+[14:14:26] [Server thread/INFO]: [dough: protection] This may happen more than once.
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "WorldGuard v7.0.16+2355-f7fded2"
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loading Protection Modules...
+[14:14:26] [Server thread/INFO]: [dough: protection] This may happen more than once.
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "WorldGuard v7.0.16+2355-f7fded2"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "GriefPrevention v16.18.7"
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loading Protection Modules...
+[14:14:26] [Server thread/INFO]: [dough: protection] This may happen more than once.
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "WorldGuard v7.0.16+2355-f7fded2"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "GriefPrevention v16.18.7"
+[14:14:26] [Server thread/INFO]: [AdvancedTech] Loading server plugin AdvancedTech v1.21.11-rutwoklabs
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "XpFarm"
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loading Protection Modules...
+[14:14:26] [Server thread/INFO]: [dough: protection] This may happen more than once.
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "WorldGuard v7.0.16+2355-f7fded2"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "GriefPrevention v16.18.7"
+[14:14:26] [Server thread/INFO]: [AdvancedTech] Loading server plugin AdvancedTech v1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [AdvancedTech] Enabling AdvancedTech v1.21.11-rutwoklabs
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loading Protection Modules...
+[14:14:26] [Server thread/INFO]: [dough: protection] This may happen more than once.
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "WorldGuard v7.0.16+2355-f7fded2"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "GriefPrevention v16.18.7"
+[14:14:26] [Server thread/INFO]: [AdvancedTech] Loading server plugin AdvancedTech v1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [AdvancedTech] Enabling AdvancedTech v1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [AdvancedTech] ========================================
+---
+[14:14:26] [Server thread/INFO]: [Slimefun] This may take a long time...
+[14:14:26] [Server thread/INFO]: [Slimefun] Loading Blocks... 100% (FINISHED - 0ms)
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded a total of 0 Blocks for World "Lobby"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loading Protection Modules...
+[14:14:26] [Server thread/INFO]: [dough: protection] This may happen more than once.
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "WorldGuard v7.0.16+2355-f7fded2"
+[14:14:26] [Server thread/INFO]: [dough: protection] Loaded Protection Module "GriefPrevention v16.18.7"
+[14:14:26] [Server thread/INFO]: [AdvancedTech] Loading server plugin AdvancedTech v1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [AdvancedTech] Enabling AdvancedTech v1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [AdvancedTech] ========================================
+[14:14:26] [Server thread/INFO]: [AdvancedTech] Name: AdvancedTech
+---
+[14:14:26] [Server thread/INFO]: [AdvancedTech] AdvancedSolarGen - 'ADVANCED_SOLAR_GEN' (AdvancedTech v1.21.11-rutwoklabs): Item was registered during runtime.
+[14:14:26] [Server thread/INFO]: [AdvancedTech] AdvancedTech loaded successfully: 9 items and 3 researches registered.
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded managed Slimefun addon: AdvancedTech v1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [EcoPower] Loading server plugin EcoPower v1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [EcoPower] Enabling EcoPower v1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [EcoPower] ========================================
+[14:14:26] [Server thread/INFO]: [EcoPower] Name: EcoPower
+[14:14:26] [Server thread/INFO]: [EcoPower] Plugin Version: 1.21.11-rutwoklabs
+[14:14:26] [Server thread/INFO]: [EcoPower] Minecraft API Target: 1.21.11
+[14:14:26] [Server thread/INFO]: [EcoPower] Modified Updater Author: rutwoklabs
+[14:14:26] [Server thread/INFO]: [EcoPower] ========================================
+---
+[14:14:26] [Server thread/INFO]: [EcoPower] §6[EcoPower] Author: Slimefun Community
+[14:14:26] [Server thread/INFO]: [EcoPower] §6[EcoPower] Modified and Updated by: Rutwok Labs
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded managed Slimefun addon: EcoPower v1.21.11-rutwoklabs
+[14:14:26] [Server thread/WARN]: [Slimefun] Managed addon "FluffyMachines" conflicts with another installed jar named FluffyMachines.
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] Loading server plugin InfinityExpansion v1.21.11-2617
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] Enabling InfinityExpansion v1.21.11-2617
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] ========================================================
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] InfinityExpansion is loading on Minecraft 1.21.1 - 1.21.11
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] Author: Community Addon
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] URL: https://github.com/Slimefun/Slimefun4/wiki/Addons
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] Modified and Updated by: RuTwoK Labs
+---
+[14:14:26] [Server thread/INFO]: [EcoPower] §6[EcoPower] Modified and Updated by: Rutwok Labs
+[14:14:26] [Server thread/INFO]: [Slimefun] Loaded managed Slimefun addon: EcoPower v1.21.11-rutwoklabs
+[14:14:26] [Server thread/WARN]: [Slimefun] Managed addon "FluffyMachines" conflicts with another installed jar named FluffyMachines.
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] Loading server plugin InfinityExpansion v1.21.11-2617
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] Enabling InfinityExpansion v1.21.11-2617
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] ========================================================
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] InfinityExpansion is loading on Minecraft 1.21.1 - 1.21.11
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] Author: Community Addon
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] URL: https://github.com/Slimefun/Slimefun4/wiki/Addons
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] Modified and Updated by: RuTwoK Labs
+[14:14:26] [Server thread/INFO]: [InfinityExpansion] ========================================================
+---
+[14:14:27] [Server thread/INFO]: [InfinityExpansion]  - 'ADVANCED_NETHER_STAR_REACTOR' (InfinityExpansion v1.21.11-2617): Item was registered during runtime.
+[14:14:27] [Server thread/INFO]: [InfinityExpansion] ElectricSmeltery - 'ADVANCED_SMELTERY' (InfinityExpansion v1.21.11-2617): Item was registered during runtime.
+[14:14:27] [Server thread/INFO]: [Slimefun] Loaded managed Slimefun addon: InfinityExpansion v1.21.11-2617
+[14:14:27] [Server thread/INFO]: [Supreme] Loading server plugin Supreme v1.21.11-2000plus
+[14:14:27] [Server thread/INFO]: [Supreme] Enabling Supreme v1.21.11-2000plus
+[14:14:27] [Server thread/INFO]: [Supreme] ########################################
+[14:14:27] [Server thread/INFO]: [Supreme]       Supreme - By RelativoBR      
+[14:14:27] [Server thread/INFO]: [Supreme] ########################################
+[14:14:27] [Server thread/INFO]: [Supreme] auto-update: false
+[14:14:27] [Server thread/INFO]: [Supreme] Loaded language Supreme: en-US
+[14:14:27] [Server thread/INFO]: [Supreme] Legacy SupremeExpansion IDs: disable
+---
+[14:14:27] [Server thread/INFO]: [Supreme] AbstractQuarry - 'SUPREME_THORNIUM_QUARRY' (Supreme v1.21.11-2000plus): Item was registered during runtime.
+[14:14:27] [Server thread/INFO]: [Supreme] AbstractQuarry - 'SUPREME_SUPREME_NUGGETS_QUARRY' (Supreme v1.21.11-2000plus): Item was registered during runtime.
+[14:14:27] [Server thread/INFO]: [Slimefun] Loaded managed Slimefun addon: Supreme v1.21.11-2000plus
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: AdvancedTech
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: EcoPower
+[14:14:27] [Server thread/WARN]: [Slimefun] Managed addon "FluffyMachines" conflicts with another installed jar named FluffyMachines.
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: InfinityExpansion
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: Supreme
+[14:14:27] [Server thread/INFO]: Done (21.373s)! For help, type "help"
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: statistic [2.0.2]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: dtf [1.1.0]
+---
+[14:14:27] [Server thread/INFO]: [Supreme] AbstractQuarry - 'SUPREME_SUPREME_NUGGETS_QUARRY' (Supreme v1.21.11-2000plus): Item was registered during runtime.
+[14:14:27] [Server thread/INFO]: [Slimefun] Loaded managed Slimefun addon: Supreme v1.21.11-2000plus
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: AdvancedTech
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: EcoPower
+[14:14:27] [Server thread/WARN]: [Slimefun] Managed addon "FluffyMachines" conflicts with another installed jar named FluffyMachines.
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: InfinityExpansion
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: Supreme
+[14:14:27] [Server thread/INFO]: Done (21.373s)! For help, type "help"
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: statistic [2.0.2]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: dtf [1.1.0]
+[14:14:27] [Server thread/WARN]: [PlaceholderAPI] Cannot load expansion playertime due to a missing plugin: PlayerTime
+---
+[14:14:27] [Server thread/INFO]: [Slimefun] Loaded managed Slimefun addon: Supreme v1.21.11-2000plus
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: AdvancedTech
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: EcoPower
+[14:14:27] [Server thread/WARN]: [Slimefun] Managed addon "FluffyMachines" conflicts with another installed jar named FluffyMachines.
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: InfinityExpansion
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: Supreme
+[14:14:27] [Server thread/INFO]: Done (21.373s)! For help, type "help"
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: statistic [2.0.2]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: dtf [1.1.0]
+[14:14:27] [Server thread/WARN]: [PlaceholderAPI] Cannot load expansion playertime due to a missing plugin: PlayerTime
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: vault [1.8.3]
+---
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: AdvancedTech
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: EcoPower
+[14:14:27] [Server thread/WARN]: [Slimefun] Managed addon "FluffyMachines" conflicts with another installed jar named FluffyMachines.
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: InfinityExpansion
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: Supreme
+[14:14:27] [Server thread/INFO]: Done (21.373s)! For help, type "help"
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: statistic [2.0.2]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: dtf [1.1.0]
+[14:14:27] [Server thread/WARN]: [PlaceholderAPI] Cannot load expansion playertime due to a missing plugin: PlayerTime
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: vault [1.8.3]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: player [2.0.9]
+---
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: EcoPower
+[14:14:27] [Server thread/WARN]: [Slimefun] Managed addon "FluffyMachines" conflicts with another installed jar named FluffyMachines.
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: InfinityExpansion
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: Supreme
+[14:14:27] [Server thread/INFO]: Done (21.373s)! For help, type "help"
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: statistic [2.0.2]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: dtf [1.1.0]
+[14:14:27] [Server thread/WARN]: [PlaceholderAPI] Cannot load expansion playertime due to a missing plugin: PlayerTime
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: vault [1.8.3]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: player [2.0.9]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: gradient [1.0]
+---
+[14:14:27] [Server thread/WARN]: [Slimefun] Managed addon "FluffyMachines" conflicts with another installed jar named FluffyMachines.
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: InfinityExpansion
+[14:14:27] [Server thread/INFO]: [Slimefun] Managed addon already present in the plugin manager, skipping duplicate load: Supreme
+[14:14:27] [Server thread/INFO]: Done (21.373s)! For help, type "help"
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: statistic [2.0.2]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: dtf [1.1.0]
+[14:14:27] [Server thread/WARN]: [PlaceholderAPI] Cannot load expansion playertime due to a missing plugin: PlayerTime
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: vault [1.8.3]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: player [2.0.9]
+[14:14:27] [Server thread/INFO]: [PlaceholderAPI] Successfully registered external expansion: gradient [1.0]
+[14:14:27] [Server thread/WARN]: [PlaceholderAPI] Cannot load expansion playerstats due to a missing plugin: PlayerStats
+---
+°??--------------------------------??°
+[14:15:34] [Server thread/INFO]: 
+[14:15:35] [Server thread/INFO]: [AddonManager] Server version: 1.21.1-1.21.11 -> using SF4 build tag: 1.21.11
+[14:15:35] [Server thread/INFO]: [AddonManager] Showing 8 compatible addons (0 hidden - no URL for this version)
+[14:15:35] [Server thread/INFO]: Managed Slimefun Addons
+[14:15:35] [Server thread/INFO]: - advancedtech (AdvancedTech) enabled, download, jar=present, loaded=yes, cached-version=1.21.11
+[14:15:35] [Server thread/INFO]: - ecopower (EcoPower) enabled, download, jar=present, loaded=yes, cached-version=1.21.11
+[14:15:35] [Server thread/INFO]: - electricspawners (ElectricSpawners) disabled, no-download, jar=missing, loaded=no, cached-version=none
+[14:15:35] [Server thread/INFO]: - exoticgarden (ExoticGarden) disabled, no-download, jar=present, loaded=yes, cached-version=none
+[14:15:35] [Server thread/INFO]: - fluffymachines (FluffyMachines) enabled, download, jar=present, loaded=yes, cached-version=1.21.11
+[14:15:35] [Server thread/INFO]: - foxymachines (FoxyMachines) disabled, no-download, jar=present, loaded=yes, cached-version=none
+---
+[14:15:34] [Server thread/INFO]: 
+[14:15:35] [Server thread/INFO]: [AddonManager] Server version: 1.21.1-1.21.11 -> using SF4 build tag: 1.21.11
+[14:15:35] [Server thread/INFO]: [AddonManager] Showing 8 compatible addons (0 hidden - no URL for this version)
+[14:15:35] [Server thread/INFO]: Managed Slimefun Addons
+[14:15:35] [Server thread/INFO]: - advancedtech (AdvancedTech) enabled, download, jar=present, loaded=yes, cached-version=1.21.11
+[14:15:35] [Server thread/INFO]: - ecopower (EcoPower) enabled, download, jar=present, loaded=yes, cached-version=1.21.11
+[14:15:35] [Server thread/INFO]: - electricspawners (ElectricSpawners) disabled, no-download, jar=missing, loaded=no, cached-version=none
+[14:15:35] [Server thread/INFO]: - exoticgarden (ExoticGarden) disabled, no-download, jar=present, loaded=yes, cached-version=none
+[14:15:35] [Server thread/INFO]: - fluffymachines (FluffyMachines) enabled, download, jar=present, loaded=yes, cached-version=1.21.11
+[14:15:35] [Server thread/INFO]: - foxymachines (FoxyMachines) disabled, no-download, jar=present, loaded=yes, cached-version=none
+[14:15:35] [Server thread/INFO]: - infinityexpansion (InfinityExpansion) enabled, download, jar=present, loaded=yes, cached-version=1.21.11
+---
+[14:15:56] [Server thread/INFO]: Downloading and enabling managed addon supreme for the next restart...
+[14:15:56] [Server thread/INFO]: Addon Supreme is already installed. Remove the existing plugin jar before using the managed installer.
+[14:16:07] [Craft Scheduler Thread - 7 - Slimefun/INFO]: [Slimefun] Auto-saving block data... (Next auto-save: 10m)
+[14:16:07] [Craft Scheduler Thread - 7 - Slimefun/INFO]: [Slimefun] Saving block data for world "world" (5 change(s) queued)
+[14:16:15] [Server thread/INFO]: ? Server Plugins (36):
+[14:16:15] [Server thread/INFO]: Paper Plugins (4):
+[14:16:15] [Server thread/INFO]:  - EconomyShopGUI-Premium, FancyNpcs, MiniMOTD, SmartSpawner
+[14:16:15] [Server thread/INFO]: Bukkit Plugins (32):
+[14:16:16] [Server thread/INFO]:  - AdvancedTech, AxGraves, BetterRTP, Chunky, CMILib, EcoPower, EcoStack, Essentials, EssentialsChat, ExoticGarden
+[14:16:16] [Server thread/INFO]:  FluffyMachines, FoxyMachines, GriefPrevention, InfinityExpansion, LagFixer, LuckPerms, Multiverse-Core, Multiverse-Inventories, MySpawn, PlaceholderAPI
+[14:16:16] [Server thread/INFO]:  ServersNPC, SimpleScore, SkinsRestorer, Slimefun, Supreme, TAB, Vault, ViaBackwards, ViaVersion, WorldEdit
+---
+[14:15:56] [Server thread/INFO]: Addon Supreme is already installed. Remove the existing plugin jar before using the managed installer.
+[14:16:07] [Craft Scheduler Thread - 7 - Slimefun/INFO]: [Slimefun] Auto-saving block data... (Next auto-save: 10m)
+[14:16:07] [Craft Scheduler Thread - 7 - Slimefun/INFO]: [Slimefun] Saving block data for world "world" (5 change(s) queued)
+[14:16:15] [Server thread/INFO]: ? Server Plugins (36):
+[14:16:15] [Server thread/INFO]: Paper Plugins (4):
+[14:16:15] [Server thread/INFO]:  - EconomyShopGUI-Premium, FancyNpcs, MiniMOTD, SmartSpawner
+[14:16:15] [Server thread/INFO]: Bukkit Plugins (32):
+[14:16:16] [Server thread/INFO]:  - AdvancedTech, AxGraves, BetterRTP, Chunky, CMILib, EcoPower, EcoStack, Essentials, EssentialsChat, ExoticGarden
+[14:16:16] [Server thread/INFO]:  FluffyMachines, FoxyMachines, GriefPrevention, InfinityExpansion, LagFixer, LuckPerms, Multiverse-Core, Multiverse-Inventories, MySpawn, PlaceholderAPI
+[14:16:16] [Server thread/INFO]:  ServersNPC, SimpleScore, SkinsRestorer, Slimefun, Supreme, TAB, Vault, ViaBackwards, ViaVersion, WorldEdit
+[14:16:16] [Server thread/INFO]:  WorldGuard, WorldGuardExtraFlagsPlus
+---
+[14:16:16] [Server thread/INFO]:  WorldGuard, WorldGuardExtraFlagsPlus
+[14:16:35] [Server thread/INFO]: Disabling and deleting managed addon supreme for the next restart...
+[14:16:35] [Slimefun - AddonManager#supreme/INFO]: [Slimefun] Managed addon Supreme is currently loaded. Its jar will be deleted safely during the next startup pass.
+[14:16:35] [Server thread/INFO]: Disabled and scheduled deletion for Supreme on the next restart.
+[14:16:35] [Server thread/INFO]: This change takes effect on the next restart.
+[14:16:40] [Server thread/INFO]: Stopping the server
+[14:16:40] [Server thread/INFO]: Stopping server
+[14:16:40] [Server thread/INFO]: [Supreme] Disabling Supreme v1.21.11-2000plus
+[14:16:40] [Server thread/INFO]: [InfinityExpansion] Disabling InfinityExpansion v1.21.11-2617
+[14:16:40] [Server thread/INFO]: [EcoPower] Disabling EcoPower v1.21.11-rutwoklabs
+[14:16:40] [Server thread/INFO]: [AdvancedTech] Disabling AdvancedTech v1.21.11-rutwoklabs
+---
+[14:16:40] [Server thread/INFO]: [WorldGuardExtraFlagsPlus] Disabling WorldGuardExtraFlagsPlus v4.3.11
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] Disabling LagFixer v1.5.1.9 [build 140]
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Disabling manager...
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Disabled manager in 0ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Disabling manager...
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Disabled manager in 0ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Disabling manager...
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Disabled manager in 1ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (HookManager) -> Disabling manager...
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m]  • Successfully disabled hook PlaceholderAPI in 0ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (HookManager) -> Disabled manager in 0ms!
+---
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] Disabling LagFixer v1.5.1.9 [build 140]
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Disabling manager...
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (ErrorsManager) -> Disabled manager in 0ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Disabling manager...
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (ConfigManager) -> Disabled manager in 0ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Disabling manager...
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (SupportManager) -> Disabled manager in 1ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (HookManager) -> Disabling manager...
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m]  • Successfully disabled hook PlaceholderAPI in 0ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (HookManager) -> Disabled manager in 0ms!
+[14:16:40] [Server thread/INFO]: [[38;5;11m?[0m] (MetricsManager) -> Disabling manager...
+---
+[14:16:40] [Server thread/INFO]: [SmartSpawner] Disabling SmartSpawner v1.6.4
+[14:16:40] [Server thread/INFO]: [SmartSpawner] SmartSpawner has been disabled!
+[14:16:40] [Server thread/INFO]: [Slimefun] Disabling Slimefun v4.0-UNOFFICIAL
+[14:16:40] [Server thread/INFO]: [Slimefun] Backed up Slimefun data to: 2026-06-19-14-16.zip
+[14:16:40] [Server thread/INFO]: [Slimefun] AddonService shutting down.
+[14:16:40] [Server thread/INFO]: [ViaBackwards] Disabling ViaBackwards v5.9.1
+[14:16:40] [Server thread/INFO]: [TAB] Disabling TAB v5.5.0
+[14:16:40] [Server thread/INFO]: [TAB] Disabled in 0ms
+[14:16:40] [Server thread/INFO]: [Essentials] Disabling Essentials v2.22.0-dev+75-8e3b24f
+[14:16:40] [Server thread/INFO]: [Vault] [Economy] Essentials Economy unhooked.
+[14:16:40] [Server thread/INFO]: [GriefPrevention] Disabling GriefPrevention v16.18.7
+---
+[14:16:40] [Server thread/INFO]: [SmartSpawner] SmartSpawner has been disabled!
+[14:16:40] [Server thread/INFO]: [Slimefun] Disabling Slimefun v4.0-UNOFFICIAL
+[14:16:40] [Server thread/INFO]: [Slimefun] Backed up Slimefun data to: 2026-06-19-14-16.zip
+[14:16:40] [Server thread/INFO]: [Slimefun] AddonService shutting down.
+[14:16:40] [Server thread/INFO]: [ViaBackwards] Disabling ViaBackwards v5.9.1
+[14:16:40] [Server thread/INFO]: [TAB] Disabling TAB v5.5.0
+[14:16:40] [Server thread/INFO]: [TAB] Disabled in 0ms
+[14:16:40] [Server thread/INFO]: [Essentials] Disabling Essentials v2.22.0-dev+75-8e3b24f
+[14:16:40] [Server thread/INFO]: [Vault] [Economy] Essentials Economy unhooked.
+[14:16:40] [Server thread/INFO]: [GriefPrevention] Disabling GriefPrevention v16.18.7
+[14:16:40] [Server thread/INFO]: [PlaceholderAPI] Unregistered placeholder expansion griefprevention
+---
+[14:16:40] [Server thread/INFO]: [Slimefun] Disabling Slimefun v4.0-UNOFFICIAL
+[14:16:40] [Server thread/INFO]: [Slimefun] Backed up Slimefun data to: 2026-06-19-14-16.zip
+[14:16:40] [Server thread/INFO]: [Slimefun] AddonService shutting down.
+[14:16:40] [Server thread/INFO]: [ViaBackwards] Disabling ViaBackwards v5.9.1
+[14:16:40] [Server thread/INFO]: [TAB] Disabling TAB v5.5.0
+[14:16:40] [Server thread/INFO]: [TAB] Disabled in 0ms
+[14:16:40] [Server thread/INFO]: [Essentials] Disabling Essentials v2.22.0-dev+75-8e3b24f
+[14:16:40] [Server thread/INFO]: [Vault] [Economy] Essentials Economy unhooked.
+[14:16:40] [Server thread/INFO]: [GriefPrevention] Disabling GriefPrevention v16.18.7
+[14:16:40] [Server thread/INFO]: [PlaceholderAPI] Unregistered placeholder expansion griefprevention
+[14:16:40] [Server thread/INFO]: [PlaceholderAPI] Reason: required plugin GriefPrevention was disabled.
+---
