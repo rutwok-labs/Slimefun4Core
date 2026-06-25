@@ -12,7 +12,7 @@
     <a href="https://modrinth.com/plugin/slimefuncore">
         <img alt="Latest Version" src="https://img.shields.io/modrinth/v/slimefuncore?style=for-the-badge&logo=modrinth" />
     </a>
-   <a href="https://discord.gg/3ymnYRqg">
+   <a href="https://discord.gg/5FWW7hbFd">
         <img alt="Discord" src="https://img.shields.io/badge/Discord-Join%20Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
  </a>
 </p>
